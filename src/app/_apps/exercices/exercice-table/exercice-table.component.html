@@ -1,0 +1,165 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>Exercices disponibles</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+          <li class="breadcrumb-item active">Exercise sportif</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <!-- row table  -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h4 class="text text-uppercase">
+                Exercises sportifs disponibles en relation avec les coachs
+                sportifs
+              </h4>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <!--form-search-->
+                <form action="">
+                  <div class="input-group">
+                    <label class="input-group-text">Search by:</label>
+                    <select name="select" id="select" class="form-control">
+                      <option selected>Critère de recherche</option>
+                      <option value="nom">Nom</option>
+                      <option value="coach">Coach</option>
+                    </select>
+                    <input
+                      type="text"
+                      name="keyword"
+                      id="keyword"
+                      class="form-control input-large"
+                    />
+                    <button class="btn btn-primary">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                </form>
+                <!-- end form search -->
+              </div>
+
+              <div class="col-md-4">
+                <div class="float-right">
+                  <button mat-raised-button color="primary">Nouvel exercice</button>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <!-- table -->
+            <div
+              class="card-body table-responsive p-0 mt-3 mb-3"
+              style="height: 400px"
+            >
+              <!-- end form-search-->
+              <ng-container
+                *ngIf="exerciceData | async as data; else FailureOrLoading"
+              >
+                <table class="table table-head-fixed table-striped">
+                  <thead class="thead">
+                    <tr>
+                      <th>COACH</th>
+                      <th>SEXE</th>
+                      <th>EXPERIENCE PRO</th>
+                      <th>NOM DU SPORT</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of exerciceData | async">
+                      <td>{{ item.coachDTO.nom_coach }}</td>
+                      <td>{{ item.coachDTO.sexe }}</td>
+                      <td>{{ item.experiencePro }}</td>
+                      <td>{{ item.nomexercise }}</td>
+                      <td>
+                        <button mat-button [matMenuTriggerFor]="menu">
+                          <mat-icon>
+                            <i class="bi bi-three-dots-vertical"></i>
+                          </mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item>
+                            <a
+                              mat-raised-button
+                              color="primary"
+                              class="button-taille"
+                              (click)="onGetSingleExercice(item.id)"
+                            >
+                              Details
+                              <i class="bi bi-eye"></i>
+                            </a>
+                          </button>
+
+                          <button mat-menu-item>
+                            <a
+                              mat-raised-button
+                              color="accent"
+                              class="button-taille"
+                            >
+                              Editer
+                              <i class="bi bi-pen"></i>
+                            </a>
+                          </button>
+
+                          <button mat-menu-item>
+                            <a
+                              mat-raised-button
+                              color="warn"
+                              class="button-taille"
+                            >
+                              Delete
+                              <i class="bi bi-trash3"></i>
+                            </a>
+                          </button>
+                        </mat-menu>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+              <ng-template #FailureOrLoading>
+                <ng-container *ngIf="errorMessage; else Loading">
+                  <div class="text-danger">
+                    {{ errorMessage }}
+                  </div>
+                </ng-container>
+              </ng-template>
+              <ng-template #Loading> Loading.... </ng-template>
+
+              <div class="text text-center mt-5">
+                <button mat-raised-button color="accent">Precedent</button>
+                <button mat-raised-button color="primary" class="m-1">suivant</button>
+             </div>
+
+            </div>
+            <!-- end table -->
+            <!-- end div card body -->
+            <div class="text text-headline">
+               <label class="text-foot">Nombre total d'exercice :</label>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end row table -->
+  </div>
+  <!-- /.container-fluid -->
+</section>

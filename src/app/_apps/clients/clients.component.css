@@ -1,0 +1,45 @@
+.prop_button {
+  margin-left: 25%;
+}
+
+.prop_img {
+  margin-left: 30%;
+}
+
+.btn_p_photo{
+  margin-left: 2px;
+}
+
+.coach_img {
+  width: 22vh;
+  height: 25vh;
+
+  border-radius: 3px;
+  padding: 2px;
+}
+
+.card-body table .thead th {
+  font-family: 'Gill Sans MT',sans-serif !important;
+  font-size: 13px !important;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.card-body table tbody td {
+  font-family: 'gill',sans-serif !important;
+  font-size: 14px !important;
+  letter-spacing: 1px;
+  text-transform: capitalize !important;
+}
+
+.button_hauteur {
+  margin-top: 2rem;
+}
+
+
+.card-hauteur {
+  height: 32rem !important;
+}
+
+
+

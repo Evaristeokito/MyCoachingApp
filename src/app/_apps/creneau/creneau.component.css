@@ -1,0 +1,15 @@
+.prop_img , .prop_button {
+    margin-left: 30%;
+}
+
+.btn_p_photo{
+margin-left: 2px;
+}
+
+.sportif_img {
+    width: 13vh; 
+    height: 13vh; 
+    border: 1px solid black;
+    padding: 6px;
+}
+    

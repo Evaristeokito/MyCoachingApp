@@ -1,0 +1,166 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>NATIONALITE</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Coach</a></li>
+          <li class="breadcrumb-item active"> Nationalite</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- .col (right) -->
+      <div class="col-md-6">
+        <form autocomplete="off"
+              [formGroup]="nationaliteForm"
+              (ngSubmit)="onsaveFn()">
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <h3>NATIONALITE</h3>
+              </div>
+            </div>
+            <div class="card-body" style="height: 350px;">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <h4>Nationalité </h4>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="col-md-12">
+                    <!-- nationalite -->
+                    <div class="form-group">
+                      <label>Nationalité  :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nationalite"
+                        name="nationalite"
+                        formControlName="nationalite"
+                      />
+                      <div class="error-controls mt-1" *ngIf="nationalite.invalid && (nationalite.dirty || nationalite.touched)">
+                          <span *ngIf="nationalite.errors.required" class="text text-danger">
+                            la nationalite est requise
+                          </span>
+                      </div>
+
+                    </div>
+                    <!-- end civilite -->
+
+                    <!-- observation -->
+                    <div class="form-group">
+                      <label>Libelle  :</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="libelle"
+                        name="observation"
+                        formControlName="libelle"
+                      />
+                    </div>
+                    <!-- end observation -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mt-1">
+            <div class="card-body">
+              <div class="float-right">
+                <button type="reset" mat-raised-button color="accent" class="m-1">
+                  Annuler
+                </button>
+                <button type="submit" mat-raised-button color="primary" class="mr-1" [disabled]="nationaliteForm.invalid">
+                  Enregistrer
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- end col (right) -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h4>Nationalité disponibles</h4>
+            </div>
+          </div>
+          <div class="card-body">
+
+<!--form search-->
+            <div class="form-search">
+              <form autocomplete="off" [formGroup]="searchNationalite">
+                <div class="input-group">
+                  <label class="input-group-text">Rechercher</label>
+                  <input type="text"  class="form-control" placeholder="rentrer un mot cles" formControlName="keyword">
+                  <button class="btn btn-danger btn-sm">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+<!-- end form search-->
+
+            <div class="card-body table-responsive p-0 mt-3" style="height: 350px;">
+              <ng-container *ngIf="nationaliteDATA | async as nationalite; else failureOrLoading">
+                <table class="table table-head-fixed table-striped">
+                  <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>NATIONALITE</th>
+                    <th>LIBELLE</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let items of nationaliteDATA | async ,let i = index;">
+                    <td>{{i +1}}</td>
+                    <td>{{items.nationalite}}</td>
+                    <td>{{items.libelle}}</td>
+                    <td>
+                      <a class="btn btn-primary btn-sm" (click)="onGetNationalite(items.id)"><i class="bi bi-pen"></i></a>
+                      <a class="btn btn-danger btn-sm m-1" (click)="onDeleteNationalite(items.id)"><i class="bi bi-trash3"></i></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+              <ng-template #failureOrLoading>
+
+                <ng-container *ngIf="errorMessage; else Loading">
+                  <div class="text text-danger">
+                    {{errorMessage}}
+                  </div>
+                </ng-container>
+
+                <ng-template #Loading>
+                  Loading data....
+                </ng-template>
+
+              </ng-template>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>

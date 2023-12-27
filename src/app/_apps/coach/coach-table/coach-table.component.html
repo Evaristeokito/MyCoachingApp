@@ -1,0 +1,174 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>GESTION DES COACHs SPORTIFS</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+          <li class="breadcrumb-item active">Liste des coachs</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                  <!--form-search-->
+                  <form action="">
+                    <div class="input-group">
+                      <label class="input-group-text">Search by:</label>
+                      <select name="select" id="select" class="form-control">
+                        <option selected>Critère de recherche</option>
+                        <option value="nom">Nom du coach</option>
+                        <option value="etat">Etat civil</option>
+                        <option value="Taille">Taille</option>
+                      </select>
+                      <input
+                        type="text"
+                        name="keyword"
+                        id="keyword"
+                        class="form-control input-large"
+                      />
+                      <button class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                      </button>
+                    </div>
+                  </form>
+                  <!-- end form search -->
+              </div>
+              <div class="col-md-4">
+                <div class="float-right">
+                  <button mat-raised-button color="primary"
+                    class="btn-sm"
+                    routerLink="/coach/creation"
+                  >
+                    <i class="bi bi-plus"></i>
+                    Nouveau coach
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- general form elements -->
+        <div class="card">
+          <!-- /.card-header -->
+          <div class="card-header">
+            <div class="card-title">
+              <h3>Tous les coachs disponibles dans le système</h3>
+            </div>
+          </div>
+          <div class="card-body">
+            <div
+              class="card-body table-responsive p-0 mt-3"
+              style="height: 400px"
+            >
+
+            <ng-container *ngIf="coachTable | async as data ; else failureOrLoading">
+                
+              <table class="table table-head-fixed table-striped">
+                <thead class="thead">
+                  <tr>
+                    <th>N°</th>
+                    <th>Coach</th>
+                    <th>Sexe</th>
+                    <th>Danais</th>
+                    <th>lieu naissance</th>
+                    <th>Telephones</th>
+                    <th class="text text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let item of coachTable | async as data;
+                      let i = index
+                    "
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.nom_coach }}</td>
+                    <td>{{ item.sexe }}</td>
+                    <td>{{ item.danais | date }}</td>
+                    <td>{{ item.lieu_naissance }}</td>
+                    <td>{{ item.telephone }} - {{ item.telephone1 }}</td>
+                    <td>
+                      <button mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>
+                          <i class="bi bi-three-dots-vertical"></i>
+                        </mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                          <button
+                            class="m-1 btn-sm btn btn-secondary"
+                            (click)="singleCoach(item.id)"
+                          >
+                            <i class="bi bi-eye"></i>
+                          </button>
+                        </button>
+
+                        <button
+                          class="btn-sm btn btn-primary"
+                          (click)="editCoach(item.id)"
+                        >
+                          <i class="bi bi-pen"></i>
+                        </button>
+
+                        <button
+                          class="btn-sm m-1 btn-danger"
+                        >
+                          <i class="bi bi-trash3"></i>
+                        </button>
+                        
+                      </mat-menu>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+
+            <ng-template #failureOrLoading>
+              <ng-container *ngIf="errorMessage">
+                <div class="text-danger">
+                  {{errorMessage}}
+                </div>
+              </ng-container>
+
+              <ng-template #Loading>
+                <div class="text-center text-primary">
+                  loading data...
+                </div>
+              </ng-template>
+            </ng-template>
+
+              <div class="text-center mt-5">
+                <button class="btn btn-danger mr-1">
+                  <i class="bi bi-arrow-left"></i>
+                </button>
+                <button class="btn btn-primary">
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>

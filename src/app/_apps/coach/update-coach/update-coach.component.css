@@ -1,0 +1,31 @@
+.prop_button {
+    margin-left: 25%;
+}
+
+.prop_img {
+    margin-left: 30%;
+}
+
+.btn_p_photo{
+    margin-left: 2px;
+}
+
+.coach_img {
+    width: 22vh;
+    height: 25vh;
+
+    border-radius: 3px;
+    padding: 2px;
+}
+
+
+
+.button_hauteur {
+    margin-top: 2rem;
+}
+
+
+.btn-creneau-validate {
+    border: none;
+}
+

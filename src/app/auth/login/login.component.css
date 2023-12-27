@@ -1,0 +1,77 @@
+html,body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #C51162 !important;
+}
+
+.hero {
+    background-color: #00695C;
+    background-image: linear-gradient(rgba(0,0,0,.5) , rgba(0,0,0,.5)),url("../../../assets/img/bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    height: 50vh;
+    
+}
+
+@media (max-width : 920px) {
+
+    .card-login {
+        width: auto;
+        height: 500px;
+        top: 200px;
+        border: none;
+    }
+    
+}
+
+.card-login {
+    width: auto;
+    height: 400px;
+    top: 200px;
+    margin-left: 250px;
+    margin-right: 250px;
+    box-shadow: 0px 5px 20px rgb(38, 37, 37);
+}
+
+.form-controls {
+    margin-top: 30px;
+}
+
+.button-control {
+    margin-top: 40px;
+    margin-left: 180px;
+    padding: 0 10px;
+}
+
+.input-controls {
+    margin: 40px;
+}
+
+input {
+    border-radius: 25px; 
+    padding: 20px 20px;
+    width: 90%;
+}
+
+.btn-login {
+    padding: 10px 50px;
+    border-radius: 25px;
+    border: 0;
+    outline: none;
+}
+
+.login-mention {
+    margin-left: 120px;
+}
+
+.login-para {
+    margin-top: 340px;
+    text-align: center;
+    color: #1976D2;
+    font-family: 'gill',sans-serif !important;
+    font-size: 14px;
+    font-weight: 700;
+}

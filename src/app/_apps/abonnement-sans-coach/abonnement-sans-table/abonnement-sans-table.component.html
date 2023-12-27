@@ -1,0 +1,88 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid mt-4">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h3>
+            Liste des abonnées sans coach
+          </h3>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+            <li class="breadcrumb-item active">Abonnement sans coach</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card">
+            <!-- /.card-header -->
+            <div class="card-header">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="float-right">
+                    <a routerLink="/add-abonnement-sans-coach" class="btn btn-primary btn-sm">
+                      <i class="bi bi-plus-circle"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-body table-responsive p-0 mt-3" style="height: 500px;">
+                <table
+                  *ngIf="abonnement_sans_coach"
+                  class="table table-head-fixed table-striped"
+                >
+                  <thead class="thead">
+                    <tr>
+                      <th>Numero D'abnmt</th>
+                      <th>Nom sportif</th>
+                      <th>Exercices</th>
+                      <th>Date D'abnmt</th>
+                      <th>Date Fin Abnmt</th>
+                      <th>Type Abnmt</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of abonnement_sans_coach">
+                      <td>{{ item.numeroPaiement }}</td>
+                      <td> {{ item.clientsDTO.nom_client }}</td>
+                      <td>{{ item.exerciceSansCoachDTO.nomexercise}}</td>
+                      <td>{{ item.dateAbonnement | date }}</td>
+                      <td>{{ item.dateFinAbonnement | date }}</td>
+                      <td> {{item.typeAbonnement | uppercase}}</td>
+                      <td>
+                        <a class="btn btn-success btn-sm m-1" (click)="getAbonnementSansCoach(item.id)"><i class="bi bi-eye"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm"><i class="bi bi-pen"></i></a>
+                        <a class="btn btn-primary btn-sm m-1"><i class="bi bi-trash3"></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-footer">
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!--/.col (left) -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+

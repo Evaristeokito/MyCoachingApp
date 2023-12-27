@@ -1,0 +1,17 @@
+.button-taille {
+    width: 120px !important;
+}
+
+.select-large {
+ width: 10% !important;
+}
+
+.input-large {
+    width: 30%;
+}
+
+.text-foot {
+  font-size: 13px !important;
+  font-family: 'Lato',sans-serif !important;
+  font-weight: 600 !important;
+}

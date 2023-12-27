@@ -1,0 +1,286 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-5">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>Exercise sportif</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+          <li class="breadcrumb-item active">Exercise sportif</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <form
+      autocomplete="off"
+      [formGroup]="ExerciceForm"
+      (ngSubmit)="onSaveExercice()"
+    >
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <h4>INFORMATION DU COACH</h4>
+              </div>
+            </div>
+            <div class="card-body">
+              <!--Card table-->
+              <form>
+                <div class="input-group">
+                  <label class="input-group-text">Rechercher :</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="veuillez entrer un mot cles"
+                  />
+                  <button class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </form>
+              <hr />
+              <div
+                class="card-body table-responsive p-0 mt-3 mb-3"
+                style="height: 200px"
+              >
+                <table class="table table-head-fixed">
+                  <thead class="thead">
+                    <tr>
+                      <th>N</th>
+                      <th>Coach</th>
+                      <th>Telephone</th>
+                      <th>Choix coach</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let item of coachDATA | async; let i = index">
+                    <tr>
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ item.nom_coach }}</td>
+                      <td>{{ item.telephone }}</td>
+                      <td class="text-center">
+                        <mat-radio-button
+                          id="id"
+                          name="id"
+                          [value]="item.id"
+                          (click)="onGetOneCoach(item.id)"
+                        ></mat-radio-button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!--Card table-->
+              <hr />
+              <div class="row">
+                <div class="col-md-6">
+                  <input
+                    type="hidden"
+                    class="form-control"
+                    formControlName="id"
+                  />
+                  <div class="form-group">
+                    <label>Nom du coach :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="nom"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Sexe :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="sexe"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Experience profesionelle :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="experience_pro"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Téléphone :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="telephone"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/.col (left) -->
+        <!-- .col (right) -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <h3>Exercice Sportif</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="col-md-12">
+                <!-- sportif image -->
+                <!-- coach image -->
+                <div class="container mb-3">
+                  <div class="col-md-12 mb-2 prop_img">
+                    <img
+                      [src]="imageURL ? imageURL : Path.user"
+                      *ngIf="imageURL ? imageURL : Path.user"
+                      alt="IMG"
+                      class="img img-thumbnail coach_img"
+                      name="imageUpload"
+                      formControlName="imageUpload"
+                    />
+                  </div>
+                  <div class="d-flex prop_button">
+                    <input
+                      #onFileInput
+                      type="file"
+                      name="imageUpload"
+                      formControlName="imageUpload"
+                      id="imageUpload"
+                      accept="/*"
+                      (change)="onSelectFile($event)"
+                      style="display: none"
+                    />
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      type="button"
+                      (click)="onFileInput.click()"
+                    >
+                      <mat-icon>
+                        <i class="bi bi-images"></i>
+                      </mat-icon>
+                      Gallerie...
+                    </button>
+                    <button
+                      mat-raised-button
+                      color="accent"
+                      type="button"
+                      class="ml-1"
+                    >
+                      Camera
+                      <mat-icon>
+                        <i class="bi bi-instagram"></i>
+                      </mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <!-- end coach image -->
+                <!-- end sportif image -->
+
+                <!-- nom du coach -->
+                <div class="form-group">
+                  <label>Discipline :</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nomexercise"
+                    name="nomexercise"
+                    formControlName="nomexercise"
+                  />
+                </div>
+                <!-- end coach -->
+
+                <!-- nom du coach -->
+                <div class="form-group">
+                  <label>Experience professionnelle dans le domaine :</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="experiencePro"
+                    name="experiencPro"
+                    formControlName="experiencePro"
+                  />
+                </div>
+                <!-- end coach -->
+
+                <!-- nom du coach -->
+                <div class="form-group">
+                  <label>Caracteristique :</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="caracteristique"
+                    name="caracterique"
+                    formControlName="caracteristique"
+                  />
+                </div>
+                <!-- end coach -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end col (right) -->
+      </div>
+      <!-- /.row -->
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="float-right">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="btn-sm mr-1"
+                  routerLink="/exercise-table"
+                >
+                  Voir la table
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="btn btn-danger btn-sm mr-1"
+                >
+                  Annuler
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                  class="btn btn-primary btn-sm"
+                >
+                  Enregistrer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end row  -->
+    </form>
+  </div>
+  <!-- /.container-fluid -->
+</section>

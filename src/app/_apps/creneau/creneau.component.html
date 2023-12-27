@@ -1,0 +1,219 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>DEFINIR LE CRENEAU</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+          <li class="breadcrumb-item active"> Creneau</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- .col (right) -->
+      <div class="col-md-6">
+        <form
+          autocomplete="off"
+          [formGroup]="CreneauForm"
+          (ngSubmit)="onsaveFn()"
+        >
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <h4 class="text-uppercase">Définition d'un creneau horaire</h4>
+              </div>
+            </div>
+            <div class="card-body" style="height: 350px;">
+
+              <!-- heure debut -->
+              <div class="form-group">
+                <label>Heure du debut <b class="text-danger">*</b> :</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  placeholder="heure du debut"
+                  id="heureDebut"
+                  name="heureFin"
+                  formControlName="heureDebut"
+                />
+                <div class="error-controls mt-1" *ngIf="heureDebut.invalid && (heureDebut.dirty || heureDebut.touched)">
+                          <span *ngIf="heureDebut.errors.required" class="text text-danger">
+                            L'heure du debut creneau est requise
+                          </span>
+                </div>
+
+              </div>
+              <!-- end heure fin -->
+
+              <!-- nom du coach -->
+              <div class="form-group">
+                <label>Heure de fin <b class="text-danger">*</b> :</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  placeholder="heure de fin"
+                  id="heureFin"
+                  name="heureFin"
+                  formControlName="heureFin"
+                />
+                <div class="errors-controls mt-1" *ngIf="heureFin.invalid && (heureFin.dirty || heureFin.touched)">
+                        <span *ngIf="heureFin.errors.required" class="text-danger">
+                          L'heure de fin creneau est requise
+                        </span>
+                </div>
+              </div>
+              <!-- end coach -->
+
+              <div class="col-md-12">
+                <div class="row">
+
+                  <div class="col-md-6">
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- nom du jours -->
+                    <div class="form-group">
+                      <label>Jours <b class="text-danger">*</b> :</label>
+                      <select
+                        name="joursDisponible"
+                        id="joursDisponible"
+                        class="form-control"
+                        formControlName="joursDisponible"
+                      >
+                        <option selected>Jours disponible</option>
+                        <option value="lundi">Lundi</option>
+                        <option value="mardi">Mardi</option>
+                        <option value="mercredi">Mercredi</option>
+                        <option value="jeudi">Jeudi</option>
+                        <option value="vendredi">Vendredi</option>
+                        <option value="samedi">Samedi</option>
+                        <option value="dimanche">Dimanche</option>
+                      </select>
+
+                      <div class="errors-controls mt-1" *ngIf="joursDisponible.invalid && (joursDisponible.dirty || joursDisponible.touched)">
+                         <span *ngIf="joursDisponible.errors.required" class="text-danger">
+                           Veuillez indiquer le jour de disponibilité
+                         </span>
+                      </div>
+                    </div>
+                    <!-- end nom du jours -->
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Etat de disponibilité :</label>
+                      <select name="etat" id="etat" class="form-control" formControlName="etat">
+                        <option value="0">Disponible</option>
+                        <option value="1">Indisponible</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mt-4">
+            <div class="card-body">
+             <div class="float-right">
+               <button type="reset" class="btn btn-danger m-1 btn-sm">
+                 Annuler
+               </button>
+               <button type="submit" class="btn btn-primary btn-sm mr-1" [disabled]="CreneauForm.invalid">
+                 Enregistrer
+               </button>
+             </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- end col (right) -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h4>CRENEAU DISPONIBLES</h4>
+            </div>
+          </div>
+          <div class="card-body">
+
+              <form [formGroup]="searchCreneauHandler" (ngSubmit)="searchHandler()">
+                <div class="input-group">
+                  <label class="input-group-text">Search :</label>
+                  <input type="text" class="form-control" id="search" name="search" formControlName="search">
+                  <button class="btn btn-danger btn-sm">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </form>
+            <hr>
+            <div class="card-body table-responsive p-0 mt-3" style="height: 350px;">
+              <ng-container *ngIf="CreneauData | async as listCreneau; else failureOrLoading">
+                <table class="table table-head-fixed table-striped">
+                  <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>HR DEBUT</th>
+                    <th>HR DE FIN</th>
+                    <th>JOURS</th>
+                    <th>ETAT</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let items of CreneauData | async ,let i = index;">
+                    <td>{{i +1}}</td>
+                    <td>{{items.heureDebut}}</td>
+                    <td>{{items.heureFin}}</td>
+                    <td>{{items.joursDisponible}}</td>
+                    <td>{{items.etat}}</td>
+                    <td>
+                      <a class="btn btn-primary btn-sm" (click)="onGetCreneau(items.id)"><i class="bi bi-pen"></i></a>
+                      <a class="btn btn-danger btn-sm m-1" (click)="onDeleteCreneau(items.id)"><i class="bi bi-trash3"></i></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+              <ng-template #failureOrLoading>
+
+                <ng-container *ngIf="errorMessage; else Loading">
+                  <div class="text text-danger">
+                    {{errorMessage}}
+                  </div>
+                </ng-container>
+
+                <ng-template #Loading>
+                  Loading data....
+                </ng-template>
+
+              </ng-template>
+              <div class="text-center  mt-4">
+                <button class="btn btn-danger mr-1">
+                  <i class="bi bi-arrow-left"></i>
+                </button>
+                <button class="btn btn-primary">
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>

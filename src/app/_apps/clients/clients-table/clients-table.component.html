@@ -1,0 +1,181 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>GESTION DES CLIENTS SPORTIFS</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+          <li class="breadcrumb-item active">client sportifs</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card">
+          <!-- /.card-header -->
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card-title">
+                  <h4 class="text text-uppercase">
+                    Liste des clients sportifs
+                  </h4>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="float-right">
+                  <a class="btn btn-primary btn-sm">
+                    <i class="bi bi-eye"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <!--form-search-->
+                <form action="">
+                  <div class="input-group">
+                    <label class="input-group-text">Search by:</label>
+                    <select name="select" id="select" class="form-control">
+                      <option selected>Critère de recherche</option>
+                      <option value="nom">Nom client</option>
+                      <option value="Poids">Poids</option>
+                      <option value="Taille">Taille</option>
+                    </select>
+                    <input
+                      type="text"
+                      name="keyword"
+                      id="keyword"
+                      class="form-control input-large"
+                    />
+                    <button class="btn btn-primary">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                </form>
+                <!-- end form search -->
+              </div>
+
+              <div class="col-md-4">
+                <div class="float-right">
+                  <button
+                    routerLink="/client/nouveau-client"
+                    mat-raised-button
+                    color="primary"
+                  >
+                    Nouveau client
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <!-- table -->
+
+            <div
+              class="card-body table-responsive p-0 mt-3"
+              style="height: 370px"
+            >
+              <ng-container
+                *ngIf="clientDATA | async as data; else failureOrLoading"
+              >
+                <table class="table table-head-fixed table-striped">
+                  <thead class="thead">
+                    <tr>
+                      <th>Nom</th>
+                      <th>Sexe</th>
+                      <th>Télephone</th>
+                      <th>Télephone 1</th>
+                      <th>email</th>
+                      <th class="text text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of clientDATA | async">
+                      <td>{{ item.nom_client }}</td>
+                      <td>{{ item.sexe }}</td>
+                      <td>{{ item.telephone }}</td>
+                      <td>{{ item.telephone1 }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>
+                        <button mat-button [matMenuTriggerFor]="menu">
+                          <mat-icon>
+                            <i class="bi bi-three-dots-vertical"></i>
+                          </mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item>
+                            <button
+                              mat-raised-button
+                              color="primary"
+                              class="m-1 btn-sm"
+                              (click)="clientDetail(item.id)"
+                            >
+                              <i class="bi bi-eye"></i>
+                            </button>
+                          </button>
+
+                          <button
+                            mat-raised-button
+                            color="accent"
+                            class="btn-sm"
+                          >
+                            <i class="bi bi-pen"></i>
+                          </button>
+
+                          <button
+                            mat-raised-button
+                            color="warn"
+                            class="btn-sm m-1"
+                          >
+                            <i class="bi bi-trash3"></i>
+                          </button>
+                        </mat-menu>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+              <ng-template #failureOrLoading>
+                <ng-container *ngIf="errorMessage">
+                  <div class="text-danger">
+                    {{ errorMessage }}
+                  </div>
+                </ng-container>
+
+                <ng-template #Loading>
+                  <div class="text-primary">Loading data...</div>
+                </ng-template>
+              </ng-template>
+            </div>
+
+            <div class="text-center mt-3">
+              <button class="btn btn-danger mr-1">
+                <i class="bi bi-arrow-left"></i>
+              </button>
+              <button class="btn btn-primary">
+                <i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>

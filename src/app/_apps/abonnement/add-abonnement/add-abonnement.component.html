@@ -1,0 +1,463 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>Abonnement avec coach</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+          <li class="breadcrumb-item active">Abonnés</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <form [formGroup]="abonneForm" (ngSubmit)="onSaveAbonnement()">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h3>Information du candidat</h3>
+            </div>
+          </div>
+          <div class="card-body">
+
+             <!--Card table-->
+             <form>
+              <div class="input-group">
+                <label class="input-group-text">Rechercher :</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="veuillez entrer un mot cles"
+                />
+                <button class="btn btn-primary">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </form>
+            <hr />
+
+            <div
+              class="card-body table-responsive p-0 mt-3 mb-3"
+              style="height: 200px"
+            >
+              <table class="table table-head-fixed">
+                <thead class="thead">
+                  <tr>
+                    <th>N</th>
+                    <th>Client</th>
+                    <th>Telephone</th>
+                    <th>Choisir</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let item of clientData | async; let i = index">
+                  <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.nom_client }}</td>
+                    <td>{{ item.telephone }}</td>
+                    <td class="text-center">
+                      <mat-radio-button
+                        id="id"
+                        name="id"
+                        [value]="item.id"
+                        (click)="onGetOneClient(item.id)"
+                      ></mat-radio-button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <hr>
+            <div class="col-md-12">
+              <!-- nom du coach -->
+              <div class="form-group">
+                <label>Nom du client :</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nom_sportif"
+                  name="nom_sportif"
+                  readonly
+                />
+              </div>
+              <!-- end coach -->
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Telephone 1 :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="civilité..."
+                      id="nom_sportif"
+                      name="nom_sportif"
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Telephone 2 :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                      readonly
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Taille :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                      readonly
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Poids :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                      readonly
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/.col (left) -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h3>Information de l'exercice sportifs</h3>
+            </div>
+          </div>
+          <div class="card-body">
+
+             <!--Card table-->
+             <form>
+              <div class="input-group">
+                <label class="input-group-text">Rechercher :</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="veuillez entrer un mot cles"
+                />
+                <button class="btn btn-primary">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </form>
+            <hr />
+            <div
+              class="card-body table-responsive p-0 mt-3 mb-3"
+              style="height: 200px"
+            >
+              <table class="table table-head-fixed">
+                <thead class="thead">
+                  <tr>
+                    <th>N</th>
+                    <th>Exercice</th>
+                    <th>Coach</th>
+                    <th>Choix de l'exercice</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let item of exerciceData | async; let i = index">
+                  <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.nomexercise }}</td>
+                    <td>{{ item.experiencePro }}</td>
+                    <td class="text-center">
+                      <mat-radio-button
+                        id="id"
+                        name="id"
+                        [value]="item.id"
+                        (click)="onGetOneExercice(item.id)"
+                      ></mat-radio-button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <hr>
+            <hr>
+            <div class="col-md-12">
+              <!-- nom du coach -->
+              <div class="form-group">
+                <label for="exampleInputEmail1">Nom de l'exercice :</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nom_sportif"
+                  name="nom_sportif"
+                  readonly
+                />
+              </div>
+              <!-- end coach -->
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Nom du coach :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                      readonly
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Nationalité :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                      readonly
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Taille :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                      readonly
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Poids :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                      readonly
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- .col (right) -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h5>Abonnement</h5>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- numero d'abonnement -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"
+                      >Numero d'abonnement :</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="A00-304-AAB"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                    />
+                  </div>
+                  <!-- end numero d'abonnement -->
+                </div>
+                <div class="col-md-6">
+                  <!-- numero paiement -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Numero paiement :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="NN-000-NP"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                    />
+                  </div>
+                  <!-- end numero paiement -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Date d'abonnement :</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      placeholder="civilité..."
+                      id="nom_sportif"
+                      name="nom_sportif"
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"
+                      >Date fin d'abonnement :</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      placeholder="nationalité..."
+                      id="nom_sportif"
+                      name="nom_sportif"
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Mode de paiement :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="mode de paiement"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Montant payé :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="00.000"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Type d'abonnement :</label>
+                    <select
+                      name="typeAbonnement"
+                      id="typeAbonnement"
+                      class="form-control"
+                    >
+                      <option selected>type d'abonnement</option>
+                      <option value="Annuel">Annuel</option>
+                      <option value="mensuel">mensuel</option>
+                      <option value="semestriel">semestriel</option>
+                      <option value="journalier">journalier</option>
+                    </select>
+                  </div>
+                  <!-- end coach -->
+                </div>
+                <div class="col-md-6">
+                  <!-- nom du coach -->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Montant payé :</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="00.000"
+                      id="nom_sportif"
+                      name="nom_sportif"
+                    />
+                  </div>
+                  <!-- end coach -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h5>Controles</h5>
+            </div>
+          </div>
+          <div class="card-body">
+            <button class="btn btn-danger m-1">Annuler</button>
+            <button class="btn btn-primary">Enregistrer</button>
+          </div>
+        </div>
+      </div>
+      <!-- end col (right) -->
+    </div>
+    <!-- /.row -->
+  </form>
+  </div>
+  <!-- /.container-fluid -->
+</section>
