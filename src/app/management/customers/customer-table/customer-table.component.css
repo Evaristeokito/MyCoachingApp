@@ -1,0 +1,39 @@
+.btn-secondary {
+  background-color: #eee6ff;
+  border: none;
+}
+
+i {
+  color: #000000;
+}
+
+.btn-search {
+  background-color: #1976D2;
+  margin-left: 5px;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.fa-magnifying-glass {
+  color: #ffffff !important;
+}
+
+.form-search-center {
+  border: none;
+  border-radius: 30px;
+  background-color: #F5F5F5;
+  height: 50px;
+  width: 50rem;
+}
+.input-search {
+  background:none;
+  border: none;
+}

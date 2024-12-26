@@ -1,0 +1,33 @@
+input {
+  text-transform: capitalize;
+  font-size: 15px;
+  font-weight: 300;
+  font-family: "Gill Sans MT",sans-serif;
+}
+
+.btn-secondary {
+  background-color: #eee6ff;
+  border: none;
+}
+
+.btn-secondary:focus {
+  background: none;
+}
+
+.bi-three-dots {
+  color: #000;
+  font-size: 22px;
+}
+
+a {
+  cursor: pointer !important;
+  line-height: 1.4rem;
+  font-family: "Montserrat",sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+
+  i {
+    color: red !important;
+    font-size: 17px;
+  }
+}

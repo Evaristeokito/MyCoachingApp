@@ -1,0 +1,200 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>
+          Colors
+        </h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Colors</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="d-flex flex-row" style="width: 100%;height: 50px;background-color: #EEEEEE;border-radius: 11px;">
+                  <div style="width: 100%">
+                    <input type="text" class="form-control" placeholder="Search..." style="letter-spacing: 0.5px;border: none; background-color: transparent;height: 50px;">
+                  </div>
+                  <div class="w-20" style="margin-top: 14px;margin-right: 15px;">
+                    <i class="bi bi-search" style="font-size: 19px; color: #757575;"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- general form elements -->
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="float-right">
+                  <button class="btn btn-primary" (click)="dialogColors()">Create New Colors</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div
+              class="card-body table-responsive p-0 mt-3"
+              style="height: 400px"
+            >
+              <table class="table table-head-fixed">
+                <thead class="thead">
+                <tr>
+                  <th>N°</th>
+                  <th>Id</th>
+                  <th>Colors</th>
+                  <th>Observations</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr
+                  *ngFor="
+                      let item of colorsEyes | slice: (page-1) * pageSize : page * pageSize;
+                      let i = index
+                    "
+                >
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.name}}</td>
+                  <td>{{ item.observation }}</td>
+                  <td>
+                    <div class="dropdown">
+                      <button class="btn btn-secondary btn-sm" type="button" id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots"></i>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" (click)="dialogColors(item)">
+                          <i class="bi bi-pen"></i>
+                          Update
+                        </a></li>
+                        <li><a class="dropdown-item">
+                          <i class="bi bi-trash3"></i>
+                          Delete
+                        </a></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <!--<ng-container *ngIf="couleurDATA | async as data ; else failureOrLoading">
+                <table class="table table-hover table-head-fixed table-striped">
+                  <thead class="thead">
+                  <tr>
+                    <th>N°</th>
+                    <th>ID</th>
+                    <th>Colors</th>
+                    <th>Observations</th>
+                    <th class="text text-center">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr
+                    *ngFor="
+                      let item of couleurDATA | async as data;
+                      let i = index
+                    "
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.observation }}</td>
+                    <td>
+                      <button mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>
+                          <i class="bi bi-three-dots-vertical"></i>
+                        </mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                          <button
+                            class="m-1 btn-sm btn btn-secondary"
+                          >
+                            <i class="bi bi-eye"></i>
+                          </button>
+                        </button>
+
+                        <button
+                          class="btn-sm btn btn-primary"
+                        >
+                          <i class="bi bi-pen"></i>
+                        </button>
+
+                        <button
+                          class="btn-sm m-1 btn-danger"
+                        >
+                          <i class="bi bi-trash3"></i>
+                        </button>
+
+                      </mat-menu>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+
+              <ng-template #failureOrLoading>
+                <ng-container *ngIf="errorMessage">
+                  <div class="text-danger">
+                    {{ errorMessage }}
+                  </div>
+                </ng-container>
+
+                <ng-template #Loading>
+                  <div class="text-center text-primary">
+                    loading data...
+                  </div>
+                </ng-template>
+              </ng-template>
+
+              <div class="text-center mt-5">
+                <button class="btn btn-danger mr-1">
+                  <i class="bi bi-arrow-left"></i>
+                </button>
+                <button class="btn btn-primary">
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>-->
+            </div>
+
+            <div *ngIf="colorsEyes.length > 0" class="pagination mt-3 d-flex justify-content-end align-items-end">
+              <ngb-pagination
+                [collectionSize]="colorsEyes.length"
+                [(page)]="page"
+                [maxSize]="pageSize"
+                [rotate]="true"
+                [ellipses]="false"
+                [boundaryLinks]="true"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+

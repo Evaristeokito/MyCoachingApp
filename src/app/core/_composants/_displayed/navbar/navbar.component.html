@@ -1,0 +1,230 @@
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <img [src]="imgPath.logo" alt="IMG" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">MYCOACHA</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img [src]="imgPath.user" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">
+            Evariste
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+            <a routerLink="/" class="nav-link">
+              <i class="nav-icon fa-thin fa-gauge"></i>
+              <p>
+                Tableau de bord
+              </p>
+            </a>
+          </li>
+          <li class="nav-item mb-2">
+            <a href="#" class="nav-link">
+              <!--<i class="nav-icon bi bi-person"></i>-->
+              <i class="nav-icon fa-thin fa-users"></i>
+              <p>
+                Coach sportif
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a routerLink="/management/coach/save" routerLinkActive="active" class="nav-link">
+                    <span class="ml-4">
+                      Création
+                    </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/coach/show" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">
+                    Liste
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item mb-2">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-thin fa-users"></i>
+              <p>
+                 client sportif
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a routerLink="/customer/create" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">Add New Customer</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/customer/list" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">Customer List</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item mb-2">
+            <a href="#" class="nav-link">
+              <i class="nav-icon bi bi-person"></i>
+              <p>
+                 Abonné assisté
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a routerLink="/subscribe/create" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">
+                    Création
+                  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/subscribe/list" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">
+                    Liste
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item mb-2">
+            <a href="#" class="nav-link">
+              <i class="nav-icon bi bi-person"></i>
+              <p>
+                abonné non assisté
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a routerLink="/subscribe-no-coach/create" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">
+                    Création
+                  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/subscribe-no-coach/list" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">
+                    Liste
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item mb-2">
+            <a href="#" class="nav-link">
+              <i class="nav-icon bi bi-person"></i>
+              <p>
+                Activité physique
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a routerLink="/exercise-sportif/nouveau" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">
+                    Management
+                  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/exercise-sportif/liste" routerLinkActive="active" class="nav-link">
+                  <span class="ml-4">
+                    Liste
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/exercise-sans-coach" routerLinkActive="active" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>ACTIVITE PYSIQUE LIBRE</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="creneau" routerLinkActive="active" class="nav-link">
+              <i class="nav-icon fa-thin fa-calendar-week"></i>
+              <p>
+                CRENEAU HORAIRE
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-thin fa-toolbox"></i>
+              <p>
+                Apps Management
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a routerLink="nationalite" routerLinkActive="active" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Nationalité</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="taille" routerLinkActive="active" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Taille</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="poids" routerLinkActive="active" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Poids</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="commune" routerLinkActive="active" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Commune</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="civilite" routerLinkActive="active" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Etat civil</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="couleur-des-yeux" routerLinkActive="active" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Couleur des yeux</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a routerLink="login" routerLinkActive="active" class="nav-link">
+              <i class="fa-thin fa-arrow-right-from-bracket nav-icon"></i>
+              <p>Deconnection</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

@@ -1,0 +1,35 @@
+<div style="background: blue !important; height: 4rem !important;">
+  <h2 mat-dialog-title>
+  <span *ngIf="!data.id" class="text-white">
+    CREATE NEW Size
+  </span>
+    <span *ngIf="data.id" class="text-white" style="line-height: 12px;">
+    You are updating with Name : {{ data.size }}
+  </span>
+  </h2>
+</div>
+<mat-dialog-content>
+  <div class="container">
+    <form [formGroup]="sizeForm" (ngSubmit)="onSubmit()">
+      <input type="text" name="id" formControlName="id" id="id" class="form-control d-none">
+      <div class="form-group">
+        <label class="form-label">Size :</label>
+        <input type="text" name="name" formControlName="taille" id="taille" class="form-control" placeholder="size...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Unit :</label>
+        <input type="text" formControlName="unite" name="unite" id="unite" class="form-control" placeholder="unite...">
+      </div>
+      <div class="float-right">
+        <button type="button" class="btn btn-danger mr-1" mat-dialog-close>Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="sizeForm.invalid">
+          <span *ngIf="!loading">Submit</span>
+          <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">loading...</span>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+

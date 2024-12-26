@@ -1,39 +1,19 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule} from '@angular/common/http';
-import { AppComponent } from './app.component';
-import {DataTablesModule} from 'angular-datatables';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {MaterialsModule} from './core/material/materials.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {DashboardComponent, FooterComponent, HeaderComponent, MainComponent, NavbarComponent} from './core/_composants';
+import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
+import {AsyncPipe, JsonPipe} from "@angular/common";
+import {UtilsModule} from "./management/utils/utils.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ChartComponent, NgApexchartsModule} from "ng-apexcharts";
+import {BaseChartDirective} from "ng2-charts";
 
-import {
-  DashboardComponent,
-  HeaderComponent,
-  FooterComponent,
-  MainComponent,
-  NavbarComponent,
-} from './_composants/index';
-import {
-  NationaliteComponent,
-  CouleurComponent,
-  CreneauComponent,
-  CiviliteComponent
-} from './_apps/index.coach';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
-import {ClientModule} from "./_apps/clients/client.module";
-import { CommuneComponent } from './_apps/commune/commune.component';
-import { PoidsComponent } from './_apps/poids/poids.component';
-import { TailleComponent } from './_apps/taille/taille.component';
-import {MaterialsModule} from "./materials/materials.module";
-import {CoachsModule} from "./_apps/coach/coachs.module";
-import {AbonnementModule} from "./_apps/abonnement/abonnement.module";
-import { AbonnementSansCoachModule } from './_apps/abonnement-sans-coach/abonnement-sans-coach.module';
-import { ExerciceSansCoachComponent } from './_apps/exercice-sans-coach/exercice-sans-coach.component';
-import { ExerciceSansCoachAddComponent } from './_apps/exercice-sans-coach/exercice-sans-coach-add/exercice-sans-coach-add.component';
-import { ExerciceModule } from './_apps/exercices/exercice.module';
 
 @NgModule({
   declarations: [
@@ -43,35 +23,23 @@ import { ExerciceModule } from './_apps/exercices/exercice.module';
     FooterComponent,
     MainComponent,
     NavbarComponent,
-    NationaliteComponent,
-    CouleurComponent,
-    CreneauComponent,
-    CiviliteComponent,
-    LoginComponent,
-    RegisterComponent,
-    CommuneComponent,
-    PoidsComponent,
-    TailleComponent,
-    ExerciceSansCoachComponent,
-    ExerciceSansCoachAddComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    DataTablesModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MaterialsModule,
-    SweetAlert2Module,
-    CoachsModule,
-    ClientModule,
-    AbonnementModule,
-    ExerciceModule,
-    AbonnementSansCoachModule,
-    BrowserAnimationsModule
-  ],
-  providers: [],
   bootstrap: [AppComponent],
+    imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        MaterialsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SweetAlert2Module,
+        AsyncPipe,
+        JsonPipe,
+        UtilsModule,
+        NgbModule,
+        ChartComponent,
+        NgApexchartsModule, BaseChartDirective, // Importing NgApexchartsModule
+    ],
+  providers: [provideHttpClient(withInterceptorsFromDi())]
 })
-export class AppModule {}
+export class AppModule {
+}

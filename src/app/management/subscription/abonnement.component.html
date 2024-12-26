@@ -1,0 +1,139 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>
+          GESTION DES ABONNES AVEC ASSISTANCE DU COACH
+        </h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+          <li class="breadcrumb-item active">Liste des abonnés</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <div class="card shadow-none" style="outline: none;border: none;">
+          <div class="card-body">
+            <div class="d-flex flex-row align-items-center justify-content-center align-content-center">
+              <!--form-search-->
+              <form action="">
+                <div class="d-flex flex-row justify-content-center align-content-center align-items-center gap-1 form-search-center">
+                  <button class="btn btn-search">
+                    <i class="fa-thin fa-magnifying-glass"></i>
+                  </button>
+                  <input type="text" name="" id="" class="form-control input-search" placeholder="Search...">
+                </div>
+              </form>
+              <!-- end form search -->
+            </div>
+          </div>
+        </div>
+        <!-- general form elements -->
+        <div class="card">
+          <div class="card-body">
+            <div
+              class="card-body table-responsive p-0 mt-3"
+              style="height: 400px"
+            >
+              <ng-container *ngIf="coachTable | async as data ; else failureOrLoading">
+                <table class="table table-head-fixed">
+                  <thead class="thead">
+                  <tr>
+                    <th>N°</th>
+                    <th>Name</th>
+                    <th>LastName</th>
+                    <th>FirstName</th>
+                    <th>Sex</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr
+                    *ngFor="
+                      let item of coachTable | async as data;
+                      let i = index
+                    "
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.lastname }}</td>
+                    <td>{{ item.firstname }}</td>
+                    <td>{{ item.sex }}</td>
+                    <td>{{ item.phoneNumber }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-secondary" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                          <li>
+                            <a class="dropdown-item" (click)="singleCoach(item.id)">
+                              <i class="fa-thin fa-eye"></i> Details
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" (click)="editCoach(item.id)">
+                              <i class="fa-thin fa-pen-to-square"></i> Update
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              <i class="fa-thin fa-trash"></i> Delete
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+
+              <ng-template #failureOrLoading>
+                <ng-container *ngIf="errorMessage">
+                  <div class="text-danger">
+                    {{ errorMessage }}
+                  </div>
+                </ng-container>
+
+                <ng-template #Loading>
+                  <div class="text-center text-primary">
+                    loading data...
+                  </div>
+                </ng-template>
+              </ng-template>
+
+              <!--<div class="text-center mt-5">
+                <button class="btn btn-danger mr-1">
+                  <i class="bi bi-arrow-left"></i>
+                </button>
+                <button class="btn btn-primary">
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>-->
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>

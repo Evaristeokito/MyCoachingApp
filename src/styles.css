@@ -1,21 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-    font-family: 'Lato',sans-serif !important;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
-.content-header h1,h2,h3,h4 {
-  font-family: 'Lato',sans-serif !important;
-  font-size: 15px !important;
+.content-header h1,
+h2,
+h3,
+h4 {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 14px !important;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-weight: 400;
 }
 
-.card .card-header .card-title h3,h4 {
-  font-family: 'Lato',sans-serif !important;
+.card .card-header .card-title h3,
+h4 {
+  font-family: 'Montserrat', sans-serif !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   letter-spacing: 0.5px;
@@ -24,59 +31,83 @@ body {
 }
 
 .nav-item {
-  line-height: 1.5rem;
+  line-height: 1.2rem;
 }
 
 .nav-item p {
-  font-family: 'Lato',sans-serif !important;
-  font-size: 13px;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
   text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.nav-item span {
+  font-weight: 400;
+  font-family: "Montserrat",sans-serif !important;
+  font-size: 13px !important;
 }
 
 .card-body table thead th {
-  font-family: 'Lato',sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   font-size: 13px !important;
   letter-spacing: 1px;
   text-transform: uppercase;
+  font-weight: 500 !important;
 }
 
 .card-body table tbody td {
-  font-family: 'Roboto',sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   font-size: 14px !important;
   letter-spacing: 1px;
+  font-weight: 400 !important;
   text-transform: none;
 }
 
+.btn-danger,
+.btn-primary {
+  font-family: "Montserrat",sans-serif;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  border: 0;
+  text-transform: uppercase;
+  border-radius: 17px !important;
+}
+
 label {
-  font-family: 'Lato',sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   font-size: 12px !important;
-  font-weight: 700 !important;
+  font-weight: 500 !important;
   text-transform: uppercase;
   color: rgb(103, 98, 98) !important;
 }
 
-form input,select {
-  font-family: 'Lato',sans-serif !important;
+form input,
+select {
+  font-family: 'Montserrat', sans-serif !important;
   font-size: 13px !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  color:black !important;
+  font-weight: 500 !important;
+  color: black !important;
 }
-
 
 .card-header {
-    background-color: #E0E0E0;
+  background-color: #E0E0E0;
 }
-html, body { height: 100%; }
+
+html,
+body {
+  height: 100%;
+}
+
+.success-snackbar {
+  margin-top: 5rem !important;
+}
 
 /* success confirm dialog */
 
 .success,
 .msg-success,
 .error_message {
-  font-family: "Gill Sans MT",sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 500 !important;
   text-decoration: none;
   text-transform: none;
@@ -122,7 +153,7 @@ html, body { height: 100%; }
 .swal-content,
 .btn-swal-success,
 .btn-swal-cancel {
-  font-family: "Gill Sans MT", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .btn-swal-success,
@@ -167,8 +198,10 @@ html, body { height: 100%; }
 
 .btn-swal-cancel {
   background-color: #fff;
-  color: #F57F17;;
-  border: 1px solid #F57F17;;
+  color: #F57F17;
+  ;
+  border: 1px solid #F57F17;
+  ;
   font-size: 14px;
   outline-style: none;
   margin-right: 3px;
@@ -188,9 +221,32 @@ html, body { height: 100%; }
   height: 15vh;
 }
 
-
 /* .confirm dialog suppression */
 
+/* customer button general */
+.btn-primary,
+.btn-secondary,
+.btn-warning,
+.btn-danger {
+  font-size: 18px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  border: 0;
+  border-radius: 3em;
+}
+
+.btn-primary {
+  background-color: blue;
+}
+
+.btn-secondary {
+  background: #33691E;
+}
+
+.btn-warning {
+  background: #F57F17;
+}
 
 
 
+/* end customer button */
