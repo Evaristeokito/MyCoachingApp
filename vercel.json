@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/my-coaching-app/**/*",
+      "src": "dist/my-coaching-app/browser/**/*",
       "use": "@vercel/static"
     }
   ],
