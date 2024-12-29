@@ -84,3 +84,17 @@ span {
   font-size: 14px !important;
   font-weight: 300 !important;
 }
+
+.btn-primary {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50px;
+  width: 35px;
+  height: 35px;
+}
+.fa-thin {
+  font-size: 14px;
+}
