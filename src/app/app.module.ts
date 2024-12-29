@@ -11,7 +11,6 @@ import {AsyncPipe, JsonPipe} from "@angular/common";
 import {UtilsModule} from "./management/utils/utils.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {BaseChartDirective} from "ng2-charts";
 
 
 @NgModule({
