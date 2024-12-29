@@ -11,7 +11,6 @@ import {AsyncPipe, JsonPipe} from "@angular/common";
 import {UtilsModule} from "./management/utils/utils.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ChartComponent, NgApexchartsModule} from "ng-apexcharts";
 import {BaseChartDirective} from "ng2-charts";
 
 
@@ -35,9 +34,7 @@ import {BaseChartDirective} from "ng2-charts";
         AsyncPipe,
         JsonPipe,
         UtilsModule,
-        NgbModule,
-        ChartComponent,
-        NgApexchartsModule, BaseChartDirective, // Importing NgApexchartsModule
+        NgbModule
     ],
   providers: [provideHttpClient(withInterceptorsFromDi())]
 })
