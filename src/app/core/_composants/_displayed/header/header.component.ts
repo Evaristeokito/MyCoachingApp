@@ -15,4 +15,10 @@ export class HeaderComponent {
     user : "assets/img/user.jpeg"
   }
 
+  isDropdownOpen = false;
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
 }
