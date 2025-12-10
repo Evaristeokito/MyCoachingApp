@@ -11,6 +11,7 @@ import {AsyncPipe, JsonPipe} from "@angular/common";
 import {UtilsModule} from "./management/utils/utils.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {DashTopCardComponent} from "./core/_composants/dashboard/dash-top-card/dash-top-card/dash-top-card.component";
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         AsyncPipe,
         JsonPipe,
         UtilsModule,
-        NgbModule
+        NgbModule, DashTopCardComponent
     ],
   providers: [provideHttpClient(withInterceptorsFromDi())]
 })
