@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-3 col-6" *ngFor="let item of stats">
+            <div class="small-box" [ngClass]="item.color">
+              <div class="inner">
+                <h3>{{ item.value }}</h3>
+                <p>{{ item.title }}</p>
+              </div>
+
+              <div class="icon">
+                <i [class]="item.icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
