@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {catchError, Observable, throwError} from "rxjs";
-import { CoachService } from '../coach/coach.service';
 import { ExerciseService } from './Exercise.service';
+import { AgentService } from '../agents/agents.service';
 
 @Component({
   selector: 'app-exercice',
@@ -23,7 +23,7 @@ export class ExerciceComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private exerciceService: ExerciseService,
-    private serviceCoach: CoachService
+    private serviceCoach: AgentService
   ) {
   }
 

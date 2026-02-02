@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, Observable, throwError } from 'rxjs';
-import { CoachService } from '../../coach/coach.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsService } from '../../utils/utils.service';
 import {CiviliteService} from "../../utils/civilite/civilite.service";
+import { AgentService } from '../../agents/agents.service';
 
 @Component({
   selector: 'app-customer',
@@ -32,7 +32,7 @@ export class CreateCustomerComponent implements OnInit {
   communeData!:  any;
 
   constructor(
-    private coachService: CoachService,
+    private coachService: AgentService,
     private utilsSservice : UtilsService,
     private toast: ToastService,
     private serviceCivility : CiviliteService,

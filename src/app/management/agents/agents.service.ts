@@ -7,7 +7,7 @@ import {environment} from "../../../environments/environment.development";
 @Injectable({
   providedIn: 'root',
 })
-export class CoachService {
+export class AgentService {
 
   baseUrl = environment.apiUrl;
 

@@ -31,8 +31,8 @@ const routes: Routes = [
       {
         path: 'coach',
         loadChildren: () =>
-          import('./management/coach/coachs.module').then(
-            (m) => m.CoachsModule
+          import('./management/agents/agents.module').then(
+            (m) => m.AgentsModule
           ),
       },
       {

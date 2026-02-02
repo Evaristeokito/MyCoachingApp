@@ -2,21 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import {catchError, Observable, throwError} from "rxjs";
 import {Router} from "@angular/router";
 import { ICoach } from 'src/app/shared/models/coach';
-import { CoachService } from '../coach.service';
+import { AgentService } from '../agents.service';
+
 
 @Component({
   selector: 'app-coach-table',
-  templateUrl: './coach-table.component.html',
-  styleUrls: ['./coach-table.component.css']
+  templateUrl: './agents-table.component.html',
+  styleUrls: ['./agents-table.component.css']
 })
-export class CoachTableComponent implements OnInit {
+export class AgentsTableComponent implements OnInit {
 
   coachTable : Observable<Array<ICoach>> |undefined ;
   errorMessage! : String ;
 
 
   constructor(
-    private service : CoachService,
+    private service : AgentService,
     private route : Router,
   ){}
 

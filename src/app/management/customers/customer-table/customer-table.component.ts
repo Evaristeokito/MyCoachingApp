@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {catchError, Observable, throwError} from "rxjs";
 import {ICoach} from "../../../shared/models/coach";
-import {CoachService} from "../../coach/coach.service";
 import {Router} from "@angular/router";
+import { AgentService } from '../../agents/agents.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class CustomerTableComponent implements OnInit {
   errorMessage! : String ;
 
   constructor(
-    private service : CoachService,
+    private service : AgentService,
     private route : Router,
   ){}
 

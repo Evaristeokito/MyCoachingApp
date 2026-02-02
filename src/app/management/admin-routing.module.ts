@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: 'coach',
     loadChildren: () =>
-      import('./coach/coachs.module').then((m) => m.CoachsModule),
+      import('./agents/agents.module').then((m) => m.AgentsModule),
   },
 ];
 

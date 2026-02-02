@@ -1,4 +1,9 @@
 
+.card {
+  box-shadow: none;
+  background: none;
+}
+
 .small-box {
   padding:15px;
   border-radius: 10px;
@@ -41,21 +46,6 @@
   justify-content: center;
 }
 
-/*.card {
-  height: 9rem;
-  border-radius: 8px;
-  outline: none;
-  border: none;
-}*/
-
-/*.card-header {
-  background: #efe5fd;
-  border-radius: 5px;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-}*/
 
 h3 {
   line-height: 5px;

@@ -9,14 +9,14 @@ import {
   ITaille,
   IColors,
 } from 'src/app/shared/models/global.model';
-import { CoachService } from '../coach.service';
+import { AgentService } from '../agents.service';
 
 @Component({
   selector: 'app-coach-single',
-  templateUrl: './coach-single.component.html',
-  styleUrls: ['./coach-single.component.css'],
+  templateUrl: './agents-single.component.html',
+  styleUrls: ['./agents-single.component.css'],
 })
-export class CoachSingleComponent implements OnInit {
+export class AgentsSingleComponent implements OnInit {
   Path = {
     user: 'assets/img/user.jpeg',
   };
@@ -47,7 +47,7 @@ export class CoachSingleComponent implements OnInit {
   public age: any;
   constructor(
     private activeRouter: ActivatedRoute,
-    private serviceCaoch: CoachService
+    private serviceCaoch: AgentService
   ) {
     this.coach_id = this.activeRouter.snapshot.params['id'];
   }

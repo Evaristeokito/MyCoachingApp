@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, Observable, throwError } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { ICommune } from 'src/app/shared/models/commune';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ICreneau } from 'src/app/shared/models/creneau';
 import {
   ICivilite,
@@ -11,29 +14,30 @@ import {
   IPoids,
   ITaille,
 } from 'src/app/shared/models/global.model';
+import { ICommune } from 'src/app/shared/models/commune';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { CoachService } from '../coach.service';
-import { UtilsService } from '../../utils/utils.service';
-import {CiviliteService} from "../../utils/civilite/civilite.service";
+import {CiviliteService} from "../utils/civilite/civilite.service";
+import {UtilsService} from "../utils/utils.service";
+import { AgentService } from './agents.service';
 
 @Component({
-  selector: 'app-update-coach',
-  templateUrl: './update-coach.component.html',
-  styleUrls: ['./update-coach.component.css'],
+  selector: 'app-coach',
+  templateUrl: './agents.component.html',
+  styleUrls: ['./agents.component.css'],
 })
-export class UpdateCoachComponent implements OnInit {
+export class AgentsComponent implements OnInit {
   Path = {
     user: 'assets/img/user.jpeg',
   };
 
-  coachForm: FormGroup | any;
+  isLinear = false;
+  public coachForm: FormGroup | any;
 
   public imagePath: any;
   imageURL: any;
   useFile: any;
   Errormessage?: String = '';
   submitted = false;
-  coach_id: Number | any;
 
   CreneauDatas!: Observable<Array<ICreneau>>;
   CivilitesData!: Observable<Array<ICivilite>>;
@@ -44,15 +48,12 @@ export class UpdateCoachComponent implements OnInit {
   communeData!: ICommune | any;
 
   constructor(
-    private service: UtilsService,
-    private coachService: CoachService,
     private serviceCivility: CiviliteService,
+    private service : UtilsService,
+    private coachService: AgentService,
     private toast: ToastService,
-    private activdRouter: ActivatedRoute,
     private fb: FormBuilder
-  ) {
-    this.coach_id = this.activdRouter.snapshot.params['id'];
-  }
+  ) {}
 
   ngOnInit(): void {
     this.Path;
@@ -65,58 +66,35 @@ export class UpdateCoachComponent implements OnInit {
     this.onGetTaille();
 
     this.coachForm = this.fb.group({
-      nom_coach: [''],
-      telephone: [''],
-      telephone1: [''],
-      email: [''],
-      danais: [''],
-      lieu_naissance: [''],
-      nationalite: [''],
-      taille: [''],
-      poids: [''],
-      experience_pro: [''],
-      couleurYeux: [''],
-      sexe: [''],
-      civilite: [''],
+      name: [
+        '',
+        [Validators.required, Validators.min(5), Validators.max(30)],
+      ],
+      lastname : ['', Validators.required],
+      firstname : ['' , Validators.required],
+      dateOfBirt: ['', Validators.required],
+      placeOfBirt: ['', Validators.required],
+      nationalite: ['', Validators.required],
+      taille: ['', Validators.required],
+      poids: ['', Validators.required],
+      professionalExp: ['', Validators.required],
+      couleurYeux: ['', Validators.required],
+      civilite: ['', Validators.required],
+      sex: ['', Validators.required],
+      phoneNumber : ['', []],
+      phoneNumber1 : ['' , []],
+      email : [''],
+      address: ['', [Validators.required]],
+      nom_epoux: [''],
+      nombre_enfant: [''],
       imageUpload: [''],
-      joursD: [''],
-      heureD: [''],
-      heureF: [''],
-      quartier: [''],
-      commune: [''],
-      avenue: [''],
-      numero: [''],
+      startTime: [''],
+      endTime: [''],
+      day: [''],
     });
 
-    this.editerCoach();
   }
 
-  createCoach() {}
-
-  editerCoach() {
-    this.coachService.getCoach(this.coach_id).subscribe({
-      next: (data) => {
-        this.coachForm.patchValue({
-          nom_coach: data.name,
-          telephone: data.phoneNumber,
-          telephone1: data.phoneNumber1,
-          email: data.email,
-          danais: data.dateOfBirt,
-          lieu_naissance: data.placeOfBirt,
-          nationalite: data.nationalite.name,
-          taille: data.taille.taille,
-          experience_pro: data.professionalExp,
-          couleurYeux: data.couleurYeux.name,
-          sexe: data.sex,
-          civilite: data.civilite.name,
-        });
-        console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
 
   onGetCreneauData() {
     this.CreneauDatas = this.service.getCreneaux().pipe(
@@ -126,6 +104,11 @@ export class UpdateCoachComponent implements OnInit {
         return throwError(err);
       })
     );
+  }
+
+  patchCreneau(){
+    this.coachForm.patchValue({
+    })
   }
 
   onSelectFile(event: any) {
@@ -227,5 +210,79 @@ export class UpdateCoachComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  createCoach() {
+    if (this.coachForm.valid) {
+      console.log(this.coachForm.value);
+    }
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.coachForm.controls;
+  }
+
+  get nom_coach() {
+    return this.coachForm.controls['nom_coach'];
+  }
+  get telephone() {
+    return this.coachForm.controls['telephone'];
+  }
+
+  get telephone1() {
+    return this.coachForm.controls['telephone1'];
+  }
+
+  get email() {
+    return this.coachForm.controls['email'];
+  }
+
+  get danais() {
+    return this.coachForm.controls['danais'];
+  }
+  get lieu_naissance() {
+    return this.coachForm.controls['lieu_naissance'];
+  }
+
+  get nationalite() {
+    return this.coachForm.controls['nationalite'];
+  }
+
+  get taille() {
+    return this.coachForm.controls['taille'];
+  }
+
+  get poids() {
+    return this.coachForm.controls['poids'];
+  }
+  get experience_pro() {
+    return this.coachForm.controls['experience_pro'];
+  }
+  get couleurYeux() {
+    return this.coachForm.controls['couleurYeux'];
+  }
+
+  get sexe() {
+    return this.coachForm.controls['sexe'];
+  }
+
+  get civilite() {
+    return this.coachForm.controls['civilite'];
+  }
+
+  get commune() {
+    return this.coachForm.controls['commune'];
+  }
+
+  get quartier() {
+    return this.coachForm.controls['quartier'];
+  }
+
+  get avenue() {
+    return this.coachForm.controls['avenue'];
+  }
+
+  get numero() {
+    return this.coachForm.controls['numero'];
   }
 }
