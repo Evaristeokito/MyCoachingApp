@@ -7,11 +7,11 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {CreateColorEyesComponent} from "./create-color-eyes/create-color-eyes.component";
 
 @Component({
-  selector: 'app-couleur',
-  templateUrl: './couleur.component.html',
-  styleUrls: ['./couleur.component.css'],
+  selector: 'app-competences',
+  templateUrl: './competences.component.html',
+  styleUrls: ['./competences.component.css'],
 })
-export class CouleurComponent implements OnInit {
+export class CompetencesComponent implements OnInit {
 
   couleurForm: any;
   colorsEyes : IColors[] = [];

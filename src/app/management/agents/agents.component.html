@@ -15,13 +15,14 @@
           <li class="breadcrumb-item active">Editer Agent</li>
         </ol>
       </div>
-    </div>  
+    </div>
   </div>
   <!-- /.container-fluid -->
 </section>
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
+
     <form autocomplete="off" [formGroup]="coachForm" (ngSubmit)="createCoach()">
       <div class="row">
         <!-- left column -->
@@ -32,7 +33,7 @@
             <div class="card-header">
               <div class="card-title">
                 <h4>
-                  INFORMATION PERSONNELLES
+                  INFO 1
                 </h4>
               </div>
             </div>
@@ -73,6 +74,47 @@
               </div>
               <!-- end row lieu de naissance et dateNaissance -->
 
+                <!-- row sexe et civilité -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Sexe :</label>
+                    <select name="sex" id="sex" formControlName="sex" class="form-select select shadow-none">
+                      <option selected>Selectionner le sexe</option>
+                      <option value="Masculin">Masculin</option>
+                      <option value="Feminin">Feminin</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Etat civil :</label>
+                  <select  formControlName="civilite" class="form-select select shadow-none">
+                    <option selected>Selectionner la civilité</option>
+                    <ng-container *ngFor="let civilite of CivilitesData | async">
+                      <option value="civilite.id">{{civilite.name}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+              <!-- end row sexe et civilité -->
+
+               <!-- Province et Localité -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Province :</label>
+                    <input type="text" name="placeOfBirt" id="" formControlName="placeOfBirt" class="form-control"
+                           placeholder="province...">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Territoire : </label>
+                  <input type="text" name="placeOfBirt" id="" formControlName="placeOfBirt" class="form-control"
+                           placeholder="territoire...">
+                </div>
+              </div>
+              <!-- end row lieu de naissance et dateNaissance -->
+
               <div class="row">
                 <div class="col-md-12">
                   <!-- nationalité-->
@@ -88,55 +130,6 @@
                   <!-- end nationalité-->
                 </div>
               </div>
-
-              <!-- row sexe et civilité -->
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Sexe :</label>
-                    <select name="sex" id="sex" formControlName="sex" class="form-select select shadow-none">
-                      <option selected>Selectionner le sexe</option>
-                      <option value="Masculin">Masculin</option>
-                      <option value="Feminin">Feminin</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <label>Civilité :</label>
-                  <select  formControlName="civilite" class="form-control select shadow-none">
-                    <option selected>Selectionner la civilité</option>
-                    <ng-container *ngFor="let civilite of CivilitesData | async">
-                      <option value="civilite.id">{{civilite.name}}</option>
-                    </ng-container>
-                  </select>
-                </div>
-              </div>
-              <!-- end row sexe et civilité -->
-
-              <!-- row poids et taille -->
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Poids :</label>
-                    <select name="poids" id="poids" class="form-select shadow-none" formControlName="poids">
-                      <option selected>Veuillez indiquer le poids</option>
-                      <ng-container *ngFor="let p of PoidsData">
-                        <option value="p.id">{{p.poids}} {{p.unite}}</option>
-                      </ng-container>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <label>Taille :</label>
-                  <select class="form-select shadow-none" formControlName="taille">
-                    <option selected>veuillez inserer la taille</option>
-                    <ng-container *ngFor="let t of TailleData">
-                      <option value="t.id">{{t.taille}} {{t.unite}}</option>
-                    </ng-container>
-                  </select>
-                </div>
-              </div>
-              <!-- end row sexe et civilité -->
 
               <div class="form-group">
                 <label>Exeperience Professionelle :</label>
@@ -156,7 +149,7 @@
             <!-- /.card-header -->
             <div class="card-header">
               <div class="card-title">
-                <h4>INFORMATION PROFESSIONNELLE</h4>
+                <h4>INFO 2</h4>
               </div>
             </div>
             <div class="card-body">
@@ -266,6 +259,15 @@
       </div>
       <!-- end card button-->
     </form>
+
+
+
+
+
+
+
+
+
   </div>
   <!-- /.container-fluid -->
 </section>

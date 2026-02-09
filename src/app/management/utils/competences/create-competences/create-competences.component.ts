@@ -14,7 +14,7 @@ import {SnackbarService} from "../../../../shared/services/snackbar.service";
 import {IColors} from "../../../../shared/models/global.model";
 
 @Component({
-  selector: 'app-create-color-eyes',
+  selector: 'app-create-competences',
   standalone: true,
   imports: [
     MatDialogClose,
@@ -26,7 +26,7 @@ import {IColors} from "../../../../shared/models/global.model";
   templateUrl: './create-color-eyes.component.html',
   styleUrl: './create-color-eyes.component.css'
 })
-export class CreateColorEyesComponent implements OnInit {
+export class CreateCompetencesComponent implements OnInit {
 
   colorsForm: FormGroup | any;
   colorsEyes: IColors [] = [];

@@ -63,14 +63,11 @@ const routes: Routes = [
 
       {path: 'nationalite', component: NationaliteComponent},
       {path: 'civilite', component: CiviliteComponent},
-      {path: 'commune', component: CommuneComponent},
       {path: 'taille', component: TailleComponent},
       {path: 'poids', component: PoidsComponent},
       {path: 'exercise-sans-coach', component: ExerciceSansCoachComponent},
-      {path: 'couleur-des-yeux', component: CouleurComponent},
       {path: 'abonnement', component: AbonnementComponent},
-      {path: 'creneau_sportif', component: CiviliteComponent},
-      {path: 'creneau', component: CreneauComponent},
+      {path: 'creneau_sportif', component: CiviliteComponent}
     ],
   },
 ];

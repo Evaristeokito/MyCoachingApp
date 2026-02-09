@@ -3,7 +3,6 @@ import {AsyncPipe, CommonModule, JsonPipe} from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CiviliteComponent } from './civilite/civilite.component';
 import { CommuneComponent } from './commune/commune.component';
-import { CouleurComponent } from './couleurs/couleur.component';
 import { CreneauComponent } from './creneau/creneau.component';
 import { NationaliteComponent } from './nationalite/nationalite.component';
 import { PoidsComponent } from './poids/poids.component';
@@ -16,20 +15,19 @@ import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 @NgModule({ declarations: [
         CiviliteComponent,
         CommuneComponent,
-        CouleurComponent,
-        CreneauComponent,
         NationaliteComponent,
         PoidsComponent,
-        TailleComponent
+        TailleComponent,
+        CompetencesComponent
     ],
     exports: [
         CiviliteComponent,
         CommuneComponent,
-        CouleurComponent,
-        CreneauComponent,
         NationaliteComponent,
         PoidsComponent,
-        TailleComponent
+        TailleComponent,
+        CompetencesComponent
+
     ], imports: [CommonModule,
         ReactiveFormsModule,
         MaterialsModule,
