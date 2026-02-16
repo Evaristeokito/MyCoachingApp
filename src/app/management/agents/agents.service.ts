@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { ICoach } from 'src/app/shared/models/coach';
+import { IAgent, ICoach } from 'src/app/shared/models/coach';
 import {environment} from "../../../environments/environment.development";
 
 @Injectable({
@@ -18,26 +18,26 @@ export class AgentService {
   };
 
   /**
-   * Get All products
+   * Get All Agents
    */
-  getCoachs(): Observable<Array<ICoach>> {
-    return this.http.get<Array<ICoach>>(this.baseUrl + 'coach');
+  getAgents(): Observable<Array<IAgent>> {
+    return this.http.get<Array<IAgent>>(this.baseUrl + 'agents');
   }
 
-  getCoach(idCoach: String): Observable<ICoach> {
-    return this.http.get<ICoach>(this.baseUrl + 'coach/' + idCoach);
+  getAgent(id: String): Observable<IAgent> {
+    return this.http.get<IAgent>(this.baseUrl + 'agents/' + id);
   }
 
-  createCoach(data: ICoach) {
-    return this.http.post(this.baseUrl + 'coach', data);
+  createAgent(data: IAgent) {
+    return this.http.post(this.baseUrl + 'agents', data);
   }
 
-  updateCoach(id :String , coach : ICoach) {
-    return this.http.put(this.baseUrl + "coach/" + id , coach);
+  updateAgent(id :String , agent : IAgent) {
+    return this.http.put(this.baseUrl + "agents/" + id , agent);
   }
 
   deleteCoach(id: any) {
-    return this.http.delete(this.baseUrl + 'coach/' + id);
+    return this.http.delete(this.baseUrl + 'agents/' + id);
   }
 
 }

@@ -20,10 +20,11 @@ export interface ICivilite {
   observation: String;
 }
 
-export interface IColors {
-  id: String;
-  name: String;
-  observation: String;
+export interface ICompetences {
+  id: string
+  name: string
+  level: string
+  description: string;
 }
 
 export interface ITaille {

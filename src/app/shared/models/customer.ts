@@ -1,6 +1,6 @@
 import { ICommune } from './commune';
 import { ICreneau } from './creneau';
-import { IColors, INationalite, IPoids, ITaille } from './global.model';
+import {  INationalite, IPoids, ITaille } from './global.model';
 
 export interface ICustomers {
   id: Number;
@@ -17,6 +17,5 @@ export interface ICustomers {
   commune: ICommune;
   nationaliteDTO: INationalite;
   poids: IPoids;
-  taille: ITaille;
-  couleurYeux: IColors;
+  taille: ITaille
 }

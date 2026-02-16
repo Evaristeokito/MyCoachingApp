@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {catchError, Observable, throwError} from "rxjs";
 import { UtilsService } from '../utils.service';
 import { ICommune } from 'src/app/shared/models/commune';
-import { ToastService } from 'src/app/shared/services/toast.service';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {CreateCommuneComponent} from "./create-commune/create-commune.component";
 
@@ -26,7 +24,6 @@ export class CommuneComponent implements OnInit{
 
   constructor(private service : UtilsService,
               private fb:FormBuilder,
-              private toast : ToastService,
               private dialog : MatDialog
               ) {
   }

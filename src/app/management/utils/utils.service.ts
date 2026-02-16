@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable} from 'rxjs';
+import { IExperience, IFormation, ILangues } from 'src/app/shared/models/coach';
 import { ICommune } from 'src/app/shared/models/commune';
 import { ICreneau } from 'src/app/shared/models/creneau';
 import {
-  IColors,
-  INationalite,
-  IPoids,
-  ITaille,
+  ICompetences,
+  INationalite
 } from 'src/app/shared/models/global.model';
 import { environment } from 'src/environments/environment.development';
 
@@ -15,55 +14,75 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class UtilsService {
-
   BaseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  // ========================== Taille ==============================
+  // ========================== FORMATION ==============================
 
-  getTailles(): Observable<Array<ITaille>> {
-    return this.http.get<Array<ITaille>>(this.BaseUrl + 'tailles');
+  getFormations(): Observable<Array<IFormation>> {
+    return this.http.get<Array<IFormation>>(this.BaseUrl + 'formations');
   }
 
-  getTaille(id: Number): Observable<ITaille> {
-    return this.http.get<ITaille>(this.BaseUrl + 'taillles/' + id);
+  getFormation(id: string): Observable<IFormation> {
+    return this.http.get<IFormation>(this.BaseUrl + 'formations/' + id);
   }
 
-  createTaille(data: ITaille): Observable<ITaille> {
-    return this.http.post<ITaille>(this.BaseUrl + 'tailles', data);
+  createFormation(data: IFormation): Observable<IFormation> {
+    return this.http.post<IFormation>(this.BaseUrl + 'formations', data);
   }
 
-  updateTaille(id: Number,data: ITaille): Observable<ITaille> {
-    return this.http.put<ITaille>(this.BaseUrl + 'tailles/' + id, data);
+  updateFormation(id: string, data: IFormation): Observable<IFormation> {
+    return this.http.put<IFormation>(this.BaseUrl + 'formations/' + id, data);
   }
 
-  deleteTaille(id: Number) {
-    return this.http.delete(this.BaseUrl + 'tailles/' + id);
-  }
-  // ========================== Poids ==============================
-
-  getPoids(): Observable<Array<IPoids>> {
-    return this.http.get<Array<IPoids>>(this.BaseUrl + 'poids');
+  deleteFormation(id: string) {
+    return this.http.delete(this.BaseUrl + 'formations/' + id);
   }
 
-  getOnePoid(id: Number): Observable<IPoids> {
-    return this.http.get<IPoids>(this.BaseUrl + 'poids/' + id);
+  // ========================== EXPERIENCE PRO ==============================
+
+  getExperiences(): Observable<Array<IExperience>> {
+    return this.http.get<Array<IExperience>>(this.BaseUrl + 'experience');
   }
 
-  createPoid(data: IPoids): Observable<IPoids> {
-    return this.http.post<IPoids>(this.BaseUrl + 'poids', data);
+  getExperience(id: string): Observable<IExperience> {
+    return this.http.get<IExperience>(this.BaseUrl + 'experience/' + id);
   }
 
-  updatePoids(id: Number,data: IPoids): Observable<IPoids> {
-    return this.http.put<IPoids>(this.BaseUrl + 'poids/' + id, data);
+  createExperience(data: IExperience): Observable<IExperience> {
+    return this.http.post<IExperience>(this.BaseUrl + 'experience', data);
   }
 
-  deletePoids(id: Number) {
-    return this.http.delete<IPoids>(this.BaseUrl + 'poids/' + id);
+  updateExperience(id: string, data: IExperience): Observable<IExperience> {
+    return this.http.put<IExperience>(this.BaseUrl + 'experience/' + id, data);
   }
 
+  deleteExperience(id: string) {
+    return this.http.delete(this.BaseUrl + 'experience/' + id);
+  }
 
+  // ========================== Langues ==============================
+
+  getLangues(): Observable<Array<ILangues>> {
+    return this.http.get<Array<ILangues>>(this.BaseUrl + 'langues');
+  }
+
+  getLangue(id: any): Observable<ILangues> {
+    return this.http.get<ILangues>(this.BaseUrl + 'langues/' + id);
+  }
+
+  createLangue(data: ILangues): Observable<ILangues> {
+    return this.http.post<ILangues>(this.BaseUrl + 'langues', data);
+  }
+
+  updateLangue(id: any, data: ILangues): Observable<ILangues> {
+    return this.http.put<ILangues>(this.BaseUrl + 'langues/' + id, data);
+  }
+
+  deleteLangue(id: any) {
+    return this.http.delete<ILangues>(this.BaseUrl + 'langues/' + id);
+  }
 
   // ========================== Commune ==============================
 
@@ -105,26 +124,29 @@ export class UtilsService {
     return this.http.delete(this.BaseUrl + '/' + id);
   }
 
-  // ========================== colors ==============================
+  // ========================== competences ==============================
 
-  getCouleursYeux(): Observable<Array<IColors>> {
-    return this.http.get<Array<IColors>>(this.BaseUrl + 'couleurs');
+  getCompetences(): Observable<Array<ICompetences>> {
+    return this.http.get<Array<ICompetences>>(this.BaseUrl + 'competences');
   }
 
-  createCouleurs(data: IColors): Observable<IColors> {
-    return this.http.post<IColors>(this.BaseUrl + 'couleurs', data);
+  createCompetences(data: ICompetences): Observable<ICompetences> {
+    return this.http.post<ICompetences>(this.BaseUrl + 'competences', data);
   }
 
-  updateCouleurs(id: number, data: IColors): Observable<IColors> {
-    return this.http.put<IColors>(this.BaseUrl + 'couleurs/' + id, data);
+  updateCompetence(id: string, data: ICompetences): Observable<ICompetences> {
+    return this.http.put<ICompetences>(
+      this.BaseUrl + 'competences/' + id,
+      data,
+    );
   }
 
-  getOneCouleur(id: any): Observable<IColors> {
-    return this.http.get<IColors>(this.BaseUrl + 'couleurs/' + id);
+  getCompetence(id: any): Observable<ICompetences> {
+    return this.http.get<ICompetences>(this.BaseUrl + 'competences/' + id);
   }
 
-  deleteCouleur(id: any) {
-    return this.http.delete(this.BaseUrl + 'couleurs/' + id);
+  deleteCompetence(id: any) {
+    return this.http.delete(this.BaseUrl + 'competences/' + id);
   }
 
   //============================= Creneau ============================
@@ -141,13 +163,11 @@ export class UtilsService {
     return this.http.post(this.BaseUrl + 'creneau', data);
   }
 
-  updateCreneau(id : String , creneau : ICreneau) {
-    return this.http.put(this.BaseUrl + 'creneau/' + id , creneau );
+  updateCreneau(id: String, creneau: ICreneau) {
+    return this.http.put(this.BaseUrl + 'creneau/' + id, creneau);
   }
 
   deleteCreneau(id: any) {
     return this.http.delete(this.BaseUrl + 'creneau/' + id);
   }
-
-
 }

@@ -3,15 +3,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './account/login/login.component';
 import {RegisterComponent} from './account/register/register.component';
 import {DashboardComponent, MainComponent} from './core/_composants';
-import {NationaliteComponent} from './management/utils/nationalite/nationalite.component';
-import {CiviliteComponent} from './management/utils/civilite/civilite.component';
-import {CommuneComponent} from './management/utils/commune/commune.component';
-import {TailleComponent} from './management/utils/taille/taille.component';
-import {PoidsComponent} from './management/utils/poids/poids.component';
-import {ExerciceSansCoachComponent} from './management/exercice-sportif-single/exercice-sans-coach.component';
-import {CouleurComponent} from './management/utils/couleurs/couleur.component';
-import {AbonnementComponent} from './management/subscription/abonnement.component';
-import {CreneauComponent} from './management/utils/creneau/creneau.component';
+import { Langues } from './management/utils/langues/langues';
+import { Experience } from './management/utils/experience/experience';
+import { Competence } from './management/utils/competence/competence';
+import { Formations } from './management/utils/formations/formations';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -35,39 +30,10 @@ const routes: Routes = [
             (m) => m.AgentsModule
           ),
       },
-      {
-        path: 'subscribe',
-        loadChildren: () =>
-          import('./management/subscription/abonnement.module').then(
-            (m) => m.AbonnementModule
-          ),
-      },
-      {
-        path: 'subscribe-no-coach',
-        loadChildren: () =>
-          import(
-            './management/single-subscription/abonnement-sans-coach.module'
-            ).then((e) => e.AbonnementSansCoachModule),
-      },
-      {
-        path: 'customer',
-        loadChildren: () => import('./management/customers/customer.module').then((e) => e.CustomerModule)
-      },
-      {
-        path: 'exercise-sportif',
-        loadChildren: () =>
-          import('./management/exercice-sportif/exercice.module').then(
-            (e) => e.ExerciceModule
-          ),
-      },
-
-      {path: 'nationalite', component: NationaliteComponent},
-      {path: 'civilite', component: CiviliteComponent},
-      {path: 'taille', component: TailleComponent},
-      {path: 'poids', component: PoidsComponent},
-      {path: 'exercise-sans-coach', component: ExerciceSansCoachComponent},
-      {path: 'abonnement', component: AbonnementComponent},
-      {path: 'creneau_sportif', component: CiviliteComponent}
+      {path: 'langue-parlee', component: Langues},
+      {path: 'experience-pro', component: Experience},
+      {path: 'competences', component: Competence},
+      {path: 'formations', component: Formations}
     ],
   },
 ];

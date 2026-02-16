@@ -1,0 +1,110 @@
+<div style="background: blue !important; height: 4rem !important">
+  <h2 mat-dialog-title>
+    <span *ngIf="!data.id" class="text-white"> CREATE NEW FORMATION </span>
+    <span *ngIf="data.id" class="text-white" style="line-height: 12px">
+      You are updating with Name : {{ data.name }}
+    </span>
+  </h2>
+</div>
+<mat-dialog-content>
+  <div class="container">
+    <form [formGroup]="formationForm" (ngSubmit)="onSubmit()">
+      <input
+        type="text"
+        name="id"
+        formControlName="id"
+        id="id"
+        class="form-control d-none"
+      />
+      <div class="form-group">
+        <label class="form-label">Titre :</label>
+        <input
+          type="text"
+          name="title"
+          formControlName="title"
+          id="name"
+          class="form-control"
+          placeholder="titre (diplome,attestation de reussite)..."
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Faculté :</label>
+        <input
+          type="text"
+          formControlName="Faculty"
+          name="faculty"
+          id="faculty"
+          class="form-control"
+          placeholder="faculté..."
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ecole :</label>
+        <input
+          type="text"
+          name="ecole"
+          formControlName="Ecole"
+          id="ecole"
+          class="form-control"
+          placeholder="ecole..."
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Options :</label>
+        <input
+          type="text"
+          name="Options"
+          formControlName="Options"
+          id="options"
+          class="form-control"
+          placeholder="option..."
+        />
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label class="form-label">Date début :</label>
+            <input
+              type="date"
+              name="options"
+              formControlName="startDate"
+              id="options"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label class="form-label">Date de fin :</label>
+            <input
+              type="date"
+              name="endDate"
+              formControlName="endDate"
+              id="options"
+              class="form-control"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="float-right">
+        <button type="button" class="btn btn-danger mr-1" mat-dialog-close>
+          Close
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="formationForm.invalid"
+        >
+          <span *ngIf="!loading">Submit</span>
+          <div
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
+            <span class="sr-only">loading...</span>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

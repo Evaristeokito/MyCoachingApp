@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {catchError, Observable, throwError} from "rxjs";
 import {Router} from "@angular/router";
-import { ICoach } from 'src/app/shared/models/coach';
+import { IAgent } from 'src/app/shared/models/coach';
 import { AgentService } from '../agents.service';
 
 
@@ -12,7 +12,7 @@ import { AgentService } from '../agents.service';
 })
 export class AgentsTableComponent implements OnInit {
 
-  coachTable : Observable<Array<ICoach>> |undefined ;
+  agentTable : Observable<Array<IAgent>> |undefined ;
   errorMessage! : String ;
 
 
@@ -27,7 +27,7 @@ export class AgentsTableComponent implements OnInit {
   }
 
   onGetCoach(){
-    this.coachTable = this.service.getCoachs().pipe(
+    this.agentTable = this.service.getAgents().pipe(
       catchError((err) => {
         this.errorMessage = err.message;
         return throwError(err);

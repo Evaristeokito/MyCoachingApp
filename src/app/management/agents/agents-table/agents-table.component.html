@@ -47,7 +47,7 @@
               style="height: 400px"
             >
 
-              <ng-container *ngIf="coachTable | async as data ; else failureOrLoading">
+              <ng-container *ngIf="agentTable | async as data ; else failureOrLoading">
                 <table class="table table-head-fixed">
                   <thead class="thead">
                   <tr>
@@ -64,7 +64,7 @@
                   <tbody>
                   <tr
                     *ngFor="
-                      let item of coachTable | async as data;
+                      let item of agentTable | async as data;
                       let i = index
                     "
                   >
@@ -72,8 +72,8 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.lastname }}</td>
                     <td>{{ item.firstname }}</td>
-                    <td>{{ item.sex }}</td>
-                    <td>{{ item.phoneNumber }}</td>
+                    <td>{{ item.sexe }}</td>
+                    <td>{{ item.phone }}</td>
                     <td>{{ item.email }}</td>
                     <td>
                       <div class="dropdown">
@@ -118,15 +118,6 @@
                   </div>
                 </ng-template>
               </ng-template>
-
-              <!--<div class="text-center mt-5">
-                <button class="btn btn-danger mr-1">
-                  <i class="bi bi-arrow-left"></i>
-                </button>
-                <button class="btn btn-primary">
-                  <i class="bi bi-arrow-right"></i>
-                </button>
-              </div>-->
             </div>
           </div>
         </div>

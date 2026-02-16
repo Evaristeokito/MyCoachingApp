@@ -1,14 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ICommune } from 'src/app/shared/models/commune';
-import { ICreneau } from 'src/app/shared/models/creneau';
-import {
-  ICivilite,
-  IPoids,
-  INationalite,
-  ITaille,
-  IColors,
-} from 'src/app/shared/models/global.model';
 import { AgentService } from '../agents.service';
 
 @Component({
@@ -55,26 +47,19 @@ export class AgentsSingleComponent implements OnInit {
   ngOnInit(): void {
     this.Path;
 
-    this.serviceCaoch.getCoach(this.coach_id).subscribe({
+    this.serviceCaoch.getAgent(this.coach_id).subscribe({
       next: (data) => {
         this.nom_coach = data.name ;
         this.lastname = data.lastname;
         this.firstname = data.firstname;
-        this.sexe = data.sex;
-        this.danais = data.dateOfBirt;
-        this.lieu_naissance = data.placeOfBirt;
-        this.telephone = data.phoneNumber;
-        this.telephone1 = data.phoneNumber1;
+        this.sexe = data.sexe;
+        this.danais = data.birthdate;
+        this.lieu_naissance = data.placeBirth;
+        this.telephone = data.phone;
+        this.telephone1 = data.phone1;
         this.email = data.email;
-        this.experience_pro = data.professionalExp;
-        this.address = data.addressLine
-        this.nationalite = data.nationalite.name;
-        this.taille = data.taille.taille;
-        this.civilite = data.civilite.name;
-        this.couleurYeux = data.couleurYeux.name;
-        this.creneau = data.creneau;
-        this.unit = data.taille.unite;
-        this.country = data.nationalite.country
+        this.address = data.nationality
+        this.nationalite = data.nationality;
       },
       error: (error) => {},
     });

@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ICommune } from 'src/app/shared/models/commune';
 import { ICreneau } from 'src/app/shared/models/creneau';
 import {
   ICivilite,
-  IColors,
   INationalite,
   IPoids,
   ITaille,
 } from 'src/app/shared/models/global.model';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsService } from '../../utils/utils.service';
-import {CiviliteService} from "../../utils/civilite/civilite.service";
 import { AgentService } from '../agents.service';
 
 @Component({
@@ -22,210 +20,188 @@ import { AgentService } from '../agents.service';
   styleUrls: ['./update-agents.component.css'],
 })
 export class UpdateAgentsComponent implements OnInit {
-  Path = {
-    user: 'assets/img/user.jpeg',
-  };
 
-  coachForm: FormGroup | any;
-
-  public imagePath: any;
-  imageURL: any;
-  useFile: any;
-  Errormessage?: String = '';
-  submitted = false;
-  coach_id: Number | any;
-
-  CreneauDatas!: Observable<Array<ICreneau>>;
-  CivilitesData!: Observable<Array<ICivilite>>;
-  CouleurData!: Observable<Array<IColors>>;
-  NationalitesData!: Observable<Array<INationalite>>;
-  PoidsData!: IPoids | any;
-  TailleData!: ITaille | any;
-  communeData!: ICommune | any;
-
-  constructor(
-    private service: UtilsService,
-    private coachService: AgentService,
-    private serviceCivility: CiviliteService,
-    private toast: ToastService,
-    private activdRouter: ActivatedRoute,
-    private fb: FormBuilder
-  ) {
-    this.coach_id = this.activdRouter.snapshot.params['id'];
-  }
-
+  
   ngOnInit(): void {
-    this.Path;
-    this.onGetCreneauData();
-    this.getSelectedCivilites();
-    this.getSelectedCouleursYeux();
-    this.getNationalites();
-    this.onGetCommune();
-    this.onGetPoids();
-    this.onGetTaille();
-
-    this.coachForm = this.fb.group({
-      nom_coach: [''],
-      telephone: [''],
-      telephone1: [''],
-      email: [''],
-      danais: [''],
-      lieu_naissance: [''],
-      nationalite: [''],
-      taille: [''],
-      poids: [''],
-      experience_pro: [''],
-      couleurYeux: [''],
-      sexe: [''],
-      civilite: [''],
-      imageUpload: [''],
-      joursD: [''],
-      heureD: [''],
-      heureF: [''],
-      quartier: [''],
-      commune: [''],
-      avenue: [''],
-      numero: [''],
-    });
-
-    this.editerCoach();
+    throw new Error('Method not implemented.');
   }
+  
+  // Path = {
+  //   user: 'assets/img/user.jpeg',
+  // };
 
-  createCoach() {}
+  // coachForm: FormGroup | any;
 
-  editerCoach() {
-    this.coachService.getCoach(this.coach_id).subscribe({
-      next: (data) => {
-        this.coachForm.patchValue({
-          nom_coach: data.name,
-          telephone: data.phoneNumber,
-          telephone1: data.phoneNumber1,
-          email: data.email,
-          danais: data.dateOfBirt,
-          lieu_naissance: data.placeOfBirt,
-          nationalite: data.nationalite.name,
-          taille: data.taille.taille,
-          experience_pro: data.professionalExp,
-          couleurYeux: data.couleurYeux.name,
-          sexe: data.sex,
-          civilite: data.civilite.name,
-        });
-        console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  // public imagePath: any;
+  // imageURL: any;
+  // useFile: any;
+  // Errormessage?: String = '';
+  // submitted = false;
+  // coach_id: Number | any;
 
-  onGetCreneauData() {
-    this.CreneauDatas = this.service.getCreneaux().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message();
-        console.log(err.message());
-        return throwError(err);
-      })
-    );
-  }
+  // CreneauDatas!: Observable<Array<ICreneau>>;
+  // CivilitesData!: Observable<Array<ICivilite>>;
+  // NationalitesData!: Observable<Array<INationalite>>;
+  // PoidsData!: IPoids | any;
+  // TailleData!: ITaille | any;
+  // communeData!: ICommune | any;
 
-  onSelectFile(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.useFile = file;
-      var mimeType = event.target.files[0].type;
+  // constructor(
+  //   private service: UtilsService,
+  //   private coachService: AgentService,
+  //   private toast: ToastService,
+  //   private activdRouter: ActivatedRoute,
+  //   private fb: FormBuilder
+  // ) {
+  //   this.coach_id = this.activdRouter.snapshot.params['id'];
+  // }
 
-      if (mimeType.match(/image\/*/) == null) {
-        this.Errormessage = 'Only image are not supported';
-        return;
-      }
+  // ngOnInit(): void {
+  //   this.Path;
+  //   this.onGetCreneauData();
+  //   this.getSelectedCivilites();
+  //   this.getSelectedCouleursYeux();
+  //   this.getNationalites();
+  //   this.onGetCommune();
+  //   this.onGetPoids();
+  //   this.onGetTaille();
 
-      var reader = new FileReader();
-      this.imagePath = File;
-      reader.readAsDataURL(file);
-      reader.onload = (_event) => {
-        this.imageURL = reader.result;
-      };
-    }
-  }
-  fileName: String = '';
-  onFileInput(e: any) {
-    this.fileName = e.target.files[0].name;
-  }
+  //   this.coachForm = this.fb.group({
+  //     nom_coach: [''],
+  //     telephone: [''],
+  //     telephone1: [''],
+  //     email: [''],
+  //     danais: [''],
+  //     lieu_naissance: [''],
+  //     nationalite: [''],
+  //     taille: [''],
+  //     poids: [''],
+  //     experience_pro: [''],
+  //     couleurYeux: [''],
+  //     sexe: [''],
+  //     civilite: [''],
+  //     imageUpload: [''],
+  //     joursD: [''],
+  //     heureD: [''],
+  //     heureF: [''],
+  //     quartier: [''],
+  //     commune: [''],
+  //     avenue: [''],
+  //     numero: [''],
+  //   });
 
-  getOneCreneau(id: string) {
-    this.service.getCreneau(id).subscribe({
-      next: (data) => {
-        this.coachForm.patchValue({
-          heureD: data.startTime,
-          heureF: data.endTime,
-          joursD: data.day,
-        });
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  //   this.editerCoach();
+  // }
 
-  createClient() {}
+  // createCoach() {}
 
-  getSelectedCivilites() {
-    this.CivilitesData = this.serviceCivility.getCivilities().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message();
-        return throwError(err);
-      })
-    );
-  }
+  // editerCoach() {
+  //   this.coachService.getCoach(this.coach_id).subscribe({
+  //     next: (data) => {
+  //       this.coachForm.patchValue({
+  //         nom_coach: data.name,
+  //         telephone: data.phoneNumber,
+  //         telephone1: data.phoneNumber1,
+  //         email: data.email,
+  //         danais: data.dateOfBirt,
+  //         lieu_naissance: data.placeOfBirt,
+  //         nationalite: data.nationalite.name,
+  //         taille: data.taille.taille,
+  //         experience_pro: data.professionalExp,
+  //         sexe: data.sex,
+  //         civilite: data.civilite.name,
+  //       });
+  //       console.log(data);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
 
-  getSelectedCouleursYeux() {
-    this.CouleurData = this.service.getCouleursYeux().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message();
-        return throwError(err);
-      })
-    );
-  }
+  // onGetCreneauData() {
+  //   this.CreneauDatas = this.service.getCreneaux().pipe(
+  //     catchError((err) => {
+  //       this.Errormessage = err.message();
+  //       console.log(err.message());
+  //       return throwError(err);
+  //     })
+  //   );
+  // }
 
-  getNationalites() {
-    this.NationalitesData = this.service.getNationalites().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message();
-        return throwError(err);
-      })
-    );
-  }
+  // onSelectFile(event: any) {
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     this.useFile = file;
+  //     var mimeType = event.target.files[0].type;
 
-  onGetCommune() {
-    this.service.getCommunes().subscribe({
-      next: (data) => {
-        this.communeData = data;
-      },
-      error: (err) => {
-        console.log(err.message());
-      },
-    });
-  }
+  //     if (mimeType.match(/image\/*/) == null) {
+  //       this.Errormessage = 'Only image are not supported';
+  //       return;
+  //     }
 
-  onGetPoids() {
-    this.service.getPoids().subscribe({
-      next: (data) => {
-        this.PoidsData = data;
-      },
-      error: (err) => {
-        console.log(err.message);
-      },
-    });
-  }
+  //     var reader = new FileReader();
+  //     this.imagePath = File;
+  //     reader.readAsDataURL(file);
+  //     reader.onload = (_event) => {
+  //       this.imageURL = reader.result;
+  //     };
+  //   }
+  // }
+  // fileName: String = '';
+  // onFileInput(e: any) {
+  //   this.fileName = e.target.files[0].name;
+  // }
 
-  onGetTaille() {
-    this.service.getTailles().subscribe({
-      next: (data) => {
-        this.TailleData = data;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  // getOneCreneau(id: string) {
+  //   this.service.getCreneau(id).subscribe({
+  //     next: (data) => {
+  //       this.coachForm.patchValue({
+  //         heureD: data.startTime,
+  //         heureF: data.endTime,
+  //         joursD: data.day,
+  //       });
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
+
+  // createClient() {}
+
+  // getSelectedCivilites() {
+  // }
+
+  // getSelectedCouleursYeux():void {
+    
+  // }
+
+  // getNationalites() {
+  //   this.NationalitesData = this.service.getNationalites().pipe(
+  //     catchError((err) => {
+  //       this.Errormessage = err.message();
+  //       return throwError(err);
+  //     })
+  //   );
+  // }
+
+  // onGetCommune() {
+  //   this.service.getCommunes().subscribe({
+  //     next: (data) => {
+  //       this.communeData = data;
+  //     },
+  //     error: (err) => {
+  //       console.log(err.message());
+  //     },
+  //   });
+  // }
+
+  // onGetPoids():void{
+    
+  // }
+
+  // onGetTaille():void {
+    
+  // }
 }

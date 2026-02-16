@@ -72,6 +72,8 @@ h4 {
   border: 0;
   text-transform: uppercase;
   border-radius: 17px !important;
+  outline: none;
+  padding : 10px;
 }
 
 label {

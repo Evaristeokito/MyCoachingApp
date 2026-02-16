@@ -1,69 +1,87 @@
 import { ICommune } from './commune';
 import { ICreneau } from './creneau';
-import { ICivilite, IColors, INationalite, ITaille } from './global.model';
+import { ICivilite, INationalite, ITaille } from './global.model';
 
 export interface ICoach {
-  id: string
-  name: string
-  lastname: string
-  firstname: string
-  sex: string
-  dateOfBirt: Date
-  placeOfBirt: string
-  professionalExp: string
-  phoneNumber: string
-  phoneNumber1: string
-  email: string
-  photo: any
-  addressLine: string
-  addressLine1: string
+  id: string;
+  name: string;
+  lastname: string;
+  firstname: string;
+  sex: string;
+  dateOfBirt: Date;
+  placeOfBirt: string;
+  professionalExp: string;
+  phoneNumber: string;
+  phoneNumber1: string;
+  email: string;
+  photo: any;
+  addressLine: string;
+  addressLine1: string;
   creneau: ICreneau[];
-  nationalite: INationalite
-  civilite: ICivilite
-  couleurYeux: IColors
-  commune: ICommune
-  taille: ITaille
+  nationalite: INationalite;
+  civilite: ICivilite;
+  commune: ICommune;
+  taille: ITaille;
 }
 
+export interface IAgent {
+  id: string
+  name: string
+  firstname: string
+  lastname: string
+  sexe: string
+  birthdate: string
+  placeBirth: string
+  email: string
+  phone: string
+  phone1: string
+  competence: string
+  langue: ILangues
+  experience: IExperience
+  formation: IFormation
+  nationality: string
+}
+
+export interface ILangues {
+  id: string;
+  name: string;
+  level: string;
+  Observation: string;
+}
 
 export interface Creneau {
-  id: string
-  startTime: string
-  endTime: string
-  day: string[]
-  duration: string
-  state: string
-  status: string
-  description: any
+  id: string;
+  startTime: string;
+  endTime: string;
+  day: string[];
+  duration: string;
+  state: string;
+  status: string;
+  description: any;
 }
 
-export interface Nationalite {
-  id: string
-  name: string
-  country: string
-}
-
-export interface Civilite {
-  id: string
-  name: string
-  observation: string
-}
-
-export interface CouleurYeux {
-  id: string
-  name: string
-  observation: string
-}
 
 export interface Commune {
-  id: string
-  commune: string
-  district: string
+  id: string;
+  commune: string;
+  district: string;
 }
 
-export interface Taille {
-  id: string
-  taille: number
-  unite: string
+export interface IFormation {
+  id: string;
+  startDate: Date;
+  endDate: Date;
+  title: string;
+  Options: string;
+  Faculty: string;
+  Ecole: string;
 }
 
+export interface IExperience {
+  id: string;
+  startdate: string;
+  enddate: string;
+  title: string;
+  company: string;
+  descriptions: string[];
+}

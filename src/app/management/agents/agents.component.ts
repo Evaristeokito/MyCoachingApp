@@ -9,16 +9,15 @@ import {
 import { ICreneau } from 'src/app/shared/models/creneau';
 import {
   ICivilite,
-  IColors,
+  ICompetences,
   INationalite,
   IPoids,
   ITaille,
 } from 'src/app/shared/models/global.model';
-import { ICommune } from 'src/app/shared/models/commune';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import {CiviliteService} from "../utils/civilite/civilite.service";
-import {UtilsService} from "../utils/utils.service";
+import { UtilsService } from '../utils/utils.service';
 import { AgentService } from './agents.service';
+import { IExperience, IFormation, ILangues } from 'src/app/shared/models/coach';
 
 @Component({
   selector: 'app-coach',
@@ -39,39 +38,29 @@ export class AgentsComponent implements OnInit {
   Errormessage?: String = '';
   submitted = false;
 
-  CreneauDatas!: Observable<Array<ICreneau>>;
-  CivilitesData!: Observable<Array<ICivilite>>;
-  CouleurData!: Observable<Array<IColors>>;
-  NationalitesData!: Observable<Array<INationalite>>;
-  PoidsData!: IPoids | any;
-  TailleData!: ITaille | any;
-  communeData!: ICommune | any;
+  formationDATA!: Observable<Array<IFormation>>;
+  langueDATA!: Observable<Array<ILangues>>;
+  experienceDATA!: Observable<Array<IExperience>>;
+  competenceDATA!: ICompetences | any;
 
   constructor(
-    private serviceCivility: CiviliteService,
-    private service : UtilsService,
+    private service: UtilsService,
     private coachService: AgentService,
     private toast: ToastService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
     this.Path;
-    this.onGetCreneauData();
-    this.getSelectedCivilites();
-    this.getSelectedCouleursYeux();
-    this.getNationalites();
-    this.onGetCommune();
-    this.onGetPoids();
-    this.onGetTaille();
+    this.getCompetences();
+    this.getLangues();
+    this.getFormations();
+    this.getExperiences();
 
     this.coachForm = this.fb.group({
-      name: [
-        '',
-        [Validators.required, Validators.min(5), Validators.max(30)],
-      ],
-      lastname : ['', Validators.required],
-      firstname : ['' , Validators.required],
+      name: ['', [Validators.required, Validators.min(5), Validators.max(30)]],
+      lastname: ['', Validators.required],
+      firstname: ['', Validators.required],
       dateOfBirt: ['', Validators.required],
       placeOfBirt: ['', Validators.required],
       nationalite: ['', Validators.required],
@@ -81,9 +70,9 @@ export class AgentsComponent implements OnInit {
       couleurYeux: ['', Validators.required],
       civilite: ['', Validators.required],
       sex: ['', Validators.required],
-      phoneNumber : ['', []],
-      phoneNumber1 : ['' , []],
-      email : [''],
+      phoneNumber: ['', []],
+      phoneNumber1: ['', []],
+      email: [''],
       address: ['', [Validators.required]],
       nom_epoux: [''],
       nombre_enfant: [''],
@@ -92,23 +81,45 @@ export class AgentsComponent implements OnInit {
       endTime: [''],
       day: [''],
     });
-
   }
 
-
-  onGetCreneauData() {
-    this.CreneauDatas = this.service.getCreneaux().pipe(
+  getFormations() {
+    this.formationDATA = this.service.getFormations().pipe(
       catchError((err) => {
         this.Errormessage = err.message();
         console.log(err.message());
         return throwError(err);
-      })
+      }),
     );
   }
 
-  patchCreneau(){
-    this.coachForm.patchValue({
-    })
+  getExperiences() {
+    this.experienceDATA = this.service.getExperiences().pipe(
+      catchError((err) => {
+        this.Errormessage = err.message;
+        return throwError(err);
+      }),
+    );
+  }
+
+  getCompetences() {
+    this.service.getCompetences().subscribe({
+      next: (data) => {
+        this.competenceDATA = data;
+      },
+      error: (err) => {
+        console.log(err.message());
+      },
+    });
+  }
+
+  getLangues(){
+    this.service.getLangues().pipe(
+      catchError((err) => {
+        this.Errormessage = err.message;
+        return throwError(err);
+      } )
+    )
   }
 
   onSelectFile(event: any) {
@@ -135,82 +146,6 @@ export class AgentsComponent implements OnInit {
     this.fileName = e.target.files[0].name;
   }
 
-  getOneCreneau(id: string) {
-    this.service.getCreneau(id).subscribe({
-      next: (data) => {
-        this.coachForm.patchValue({
-          heureD: data.startTime,
-          heureF: data.endTime,
-          joursD: data.day,
-        });
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
-  createClient() {}
-
-  getSelectedCivilites() {
-    this.CivilitesData = this.serviceCivility.getCivilities().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message();
-        return throwError(err);
-      })
-    );
-  }
-
-  getSelectedCouleursYeux() {
-    this.CouleurData = this.service.getCouleursYeux().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message();
-        return throwError(err);
-      })
-    );
-  }
-
-  getNationalites() {
-    this.NationalitesData = this.service.getNationalites().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message();
-        return throwError(err);
-      })
-    );
-  }
-
-  onGetCommune() {
-    this.service.getCommunes().subscribe({
-      next: (data) => {
-        this.communeData = data;
-      },
-      error: (err) => {
-        console.log(err.message());
-      },
-    });
-  }
-
-  onGetPoids() {
-    this.service.getPoids().subscribe({
-      next: (data) => {
-        this.PoidsData = data;
-      },
-      error: (err) => {
-        console.log(err.message);
-      },
-    });
-  }
-
-  onGetTaille() {
-    this.service.getTailles().subscribe({
-      next: (data) => {
-        this.TailleData = data;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
 
   createCoach() {
     if (this.coachForm.valid) {

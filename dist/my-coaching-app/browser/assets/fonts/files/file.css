@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "montserrat";
+    src: url("../Montserrat/Montserrat-Regular.ttf") format('opentype');
+}
+
+@font-face {
+    font-family: "sans";
+    src: url("../Gill/Gill_Sans.otf") format('opentype');
+}
+
+@font-face {
+    font-family: "leger";
+    src: url("../Gill/Gill_Sans_Light.otf") format('opentype');
+}
