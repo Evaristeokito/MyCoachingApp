@@ -104,54 +104,33 @@
                     <select
                       name="sex"
                       id="sex"
-                      formControlName="sex"
+                      formControlName="sexe"
                       class="form-select select shadow-none"
                     >
-                      <option selected>Selectionner le sexe</option>
+                      <option value="selected">Selectionner le sexe</option>
                       <option value="Masculin">Masculin</option>
                       <option value="Feminin">Feminin</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label>Formation :</label>
-                  <select
-                    formControlName="civilite"
-                    class="form-select select shadow-none"
-                  >
-                    <option selected>Selectionner la formation</option>
-                    <ng-container *ngFor="let f of formationDATA | async">
-                      <option value="f.id">{{ f.Ecole }}</option>
-                    </ng-container>
-                  </select>
-                </div>
-              </div>
-              <!-- end row sexe et civilité -->
-
-                <!-- row Langue &   -->
-              <div class="row">
-                <div class="col-md-6">
+                  <label class="form-label">Etat civil : </label>
                   <div class="form-group">
-                    <label>Sexe :</label>
-                    <select name="sex" id="sex" formControlName="sex" class="form-select select shadow-none">
-                      <option selected>Selectionner le sexe</option>
-                      <option value="Masculin">Masculin</option>
-                      <option value="Feminin">Feminin</option>
+                    <select
+                      name="etat"
+                      id="etat"
+                      class="form-select shadow-none"
+                    >
+                      <option value="selected">Etat civil de l'agent</option>
+                      <option value="cilibatire">Celibataire</option>
+                      <option value="marié">Marié</option>
+                      <option value="divorcé">Divorcé</option>
+                      <option value="veuve">Veuve</option>
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label>Formation :</label>
-                  <select  formControlName="civilite" class="form-select select shadow-none">
-                    <option selected>Selectionner la formation</option>
-                    <ng-container *ngFor="let f of formationDATA | async">
-                      <option value="f.id">{{f.Ecole}}</option>
-                    </ng-container>
-                  </select>
-                </div>
               </div>
-              <!-- end row sexe et civilité -->
-
+              <!-- end row sexe et formation -->
               <!-- Province et Localité -->
               <div class="row">
                 <div class="col-md-6">
@@ -159,9 +138,9 @@
                     <label>Province :</label>
                     <input
                       type="text"
-                      name="placeOfBirt"
+                      name="province"
                       id=""
-                      formControlName="placeOfBirt"
+                      formControlName="province"
                       class="form-control"
                       placeholder="province..."
                     />
@@ -171,46 +150,24 @@
                   <label>Territoire : </label>
                   <input
                     type="text"
-                    name="placeOfBirt"
+                    name="territoire"
                     id=""
-                    formControlName="placeOfBirt"
+                    formControlName="territoire"
                     class="form-control"
                     placeholder="territoire..."
                   />
                 </div>
               </div>
               <!-- end row lieu de naissance et dateNaissance -->
-
-              <div class="row">
-                <div class="col-md-12">
-                  <!-- nationalité-->
-                  <div class="form-group">
-                    <label>Nationalité :</label>
-                    <select
-                      name="nationalite"
-                      formControlName="nationalite"
-                      id="nationalite"
-                      class="form-select shadow-none"
-                    >
-                      <option selected>La nationalité</option>
-                      <ng-container *ngFor="let n of experienceDATA | async">
-                        <option value="n.id">{{ n.title }}</option>
-                      </ng-container>
-                    </select>
-                  </div>
-                  <!-- end nationalité-->
-                </div>
-              </div>
-
               <div class="form-group">
-                <label>Exeperience Professionelle :</label>
-                <input
-                  type="text"
-                  name="experience_pro"
-                  formControlName="professionalExp"
-                  id="experience_pro"
-                  class="form-control"
-                />
+                <label for="" class="form-label"> Nationalité : </label>
+                <select
+                  name="nationalite"
+                  id="nationalite"
+                  class="form-select shadow-none"
+                >
+                  <option value="#">Select nationality</option>
+                </select>
               </div>
             </div>
           </div>
@@ -222,10 +179,9 @@
         <div class="col-md-6">
           <!-- general form elements -->
           <div class="card">
-            <!-- /.card-header -->
             <div class="card-header">
               <div class="card-title">
-                <h4>INFO 2</h4>
+                <h3>PHOTO</h3>
               </div>
             </div>
             <div class="card-body">
@@ -257,62 +213,59 @@
                     (click)="onFileInput.click()"
                     class="btn btn-danger"
                   >
-                    Gallerie...
-                    <i class="fas fa-camera"></i>
+                    Choose Browse
+                    <i class="fa-thin fa-folder-magnifying-glass"></i>
                   </button>
                   <button
                     type="button"
                     class="btn btn-primary btn-sm btn_p_photo"
                   >
-                    Prendre une photo
-                    <i class="fas fa-video"></i>
+                    Take a Photo
+                    <i class="fa-thin fa-camera"></i>
                   </button>
                 </div>
               </div>
               <!-- end coach image -->
-
-              <div class="row">
-                <div class="col-md-11"></div>
-                <div class="col-md-1 button_hauteur">
-                  <button
-                    class="btn btn-primary btn-sm"
-                    routerLink="/couleur-des-yeux"
-                  >
-                    <i class="fas fa-plus-circle"></i>
-                  </button>
-                </div>
+            </div>
+          </div>
+          <!-- /.card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <h3>CONTACT</h3>
               </div>
-
-              <!--row Telephone 1 et telephone 2-->
+            </div>
+            <div class="card-body">
+              <!--phone  1 et phone 2-->
               <div class="row">
                 <div class="col-md-6">
-                  <label>Téléphone Line 1 : </label>
+                  <label>Téléphone (1) : </label>
                   <input
                     type="tel"
                     class="form-control"
                     id="phoneNumber"
-                    formControlName="phoneNumber"
-                    name="phoneNumber"
-                    placeholder="phone number"
+                    formControlName="phone"
+                    name="phone"
+                    placeholder="phone (1)"
                   />
                 </div>
                 <div class="col-md-6">
-                  <label>Téléphone Line 2 :</label>
+                  <label>Téléphone (2) :</label>
                   <input
                     type="tel"
-                    name="phoneNumber"
-                    placeholder="phoneNumber1"
-                    formControlName="phoneNumber1"
+                    name="phone"
+                    placeholder="phone (2)"
+                    formControlName="phone1"
                     id="phoneNumber1"
                     class="form-control"
                   />
                 </div>
               </div>
-              <!--row Telephone 1 et telephone 2-->
+              <!--end phone 1 and phone 2-->
 
               <!-- Email -->
-              <div class="form-group mt-2">
-                <label>Email :</label>
+              <div class="form-group">
+                <label class="form-label">Email :</label>
                 <input
                   type="email"
                   name="email"
@@ -325,7 +278,6 @@
               <!--End Email-->
             </div>
           </div>
-          <!-- /.card -->
         </div>
         <!--/.col (right) -->
       </div>
@@ -340,15 +292,43 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-3">
                   <div class="form-group">
-                    <label class="form-label"
-                      >Address(Commune,Quartier,Avenue,Numéro) :</label
-                    >
+                    <label for="" class="form-label"> District : </label>
+                    <select name="" id="" class="form-select shadow-none">
+                      <option value="selected">Select un district</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label for="" class="form-label">Commune : </label>
+                    <select name="" id="" class="form-select shadow-none">
+                      <option value="selected">Select une commune</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label for="" class="form-label">Quartier : </label>
                     <input
                       type="text"
-                      class="form-control"
-                      placeholder="address..."
+                      name=""
+                      id=""
+                      class="form-control shadow-none"
+                      placeholder="quartier..."
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label for="" class="form-label">Avenue : </label>
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      class="form-control shadow-none"
+                      placeholder="avenue..."
                     />
                   </div>
                 </div>
@@ -357,6 +337,314 @@
           </div>
         </div>
       </div>
+      <!-- part of competence -->
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item mt-3 mb-3">
+          <h2 class="accordion-header" id="headingOne">
+            <button
+              class="accordion-button shadow-none"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+            >
+              EXPERIENCE PROFESSIONNELLES
+            </button>
+          </h2>
+          <div
+            id="collapseOne"
+            class="accordion-collapse collapse show"
+            aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              <input
+                type="text"
+                name="id"
+                formControlName="id"
+                id="id"
+                class="form-control d-none"
+              />
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Poste :</label>
+                    <input
+                      type="text"
+                      name="title"
+                      formControlName="title"
+                      id="name"
+                      class="form-control"
+                      placeholder="posté occupé..."
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Company :</label>
+                    <input
+                      type="text"
+                      name="title"
+                      formControlName="company"
+                      id="name"
+                      class="form-control"
+                      placeholder="le nom de la company.."
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Date début : </label>
+                    <input
+                      type="date"
+                      formControlName="startdate"
+                      name="startdate"
+                      id="startdate"
+                      class="form-control"
+                      placeholder="faculté..."
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Date Fin :</label>
+                    <input
+                      type="date"
+                      name="enddate"
+                      formControlName="enddate"
+                      id="ecole"
+                      class="form-control"
+                      placeholder="ecole..."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item mt-3 mb-3">
+          <h2 class="accordion-header" id="headingTwo">
+            <button
+              class="accordion-button collapsed shadow-none"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseTwo"
+              aria-expanded="false"
+              aria-controls="collapseTwo"
+            >
+              COMPETENCES
+            </button>
+          </h2>
+          <div
+            id="collapseTwo"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingTwo"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    name="id"
+                    formControlName="id"
+                    id="id"
+                    class="form-control d-none"
+                  />
+                  <div class="form-group">
+                    <label class="form-label">Name :</label>
+                    <input
+                      type="text"
+                      name="name"
+                      formControlName="name"
+                      id="name"
+                      class="form-control"
+                      placeholder="competence name..."
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Niveau :</label>
+                    <input
+                      type="text"
+                      formControlName="level"
+                      name="level"
+                      id="level"
+                      class="form-control"
+                      placeholder="niveau de competence..."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item mt-3 mb-3">
+          <h2 class="accordion-header" id="headingThree">
+            <button
+              class="accordion-button collapsed shadow-none"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseThree"
+              aria-expanded="false"
+              aria-controls="collapseThree"
+            >
+              FORMATIONS OU ETUDES FAITES
+            </button>
+          </h2>
+          <div
+            id="collapseThree"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingThree"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              <input
+                type="text"
+                name="id"
+                formControlName="id"
+                id="id"
+                class="form-control d-none"
+              />
+              <div class="form-group">
+                <label class="form-label">Titre :</label>
+                <input
+                  type="text"
+                  name="title"
+                  formControlName="title"
+                  id="name"
+                  class="form-control"
+                  placeholder="titre (diplome,attestation de reussite)..."
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Faculté :</label>
+                <input
+                  type="text"
+                  formControlName="Faculty"
+                  name="faculty"
+                  id="faculty"
+                  class="form-control"
+                  placeholder="faculté..."
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Ecole :</label>
+                <input
+                  type="text"
+                  name="ecole"
+                  formControlName="Ecole"
+                  id="ecole"
+                  class="form-control"
+                  placeholder="ecole..."
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Options :</label>
+                <input
+                  type="text"
+                  name="Options"
+                  formControlName="Options"
+                  id="options"
+                  class="form-control"
+                  placeholder="option..."
+                />
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="form-label">Date début :</label>
+                    <input
+                      type="date"
+                      name="options"
+                      formControlName="startDate"
+                      id="options"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="form-label">Date de fin :</label>
+                    <input
+                      type="date"
+                      name="endDate"
+                      formControlName="endDate"
+                      id="options"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item mt-3 mb-3">
+          <h2 class="accordion-header" id="headingTwo">
+            <button
+              class="accordion-button collapsed shadow-none"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseFour"
+              aria-expanded="false"
+              aria-controls="collapseTwo"
+            >
+              LANGUE PARLEE ET ECRITE
+            </button>
+          </h2>
+          <div
+            id="collapseFour"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingTwo"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              <div class="row">
+                <div class="col-sm-6">
+                  <input
+                    type="text"
+                    name="id"
+                    formControlName="id"
+                    id="id"
+                    class="form-control d-none"
+                  />
+                  <div class="form-group">
+                    <label class="form-label">Langue :</label>
+                    <input
+                      type="text"
+                      name="name"
+                      formControlName="name"
+                      id="name"
+                      class="form-control"
+                      placeholder="langue..."
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="form-label">
+                      Niveau :
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="level"
+                      name="level"
+                      id="level"
+                      class="form-control"
+                      placeholder="niveau..."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end part of competence -->
       <!-- card button -->
       <div class="row">
         <div class="col-md-12">

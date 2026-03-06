@@ -6,13 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ICreneau } from 'src/app/shared/models/creneau';
 import {
-  ICivilite,
-  ICompetences,
-  INationalite,
-  IPoids,
-  ITaille,
+  ICompetences
 } from 'src/app/shared/models/global.model';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsService } from '../utils/utils.service';
@@ -41,7 +36,7 @@ export class AgentsComponent implements OnInit {
   formationDATA!: Observable<Array<IFormation>>;
   langueDATA!: Observable<Array<ILangues>>;
   experienceDATA!: Observable<Array<IExperience>>;
-  competenceDATA!: ICompetences | any;
+  competenceDATA!: Observable<Array<ICompetences>>;
 
   constructor(
     private service: UtilsService,
@@ -62,26 +57,40 @@ export class AgentsComponent implements OnInit {
       lastname: ['', Validators.required],
       firstname: ['', Validators.required],
       dateOfBirt: ['', Validators.required],
-      placeOfBirt: ['', Validators.required],
-      nationalite: ['', Validators.required],
-      taille: ['', Validators.required],
-      poids: ['', Validators.required],
+      placeBirt: ['', Validators.required],
+      nationality: ['', Validators.required],
       professionalExp: ['', Validators.required],
-      couleurYeux: ['', Validators.required],
-      civilite: ['', Validators.required],
-      sex: ['', Validators.required],
-      phoneNumber: ['', []],
-      phoneNumber1: ['', []],
+      sexe: ['', Validators.required],
+      province: [''],
+      territoire: [''],
+
+      phone: ['', []],
+      phone1: ['', []],
       email: [''],
       address: ['', [Validators.required]],
-      nom_epoux: [''],
-      nombre_enfant: [''],
+      competence: [''],
+      startdate: [''],
+      enddate: [''],
+      langue: [''],
+      experience: [''],
+      formation: [''],
       imageUpload: [''],
+      level: [''],
+      id: [''],
+      title: [''],
+      Faculty: [''],
       startTime: [''],
+      Ecole: [''],
+      Options: [''],
+      startDate: [''],
       endTime: [''],
-      day: [''],
+      company: [''],
+      endDate: [''],
+      placeOfBirt : ['']
     });
   }
+
+
 
   getFormations() {
     this.formationDATA = this.service.getFormations().pipe(
@@ -103,23 +112,21 @@ export class AgentsComponent implements OnInit {
   }
 
   getCompetences() {
-    this.service.getCompetences().subscribe({
-      next: (data) => {
-        this.competenceDATA = data;
-      },
-      error: (err) => {
-        console.log(err.message());
-      },
-    });
-  }
-
-  getLangues(){
-    this.service.getLangues().pipe(
+    this.competenceDATA = this.service.getCompetences().pipe(
       catchError((err) => {
         this.Errormessage = err.message;
         return throwError(err);
-      } )
-    )
+      }),
+    );
+  }
+
+  getLangues() {
+    this.langueDATA = this.service.getLangues().pipe(
+      catchError((err) => {
+        this.Errormessage = err.message;
+        return throwError(err);
+      }),
+    );
   }
 
   onSelectFile(event: any) {
@@ -145,7 +152,6 @@ export class AgentsComponent implements OnInit {
   onFileInput(e: any) {
     this.fileName = e.target.files[0].name;
   }
-
 
   createCoach() {
     if (this.coachForm.valid) {

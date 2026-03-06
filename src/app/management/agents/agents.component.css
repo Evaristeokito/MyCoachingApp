@@ -2,6 +2,12 @@
     margin-left: 25%;
 }
 
+.accordion-button {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Poppins",sans-serif;
+}
+
 .prop_img {
   margin-left: 30%;
 }
@@ -18,8 +24,6 @@ margin-left: 2px;
     padding: 2px;
 }
 
-
-
 .button_hauteur {
   margin-top: 2rem;
 }
@@ -27,5 +31,13 @@ margin-left: 2px;
 
 .btn-creneau-validate {
     border: none;
+}
+
+.btn-primary,
+.btn-danger
+ {
+  text-transform: capitalize;
+  font-size: 14px;
+  font-weight: 400;
 }
 
