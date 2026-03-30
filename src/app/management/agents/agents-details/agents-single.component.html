@@ -3,14 +3,14 @@
   <div class="container-fluid mt-4">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h3>
-          DETAIL SUR LE COACH
-        </h3>
+        <h3>DETAIL DE L'AGENT</h3>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a routerLink="/coach/liste-des-coachs">Coach liste</a></li>
-          <li class="breadcrumb-item active">Coach detail</li>
+          <li class="breadcrumb-item">
+            <a routerLink="/coach/liste-des-coachs"> Liste des agents </a>
+          </li>
+          <li class="breadcrumb-item active">Agent detail</li>
         </ol>
       </div>
     </div>
@@ -25,14 +25,19 @@
       <div class="col-md-12">
         <mat-card>
           <mat-card-content>
-            <img [src]="Path.user" mat-card-avatar>
+            <img [src]="Path.user" mat-card-avatar />
             <span class="header-name">
-              Coach :
-              {{nom_coach}}  {{lastname}} {{firstname}}
+              Agent :
+              {{ nom }} {{ postnom }} {{ prenom }}
             </span>
 
             <div class="float-right">
-              <button mat-raised-button color="warn" class="mr-1" routerLink="/coach/liste-des-coachs">
+              <button
+                mat-raised-button
+                color="warn"
+                class="mr-1"
+                routerLink="/coach/liste-des-coachs"
+              >
                 <i class="bi bi-arrow-left"></i>
                 Retour sur la liste
               </button>
@@ -40,7 +45,6 @@
                 Generer la carte
               </button>
             </div>
-
           </mat-card-content>
         </mat-card>
       </div>
@@ -50,143 +54,130 @@
       <!-- left column -->
       <div class="col-md-12">
         <!-- general form elements -->
-        <div class="card">
-          <!-- /.card-header -->
-          <div class="card-header">
-            <div class="card-title">
-            </div>
-          </div>
+        <div class="card card-main">
           <div class="card-body">
-
             <div class="row">
-
               <div class="col-md-4">
-                <div class="card" style="height: 65vh;">
+                <div class="card card-info-1">
                   <div class="card-body">
-                   <div class="container">
-                     <div class="col-md-12 mb-2 prop_img">
-                       <img
-                         [src]="Path.user"
-                         alt="IMG"
-                         class="img img-thumbnail coach_img"
-                         name="imageUpload"
-                       />
-                     </div>
-                   </div>
+                    <div class="container">
+                      <div class="col-md-12 mb-2 prop_img">
+                        <img
+                          [src]="Path.user"
+                          alt="IMG"
+                          class="img img-thumbnail coach_img"
+                          name="imageUpload"
+                        />
+                      </div>
+                    </div>
                     <div class="d-flex flex-column">
-                      <div class="p-2"><label class="label-text">NOM :</label>
-                        <label class="content-text">{{nom_coach}}</label>
+                      <div class="p-2">
+                        <label class="label-text">NOM :</label>
+                        <label class="content-text">{{ nom }} {{ postnom }} {{ prenom }}</label>
                       </div>
 
-                      <div class="p-2"><label class="label-text">SEXE :</label>
-                        <label class="content-text">{{sexe}}</label>
+                      <div class="p-2">
+                        <label class="label-text">SEXE :</label>
+                        <label class="content-text">{{ sex }}</label>
                       </div>
 
-                      <div class="p-2"><label class="label-text">DANAIS :</label>
-                        <label class="content-text">{{danais | date}}</label>
+                      <div class="p-2">
+                        <label class="label-text">ETAT CIVIL :</label>
+                        <label class="content-text">{{ civilite }}</label>
                       </div>
 
-                      <div class="p-2"><label class="label-text">LIEU DE NAISSANCE :</label>
-                        <label class="content-text">{{lieu_naissance}}</label>
+                      <div class="p-2">
+                        <label class="label-text">DANAIS :</label>
+                        <label class="content-text">{{ danais | date }}</label>
                       </div>
 
-                      <div class="p-2"><label class="label-text">NATIONALITE :</label>
-                        <label class="content-text">{{nationalite}}</label>
+                      <div class="p-2">
+                        <label class="label-text">LIEU DE NAISSANCE :</label>
+                        <label class="content-text">{{ lieuNaissance }}</label>
                       </div>
 
-                      <div class="p-2"><label class="label-text">PAYS :</label>
-                        <label class="content-text">{{country}}</label>
+                      <div class="p-2">
+                        <label class="label-text">NATIONALITE :</label>
+                        <label class="content-text">{{ nationalite }}</label>
                       </div>
-
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="col-md-4">
-                <div class="card" style="height: 65vh;">
+                <div class="card card-info-2">
                   <div class="card-body">
-                    <label class="label-text">CONTACT</label>
-                    <hr>
+                    <label class="label-text">Mobile</label>
+                    <hr />
                     <div class="d-flex flex-column">
-
-                      <div class="p-2"><label class="label-text">TELEPHONE :</label>
-                        <label class="content-text"> {{telephone}}</label>
+                      <div class="p-2">
+                        <label class="label-text">TELEPHONE :</label>
+                        <label class="content-text"> {{ phoneNumber }}</label>
                       </div>
 
-                      <div class="p-2"><label class="label-text">TELEPHONE 1 :</label>
-                        <label class="content-text">{{telephone1}}</label>
+                      <div class="p-2">
+                        <label class="label-text">TELEPHONE 1 :</label>
+                        <label class="content-text">{{ phoneNumber1 }}</label>
                       </div>
 
-                      <div class="p-2" *ngIf="email"><label class="label-text">EMAIL :</label>
-                        <label class="content-text" style="text-transform: lowercase">{{email}}</label>
+                      <div class="p-2" *ngIf="email">
+                        <label class="label-text">EMAIL :</label>
+                        <label
+                          class="content-text"
+                          style="text-transform: lowercase"
+                          >{{ email }}</label
+                        >
                       </div>
-                      <div class="p-2"><label class="label-text">EXPERIENCE PRO :</label>
-                        <label class="content-text">{{experience_pro}}</label>
-                      </div>
-
                     </div>
-                    <hr>
+                    <hr />
                     <label class="label-text">ADRESSE</label>
-                    <hr>
+                    <hr />
                     <div class="d-flex flex-column">
                       <div class="p-2">
                         <label class="content-text">
-                          {{address}}
+                          {{ address }}
                         </label>
                       </div>
-                      <!--<div class="p-2"><label class="label-text">NUMERO & AVENUE :</label>
-                        <label class="content-text">{{numero}} {{avenue}}</label>
-                      </div>-->
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="col-md-4">
-                <div class="card" style="height: 65vh;">
+                <div class="card card-info-3">
                   <div class="card-body">
-                    <label class="label-text">CRENEAU HORAIRE</label>
-                    <hr>
+                    <label class="label-text"> INFO PROFESSIONNELLE </label>
+                    <hr />
                     <div class="d-flex flex-column">
-
-                      <div class="p-2"><label class="label-text">HEURE DEBUT :</label>
-                        <label class="content-text" >{{creneau.startTime}}</label>
+                      <div class="p-2">
+                        <label class="label-text">MATRICULE :</label>
+                        <label class="content-text">{{ matricule }}</label>
                       </div>
 
-                      <div class="p-2"><label class="label-text">HEURE DE FIN :</label>
-                        <label class="content-text">{{creneau.endTime}}</label>
+                      <div class="p-2">
+                        <label class="label-text">SERVICE :</label>
+                        <label class="content-text"> {{ service }}</label>
                       </div>
 
-                      <div class="p-2"><label class="label-text">JOURS :</label>
-                        <label class="content-text">{{creneau.day}}</label>
+                      <div class="p-2" *ngIf="email">
+                        <label class="label-text">FONCTION :</label>
+                        <label
+                          class="content-text"
+                          style="text-transform: lowercase"
+                          >{{ fonction }}</label
+                        >
                       </div>
 
-                      <div class="p-2"><label class="label-text">ETAT :</label>
-                        <label class="content-text">{{creneau.state}}</label>
-                      </div>
-
-                    </div>
-                    <hr>
-                    <label class="label-text">AUTRES INFORMATIONS</label>
-                    <hr>
-                    <div class="d-flex flex-column">
-                      <div class="p-2"><label class="label-text">ETAT CIVIL : </label>
-                        <label class="content-text">{{civilite}}</label>
-                      </div>
-
-                      <div class="p-2"><label class="label-text">TAILLE : </label>
-                        <label class="content-text">{{taille}} {{unit}}</label>
-                      </div>
-                      <div class="p-2"><label class="label-text">COULEUR DES YEUX : </label>
-                        <label class="content-text">{{couleurYeux}}</label>
+                      <div class="p-2">
+                        <label class="label-text">FILLIATION :</label>
+                        <label class="content-text">{{ filiation }}</label>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
         <!-- /.card -->
@@ -197,4 +188,3 @@
   </div>
   <!-- /.container-fluid -->
 </section>
-

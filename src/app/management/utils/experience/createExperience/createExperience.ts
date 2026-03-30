@@ -4,7 +4,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IExperience } from 'src/app/shared/models/coach';
+import { IExperience } from 'src/app/shared/models/agents';
 import { UtilsService } from '../../utils.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogContent } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';

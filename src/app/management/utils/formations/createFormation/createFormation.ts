@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogContent } from '@angular/materi
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CreateCompetence } from '../../competence/create-competence/create-competence';
 import { UtilsService } from '../../utils.service';
-import { IFormation } from 'src/app/shared/models/coach';
+import { IFormation } from 'src/app/shared/models/agents';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({

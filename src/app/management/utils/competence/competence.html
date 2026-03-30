@@ -8,7 +8,9 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Competences</li>
+          <li class="breadcrumb-item active">
+            Competences
+          </li>
         </ol>
       </div>
     </div>
@@ -43,10 +45,10 @@
                 <thead class="thead">
                   <tr>
                     <th>N°</th>
-                    <th>Id</th>
-                    <th>Nome</th>
+                    <th>Agent</th>
+                    <th>Sexe</th>
+                    <th>Compétence en </th>
                     <th>Niveau</th>
-                    <th>Observations</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -58,10 +60,10 @@
                     "
                   >
                     <td>{{ i + 1 }}</td>
-                    <td>{{ item.id }}</td>
+                    <td>{{item.agent.name}} {{item.agent.firstname}} {{item.agent.lastname}}</td>
+                    <td>{{item.agent.sex}}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.level }}</td>
-                    <td>{{item.description }}</td>
                     <td>
                       <div class="dropdown">
                         <button

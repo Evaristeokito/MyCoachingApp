@@ -1,11 +1,12 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgForOf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogContent, MatDialogRef } from "@angular/material/dialog";
-import { ILangues } from 'src/app/shared/models/coach';
+import { IAgent, ILangues } from 'src/app/shared/models/agents';
 import { UtilsService } from '../../utils.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { AgentService } from 'src/app/management/agents/agents.service';
 
 @Component({
   selector: 'app-create-langue',
@@ -13,11 +14,11 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   imports: [
     MatDialogContent,
     NgIf,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    NgFor
+],
   templateUrl: './createLangue.html',
   styleUrl: './createLangue.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateLangue implements OnInit {
 
@@ -25,11 +26,12 @@ export class CreateLangue implements OnInit {
     loading : boolean = false ;
     errorMessage: String = "";
     langueData : ILangues[] = [];
+    agentData : IAgent [] = [];
   
     constructor(private service : UtilsService,
                 private fb:FormBuilder,
                 private toast : ToastService,
-  
+                private agentService : AgentService,
                 private dialogRef: MatDialogRef<CreateLangue>,
                 private snackbarService: SnackbarService,
                 @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,12 +40,19 @@ export class CreateLangue implements OnInit {
         id: [data ? data.id : null],
         name : [data ? data.name : [Validators.required]],
         level : [data ? data.level : [Validators.required]],
+        idAgent  : [''],
         Observation : [data ? data.Observation : [Validators.required]],
       });
     }
   
   
-    ngOnInit(): void {}
+    ngOnInit(): void {
+      this.getAllAgents();
+    }
+ 
+    languesForms(){
+
+    }
   
     getLangues() {
       this.service.getLangues().subscribe({
@@ -51,6 +60,18 @@ export class CreateLangue implements OnInit {
          this.langueData = data;
         },
         error : (error :any) => {
+          console.log(error.error.message);
+        }
+      })
+    }
+
+    getAllAgents() {
+      this.agentService.getAgents().subscribe({
+        next : data => {
+          this.agentData = data;
+          console.log("la liste des agents :" , this.agentData);
+        },
+        error : error => {
           console.log(error.error.message);
         }
       })

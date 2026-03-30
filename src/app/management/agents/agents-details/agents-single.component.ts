@@ -13,53 +13,55 @@ export class AgentsSingleComponent implements OnInit {
     user: 'assets/img/user.jpeg',
   };
 
-  coach_id: String | any;
-  nom_coach!: String;
-  lastname!: String;
-  firstname! : String;
-  sexe!: String;
+  agent_id: String | any;
+  nom !: String;
+  matricule!:String;
+  postnom!: String;
+  prenom! : String;
+  sex !: String;
   public danais!: Date | any;
-  lieu_naissance!: String;
-  experience_pro!: String;
-  telephone!: String;
-  telephone1!: String;
+  lieuNaissance!: String;
+  phoneNumber!: String;
+  phoneNumber1 !: String;
   email!: String;
   photo!: null;
   address!: String;
-  creneau!: any;
-  commune!: ICommune;
+  fonction!: any;
   civilite!: any;
-  poids!: any;
   nationalite: any;
-  taille!: any;
-  couleurYeux!: any;
-  unit : any;
-  country : any;
+  filiation : any;
+  service : any;
 
   public age: any;
   constructor(
     private activeRouter: ActivatedRoute,
     private serviceCaoch: AgentService
   ) {
-    this.coach_id = this.activeRouter.snapshot.params['id'];
+    this.agent_id = this.activeRouter.snapshot.params['id'];
   }
 
   ngOnInit(): void {
     this.Path;
 
-    this.serviceCaoch.getAgent(this.coach_id).subscribe({
+    this.serviceCaoch.getAgent(this.agent_id).subscribe({
       next: (data) => {
-        this.nom_coach = data.name ;
-        this.lastname = data.lastname;
-        this.firstname = data.firstname;
-        this.sexe = data.sexe;
+        this.matricule = data.matricule;
+        this.nom = data.name ;
+        this.postnom = data.lastname;
+        this.prenom= data.firstname;
+        this.sex = data.sex;
         this.danais = data.birthdate;
-        this.lieu_naissance = data.placeBirth;
-        this.telephone = data.phone;
-        this.telephone1 = data.phone1;
+        this.lieuNaissance = data.placeBirth;
+        this.phoneNumber = data.phoneNumber;
+        this.phoneNumber1 = data.phoneNumber1;
         this.email = data.email;
         this.address = data.nationality
         this.nationalite = data.nationality;
+        this.civilite = data.etatCivil;
+        this.fonction = data.fonction;
+        this.filiation = data.filiation;
+        this.service = data.service
+        
       },
       error: (error) => {},
     });

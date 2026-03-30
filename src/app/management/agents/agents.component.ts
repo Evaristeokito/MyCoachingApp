@@ -6,13 +6,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  ICompetences
-} from 'src/app/shared/models/global.model';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsService } from '../utils/utils.service';
 import { AgentService } from './agents.service';
-import { IExperience, IFormation, ILangues } from 'src/app/shared/models/coach';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+
 
 @Component({
   selector: 'app-coach',
@@ -32,101 +30,37 @@ export class AgentsComponent implements OnInit {
   useFile: any;
   Errormessage?: String = '';
   submitted = false;
-
-  formationDATA!: Observable<Array<IFormation>>;
-  langueDATA!: Observable<Array<ILangues>>;
-  experienceDATA!: Observable<Array<IExperience>>;
-  competenceDATA!: Observable<Array<ICompetences>>;
+  loading: boolean = false;
 
   constructor(
     private service: UtilsService,
     private coachService: AgentService,
-    private toast: ToastService,
+    private snackBarService: SnackbarService,
     private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
     this.Path;
-    this.getCompetences();
-    this.getLangues();
-    this.getFormations();
-    this.getExperiences();
 
     this.coachForm = this.fb.group({
       name: ['', [Validators.required, Validators.min(5), Validators.max(30)]],
       lastname: ['', Validators.required],
       firstname: ['', Validators.required],
-      dateOfBirt: ['', Validators.required],
+      birthdate: ['', Validators.required],
       placeBirt: ['', Validators.required],
       nationality: ['', Validators.required],
-      professionalExp: ['', Validators.required],
-      sexe: ['', Validators.required],
-      province: [''],
-      territoire: [''],
-
-      phone: ['', []],
-      phone1: ['', []],
+      sex: ['', Validators.required],
+      etatCivil: [''],
+      phoneNumber: ['', []],
+      phoneNumber1: ['', []],
+      filiation: [''],
       email: [''],
-      address: ['', [Validators.required]],
-      competence: [''],
-      startdate: [''],
-      enddate: [''],
-      langue: [''],
-      experience: [''],
-      formation: [''],
-      imageUpload: [''],
-      level: [''],
-      id: [''],
-      title: [''],
-      Faculty: [''],
-      startTime: [''],
-      Ecole: [''],
-      Options: [''],
-      startDate: [''],
-      endTime: [''],
-      company: [''],
-      endDate: [''],
-      placeOfBirt : ['']
+      matricule: [''],
+      fonction: [''],
+      service: [''],
+      address: [''],
+      placeOfBirt: [''],
     });
-  }
-
-
-
-  getFormations() {
-    this.formationDATA = this.service.getFormations().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message();
-        console.log(err.message());
-        return throwError(err);
-      }),
-    );
-  }
-
-  getExperiences() {
-    this.experienceDATA = this.service.getExperiences().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message;
-        return throwError(err);
-      }),
-    );
-  }
-
-  getCompetences() {
-    this.competenceDATA = this.service.getCompetences().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message;
-        return throwError(err);
-      }),
-    );
-  }
-
-  getLangues() {
-    this.langueDATA = this.service.getLangues().pipe(
-      catchError((err) => {
-        this.Errormessage = err.message;
-        return throwError(err);
-      }),
-    );
   }
 
   onSelectFile(event: any) {
@@ -153,10 +87,20 @@ export class AgentsComponent implements OnInit {
     this.fileName = e.target.files[0].name;
   }
 
-  createCoach() {
-    if (this.coachForm.valid) {
-      console.log(this.coachForm.value);
-    }
+  createAgent() {
+    this.coachService.createAgent(this.coachForm.value).subscribe({
+      next: (data) => {
+        setTimeout(() => {
+          this.snackBarService.showSuccessMessage(
+            "L'Agent à été crée avec succèss",
+          );
+          this.coachForm.reset();
+        }, 2000);
+      },
+      error: (error) => {
+        this.snackBarService.showErrorMessage;
+      },
+    });
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -164,14 +108,14 @@ export class AgentsComponent implements OnInit {
   }
 
   get nom_coach() {
-    return this.coachForm.controls['nom_coach'];
+    return this.coachForm.controls['name'];
   }
   get telephone() {
-    return this.coachForm.controls['telephone'];
+    return this.coachForm.controls['phoneNumber'];
   }
 
   get telephone1() {
-    return this.coachForm.controls['telephone1'];
+    return this.coachForm.controls['phoneNumber1'];
   }
 
   get email() {
@@ -186,25 +130,11 @@ export class AgentsComponent implements OnInit {
   }
 
   get nationalite() {
-    return this.coachForm.controls['nationalite'];
-  }
-
-  get taille() {
-    return this.coachForm.controls['taille'];
-  }
-
-  get poids() {
-    return this.coachForm.controls['poids'];
-  }
-  get experience_pro() {
-    return this.coachForm.controls['experience_pro'];
-  }
-  get couleurYeux() {
-    return this.coachForm.controls['couleurYeux'];
+    return this.coachForm.controls['nationality'];
   }
 
   get sexe() {
-    return this.coachForm.controls['sexe'];
+    return this.coachForm.controls['sex'];
   }
 
   get civilite() {

@@ -13,7 +13,8 @@ import {
 } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { NgIf } from '@angular/common';
-import { ICompetences } from 'src/app/shared/models/global.model';
+import { ICompetences } from 'src/app/shared/models/agents';
+
 
 @Component({
   selector: 'app-create-competence',

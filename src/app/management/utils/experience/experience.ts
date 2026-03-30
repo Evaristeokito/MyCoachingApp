@@ -1,6 +1,6 @@
 import {Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IExperience } from 'src/app/shared/models/coach';
+import { IExperience } from 'src/app/shared/models/agents';
 import { UtilsService } from '../utils.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';

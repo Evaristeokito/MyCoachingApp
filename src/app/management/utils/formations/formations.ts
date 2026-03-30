@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IFormation } from 'src/app/shared/models/coach';
+import { IFormation } from 'src/app/shared/models/agents';
 import { UtilsService } from '../utils.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ToastService } from 'src/app/shared/services/toast.service';

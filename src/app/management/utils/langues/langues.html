@@ -43,10 +43,10 @@
                 <thead class="thead">
                   <tr>
                     <th>N°</th>
-                    <th>Id</th>
+                    <th>Nom de l'agent</th>
+                    <th>Sexe</th>
                     <th>Langue</th>
                     <th>Niveau</th>
-                    <th>Observations</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -58,10 +58,10 @@
                     "
                   >
                     <td>{{ i + 1 }}</td>
-                    <td>{{ item.id }}</td>
+                    <td>{{ item.agent.name }} {{ item.agent.firstname }} {{ item.agent.lastname }}</td>
+                    <td>{{item.agent.sex}}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.level }}</td>
-                    <td>{{item.Observation }}</td>
                     <td>
                       <div class="dropdown">
                         <button

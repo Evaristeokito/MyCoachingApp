@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {catchError, Observable, throwError} from "rxjs";
 import {Router} from "@angular/router";
-import { IAgent } from 'src/app/shared/models/coach';
+import { IAgent } from 'src/app/shared/models/agents';
 import { AgentService } from '../agents.service';
 
 

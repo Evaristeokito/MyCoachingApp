@@ -2,14 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup} from '@angular/forms';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { ICommune } from 'src/app/shared/models/commune';
-import { ICreneau } from 'src/app/shared/models/creneau';
-import {
-  ICivilite,
-  INationalite,
-  IPoids,
-  ITaille,
-} from 'src/app/shared/models/global.model';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsService } from '../../utils/utils.service';
 import { AgentService } from '../agents.service';

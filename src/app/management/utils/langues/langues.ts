@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ILangues } from 'src/app/shared/models/coach';
+import { ILangues } from 'src/app/shared/models/agents';
 import { UtilsService } from '../utils.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -28,7 +28,7 @@ export class Langues implements OnInit {
       errorMessage: String = '';
       handlerCompetenceSarch: FormGroup | any;
     
-      pageSize: number = 5;
+      pageSize: number = 10;
       page: number = 1;
     
       constructor(
@@ -51,7 +51,7 @@ export class Langues implements OnInit {
       dialogColors(colorsData? : any ){
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = "530px";
-        dialogConfig.height =  "420px";
+        dialogConfig.height =  "500px";
         dialogConfig.position = {top : '8%'};
         dialogConfig.role = "dialog";
         dialogConfig.data = {...colorsData}

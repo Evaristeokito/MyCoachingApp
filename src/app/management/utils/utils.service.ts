@@ -1,13 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { IExperience, IFormation, ILangues } from 'src/app/shared/models/coach';
+import { ICompetences, IExperience, IFormation, ILangues } from 'src/app/shared/models/agents';
 import { ICommune } from 'src/app/shared/models/commune';
-import { ICreneau } from 'src/app/shared/models/creneau';
-import {
-  ICompetences,
-  INationalite
-} from 'src/app/shared/models/global.model';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -106,23 +101,7 @@ export class UtilsService {
     return this.http.put<ICommune>(this.BaseUrl + 'communes/' + id, data);
   }
 
-  // ========================== Nationalite ==============================
-
-  getNationalites(): Observable<Array<INationalite>> {
-    return this.http.get<Array<INationalite>>(this.BaseUrl + 'nationalites');
-  }
-
-  getOneNationalite(id: any): Observable<INationalite> {
-    return this.http.get<INationalite>(this.BaseUrl + 'nationalites/' + id);
-  }
-
-  createNationalite(data: INationalite): Observable<INationalite> {
-    return this.http.post<INationalite>(this.BaseUrl, data);
-  }
-
-  deleteNationalite(id: any) {
-    return this.http.delete(this.BaseUrl + '/' + id);
-  }
+ 
 
   // ========================== competences ==============================
 
@@ -149,25 +128,4 @@ export class UtilsService {
     return this.http.delete(this.BaseUrl + 'competences/' + id);
   }
 
-  //============================= Creneau ============================
-
-  getCreneaux(): Observable<Array<ICreneau>> {
-    return this.http.get<Array<ICreneau>>(this.BaseUrl + 'creneau');
-  }
-
-  getCreneau(id: string): Observable<ICreneau> {
-    return this.http.get<ICreneau>(this.BaseUrl + 'creneau/' + id);
-  }
-
-  createCreneau(data: ICreneau) {
-    return this.http.post(this.BaseUrl + 'creneau', data);
-  }
-
-  updateCreneau(id: String, creneau: ICreneau) {
-    return this.http.put(this.BaseUrl + 'creneau/' + id, creneau);
-  }
-
-  deleteCreneau(id: any) {
-    return this.http.delete(this.BaseUrl + 'creneau/' + id);
-  }
 }

@@ -4,13 +4,13 @@
     <div class="row mb-2">
       <div class="col-sm-6">
         <h3>
-          GESTION DES AGENTS
+          GESTION DES DOSSIERS DES AGENTS
         </h3>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-          <li class="breadcrumb-item active">Liste des agents</li>
+          <li class="breadcrumb-item active">Liste des dossiers</li>
         </ol>
       </div>
     </div>
@@ -46,37 +46,35 @@
               class="card-body table-responsive p-0 mt-3"
               style="height: 400px"
             >
-
-              <ng-container *ngIf="agentTable | async as data ; else failureOrLoading">
                 <table class="table table-head-fixed table-striped">
                   <thead class="thead">
                   <tr>
                     <th>N°</th>
-                    <th>Nom</th>
-                    <th>Post-Nom</th>
-                    <th>Prénom</th>
+                    <th>N° Dossier</th>
+                    <th>MATRICULE</th>
+                    <th>Agent</th>
                     <th>Sexe</th>
-                    <th>Mobile</th>
-                    <th>Mobile 1</th>
-                    <th>E-mail</th>
-                    <th>Action</th>
+                    <th>Etat Civil</th>
+                    <th>FORMATION</th> 
+                    <th>DETAIL</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr
                     *ngFor="
-                      let item of agentTable | async as data;
+                      let item of dossierTable;
                       let i = index
                     "
                   >
                     <td>{{ i + 1 }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.lastname }}</td>
-                    <td>{{ item.firstname }}</td>
-                    <td>{{ item.sex }}</td>
-                    <td>{{ item.phoneNumber }}</td>
-                    <td>{{ item.phoneNumber1 }}</td>
-                    <td>{{ item.email }}</td>
+                    <td>{{item.numeroDossier}}</td>
+                    <td>{{item.agent.matricule}}</td>
+                    <td>{{ item.agent.name }} {{ item.agent.lastname }} {{ item.agent.firstname }} </td>
+                    <td>{{item.agent.sex}}</td>
+                    <td>{{item.agent.etatCivil}}</td>
+                    <td *ngFor="let forma of item.agent.formations">
+                      {{ forma.title }}
+                    </td>
                     <td>
                       <div class="dropdown">
                         <button class="btn btn-secondary" type="button" id="dropdownMenuButton1"
@@ -85,12 +83,12 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                           <li>
-                            <a class="dropdown-item" (click)="singleCoach(item.id)">
+                            <a class="dropdown-item" (click)="detailDossier(item.id)">
                               <i class="fa-thin fa-eye"></i> Details
                             </a>
                           </li>
                           <li>
-                            <a class="dropdown-item" (click)="editCoach(item.id)">
+                            <a class="dropdown-item" (click)="editDossier(item.id)">
                               <i class="fa-thin fa-pen-to-square"></i> Update
                             </a>
                           </li>
@@ -105,8 +103,6 @@
                   </tr>
                   </tbody>
                 </table>
-              </ng-container>
-
               <ng-template #failureOrLoading>
                 <ng-container *ngIf="errorMessage">
                   <div class="text-danger">
@@ -131,3 +127,4 @@
   </div>
   <!-- /.container-fluid -->
 </section>
+

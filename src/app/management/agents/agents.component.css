@@ -36,8 +36,18 @@ margin-left: 2px;
 .btn-primary,
 .btn-danger
  {
+  border-radius: 10px;
   text-transform: capitalize;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
 }
+
+.btn-warning,
+.btn-info {
+  width: 150px;
+  border-radius: 20px;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
 

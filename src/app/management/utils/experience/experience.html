@@ -45,11 +45,11 @@
                 <thead class="thead">
                 <tr>
                   <th>N°</th>
+                  <th>Agent</th>
                   <th>Titre</th>
                   <th>Company</th>
                   <th>StartDate</th>
                   <th>EndDate</th>
-                  <th>Description</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -61,11 +61,11 @@
                     "
                 >
                   <td>{{ i + 1 }}</td>
+                  <td>{{item.agent.name}} {{item.agent.firstname}} {{item.agent.lastname}}</td>
                   <td>{{ item.title }}</td>
                   <td>{{ item.company}}</td>
                   <td>{{ item.startdate }}</td>
                   <td>{{ item.enddate }}</td>
-                  <td>{{item.descriptions}}</td>
                   <td>
                     <div class="dropdown">
                       <button class="btn btn-secondary btn-sm" type="button" id="dropdownMenuButton1"

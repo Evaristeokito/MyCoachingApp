@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { IAgent, ICoach } from 'src/app/shared/models/coach';
+import { IAgent } from 'src/app/shared/models/agents';
 import {environment} from "../../../environments/environment.development";
 
 @Injectable({

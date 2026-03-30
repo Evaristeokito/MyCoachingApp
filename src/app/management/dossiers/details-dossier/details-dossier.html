@@ -1,0 +1,359 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>DETAIL DES DOSSIERS</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item">
+            <a routerLink="/coach/liste-des-coachs"> Dossiers </a>
+          </li>
+          <li class="breadcrumb-item active">Details dossier</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <!--new row-->
+    <!-- <div class="row mb-2">
+      <div class="col-md-12">
+        <mat-card>
+          <mat-card-content>
+            <span class="header-name">
+              NUMERO DE DOSSIER : {{ numeroDossier }}
+            </span>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div> -->
+    <!--end new row-->
+    <!-- card agent informations -->
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+
+        <!-- card head -->
+        <div class="card card-top">
+          <div class="card-body">
+            <h2>
+                IDENTITE DE L'AGENT
+            </h2>
+        </div>
+        </div>
+        <!-- end card head -->
+        <div class="card card-main">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="p-2">
+                  <label class="label-text">NOM :</label>
+                  <label class="content-text"
+                    >{{ nom }} {{ postnom }} {{ prenom }}</label
+                  >
+                </div>
+
+                <div class="p-2">
+                  <label class="label-text">SEXE :</label>
+                  <label class="content-text">{{ sex }}</label>
+                </div>
+
+                <div class="p-2">
+                  <label class="label-text">ETAT CIVIL :</label>
+                  <label class="content-text">{{ civilite }}</label>
+                </div>
+
+                <div class="p-2">
+                  <label class="label-text">DANAIS :</label>
+                  <label class="content-text">{{ dateNaissance | date }}</label>
+                </div>
+
+                <div class="p-2">
+                  <label class="label-text">LIEU DE NAISSANCE :</label>
+                  <label class="content-text">{{ lieuNaissance }}</label>
+                </div>
+
+                <div class="p-2">
+                  <label class="label-text">NATIONALITE :</label>
+                  <label class="content-text">{{ nationality }}</label>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="d-flex flex-column">
+                  <div class="p-2">
+                    <label class="label-text">TELEPHONE :</label>
+                    <label class="content-text"> {{ phoneNumber }}</label>
+                  </div>
+
+                  <div class="p-2">
+                    <label class="label-text">TELEPHONE 1 :</label>
+                    <label class="content-text">{{ phoneNumber1 }}</label>
+                  </div>
+
+                  <div class="p-2" *ngIf="email">
+                    <label class="label-text">EMAIL :</label>
+                    <label
+                      class="content-text"
+                      style="text-transform: lowercase"
+                      >{{ email }}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-flex flex-column">
+                  <div class="p-2">
+                    <label class="label-text">MATRICULE :</label>
+                    <label class="content-text">{{ matricule }}</label>
+                  </div>
+
+                  <div class="p-2">
+                    <label class="label-text">SERVICE :</label>
+                    <label class="content-text"> {{ service }}</label>
+                  </div>
+
+                  <div class="p-2" *ngIf="email">
+                    <label class="label-text">FONCTION :</label>
+                    <label
+                      class="content-text"
+                      style="text-transform: lowercase"
+                      >{{ fonction }}</label
+                    >
+                  </div>
+
+                  <div class="p-2">
+                    <label class="label-text">FILLIATION :</label>
+                    <label class="content-text">{{ filiation }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- /.row agent information -->
+
+    <!-- card competences -->
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+
+        <!-- card head -->
+        <div class="card card-top">
+          <div class="card-body">
+            <h2>COMPETENCES</h2>
+          </div>
+        </div>
+        <!-- end card head -->
+        <div class="card card-main">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-striped table-borderless">
+                    <thead>
+                      <tr>
+                        <th>N°</th>
+                        <th>Competence</th>
+                        <th>Niveau</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let cop of dossierAgent.agent.competences;let i = index;"
+                      >
+                        <td>{{i+1}}</td>
+                        <td>{{cop.name}}</td>
+                        <td>{{cop.level}}</td>
+                        <td>{{cop.description}}</td>
+                      </tr>
+                      <tr *ngIf="dossierAgent.agent.competences==0">
+                        <td colspan="5" class="text-center">
+                          cet agent n'a aucune compétence ou qualification
+                          requise.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- /.row agent information -->
+
+    <!-- card experiences -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- card head -->
+        <div class="card card-top">
+          <div class="card-body">
+            <h2>EXPERIENCES PROFESSIONNELLES</h2>
+          </div>
+        </div>
+        <!-- end card head -->
+        <div class="card card-main">
+          <div class="card-body">
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table table-striped table-borderless">
+                  <thead>
+                    <tr>
+                      <th>N°</th>
+                      <th>Company</th>
+                      <th>Titre</th>
+                      <th>Date début</th>
+                      <th>Date de fin</th>
+                      <th>Role</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let exp of dossierAgent.agent.experiences;let i = index;"
+                    >
+                      <td>{{i+1}}</td>
+                      <td>{{exp.company}}</td>
+                      <td>{{exp.title}}</td>
+                      <td>{{exp.startdate}}</td>
+                      <td>{{exp.enddate}}</td>
+                      <td>{{exp.description}}</td>
+                    </tr>
+                    <tr *ngIf="dossierAgent.agent.experiences==0">
+                      <td colspan="7" class="text-center">
+                        cet agent n'a aucune experience professionnelle.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- /.row agent information -->
+
+    <!-- card formations -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- card head -->
+        <div class="card card-top">
+          <div class="card-body">
+            <h2>FORMATIONS OU ETUDES FAITES</h2>
+        </div>
+        </div>
+        <!-- end card head -->
+        <div class="card card-main">
+          <div class="card-body">
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table table-striped table-borderless">
+                  <thead>
+                    <tr>
+                      <th>N°</th>
+                      <th>ECOLE</th>
+                      <th>FACULTE</th>
+                      <th>OPTION</th>
+                      <th>TITRE</th>
+                      <th>Date début</th>
+                      <th>Date de fin</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let e of dossierAgent.agent.formations;let i = index;"
+                    >
+                      <td>{{i+1}}</td>
+                      <td>{{e.ecole}}</td>
+                      <td>{{e.faculty}}</td>
+                      <td>{{e.options}}</td>
+                      <td>{{e.title}}</td>
+                      <td>{{e.startDate}}</td>
+                      <td>{{e.endDate}}</td>
+                    </tr>
+                    <tr *ngIf="dossierAgent.agent.formations==0">
+                      <td colspan="7" class="text-center">
+                        cet agent n'a aucune education ou aucune étude faite.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- end card formations -->
+
+    <!-- card langues -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- card head -->
+        <div class="card card-top">
+          <div class="card-body">
+            <h2>LANGUES PARLEES ET ECRITES</h2>
+          </div>
+        </div>
+        <!-- end card head -->
+        <div class="card card-main">
+          <div class="card-body">
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table table-striped table-borderless">
+                  <thead>
+                    <tr>
+                      <th>N°</th>
+                      <th>Langue parlée et Ecrite</th>
+                      <th>Niveau</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let e of dossierAgent.agent.languages;let i = index;"
+                    >
+                      <td>{{i+1}}</td>
+                      <td>{{e.name}}</td>
+                      <td>{{e.level}}</td>
+                      <td>{{e.description}}</td>
+                    </tr>
+                    <tr *ngIf="dossierAgent.agent.languages==0">
+                      <td colspan="5" class="text-center">
+                        l'agent ne parle aucune langue ou acune langue n'est associée à l'agent
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- end card langues -->
+  </div>
+  <!-- /.container-fluid -->
+</section>

@@ -17,26 +17,26 @@
   </div>
   <!-- /.container-fluid -->
 </section>
+<!-- end Content Header (Page header) -->
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-    <form autocomplete="off" [formGroup]="coachForm" (ngSubmit)="createCoach()">
+    <form autocomplete="off" [formGroup]="coachForm" (ngSubmit)="createAgent()">
       <div class="row">
         <!-- left column -->
         <div class="col-md-6">
-          <!-- general form elements -->
+          <!-- card identité -->
           <div class="card">
-            <!-- /.card-header -->
             <div class="card-header">
               <div class="card-title">
-                <h4>INFO 1</h4>
+                <h4>IDENTITE DE L'AGENT</h4>
               </div>
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-4">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label class="form-label">Nom :</label>
+                    <label class="form-label"> Nom : </label>
                     <input
                       type="text"
                       name="name"
@@ -46,7 +46,7 @@
                     />
                   </div>
                 </div>
-                <div class="col-4">
+                <div class="col-md-4">
                   <label class="form-label">Post-nom :</label>
                   <input
                     type="text"
@@ -56,7 +56,7 @@
                     placeholder="nom de famille..."
                   />
                 </div>
-                <div class="col-4">
+                <div class="col-md-4">
                   <label class="form-label">Prenom :</label>
                   <input
                     type="text"
@@ -67,8 +67,7 @@
                   />
                 </div>
               </div>
-
-              <!-- row lieu de naissance et dateNaissance -->
+              <!-- Lieu & Date de naissance -->
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -89,14 +88,14 @@
                     type="date"
                     name="dateOfBirt"
                     id="dateOfBirt"
-                    formControlName="dateOfBirt"
+                    formControlName="birthdate"
                     class="form-control"
                   />
                 </div>
               </div>
-              <!-- end row lieu de naissance et dateNaissance -->
+              <!-- End Lieu & Date de naissance -->
 
-              <!-- row sexe et civilité -->
+              <!-- Sexe et civilité -->
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -104,24 +103,25 @@
                     <select
                       name="sex"
                       id="sex"
-                      formControlName="sexe"
+                      formControlName="sex"
                       class="form-select select shadow-none"
                     >
-                      <option value="selected">Selectionner le sexe</option>
+                      <option value="">Selectionner le sexe</option>
                       <option value="Masculin">Masculin</option>
                       <option value="Feminin">Feminin</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label">Etat civil : </label>
+                  <label class="form-label">Etat Civil : </label>
                   <div class="form-group">
                     <select
                       name="etat"
                       id="etat"
+                      formControlName="etatCivil"
                       class="form-select shadow-none"
                     >
-                      <option value="selected">Etat civil de l'agent</option>
+                      <option value="">Selectionner l'état civil</option>
                       <option value="cilibatire">Celibataire</option>
                       <option value="marié">Marié</option>
                       <option value="divorcé">Divorcé</option>
@@ -130,105 +130,34 @@
                   </div>
                 </div>
               </div>
-              <!-- end row sexe et formation -->
-              <!-- Province et Localité -->
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Province :</label>
-                    <input
-                      type="text"
-                      name="province"
-                      id=""
-                      formControlName="province"
-                      class="form-control"
-                      placeholder="province..."
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <label>Territoire : </label>
-                  <input
-                    type="text"
-                    name="territoire"
-                    id=""
-                    formControlName="territoire"
-                    class="form-control"
-                    placeholder="territoire..."
-                  />
-                </div>
-              </div>
-              <!-- end row lieu de naissance et dateNaissance -->
-              <div class="form-group">
-                <label for="" class="form-label"> Nationalité : </label>
-                <select
-                  name="nationalite"
-                  id="nationalite"
-                  class="form-select shadow-none"
-                >
-                  <option value="#">Select nationality</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <!-- /.card -->
-        </div>
-        <!--/.col (left) -->
+              <!-- End civilite & Sex -->
 
-        <!-- right column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">
-                <h3>PHOTO</h3>
-              </div>
-            </div>
-            <div class="card-body">
-              <!-- coach image -->
-              <div class="container mb-3">
-                <div class="col-md-12 mb-2 prop_img">
-                  <img
-                    [src]="imageURL ? imageURL : Path.user"
-                    *ngIf="imageURL ? imageURL : Path.user"
-                    alt="IMG"
-                    class="img img-thumbnail coach_img"
-                    name="imageUpload"
-                    formControlName="imageUpload"
-                  />
-                </div>
-                <div class="d-flex prop_button">
-                  <input
-                    #onFileInput
-                    type="file"
-                    name="imageUpload"
-                    formControlName="imageUpload"
-                    id="imageUpload"
-                    accept="/*"
-                    (change)="onSelectFile($event)"
-                    style="display: none"
-                  />
-                  <button
-                    type="button"
-                    (click)="onFileInput.click()"
-                    class="btn btn-danger"
+              <!-- Nationality -->
+              <div class="row">
+                <div class="form-group">
+                  <label class="form-label"> Nationalité : </label>
+                  <select
+                    name="nationalite"
+                    id="nationalite"
+                    formControlName="nationality"
+                    class="form-select shadow-none"
                   >
-                    Choose Browse
-                    <i class="fa-thin fa-folder-magnifying-glass"></i>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-sm btn_p_photo"
-                  >
-                    Take a Photo
-                    <i class="fa-thin fa-camera"></i>
-                  </button>
+                    <option value="">Selectionner la nationalité</option>
+                    <option value="Congolais(RDC)">Congo Kinshasa</option>
+                    <option value="Congolais(Brazzaville)">
+                      Congo Brazzaville
+                    </option>
+                    <option value="Angola">Angola</option>
+                    <option value="Zambie">Zambie</option>
+                  </select>
                 </div>
               </div>
-              <!-- end coach image -->
+              <!-- ./ end Nationality -->
             </div>
           </div>
-          <!-- /.card -->
+          <!-- ./ card identité -->
+
+          <!-- /.card contact -->
           <div class="card">
             <div class="card-header">
               <div class="card-title">
@@ -244,7 +173,7 @@
                     type="tel"
                     class="form-control"
                     id="phoneNumber"
-                    formControlName="phone"
+                    formControlName="phoneNumber"
                     name="phone"
                     placeholder="phone (1)"
                   />
@@ -255,7 +184,7 @@
                     type="tel"
                     name="phone"
                     placeholder="phone (2)"
-                    formControlName="phone1"
+                    formControlName="phoneNumber1"
                     id="phoneNumber1"
                     class="form-control"
                   />
@@ -276,6 +205,114 @@
                 />
               </div>
               <!--End Email-->
+            </div>
+          </div>
+          <!-- ./ card contact -->
+        </div>
+        <!--/.col (left) -->
+
+        <!-- right column -->
+        <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="card">
+            <div class="card-body">
+              <div class="container">
+                <div class="d-flex flex-column">
+                  <div class="text-center">
+                    <img
+                      [src]="imageURL ? imageURL : Path.user"
+                      *ngIf="imageURL ? imageURL : Path.user"
+                      alt="IMG"
+                      class="img img-thumbnail coach_img"
+                      name="imageUpload"
+                    />
+                  </div>
+                  <div class="d-flex flex-row justify-content-center mt-3">
+                    <div>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                      >
+                        Choose Browse
+                        <i class="fa-thin fa-folder-magnifying-glass"></i>
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm btn_p_photo"
+                      >
+                        Take a Photo
+                        <i class="fa-thin fa-camera"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card -->
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <h3>INFORMATION PROFESSIONNELLE</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              <!--phone  1 et phone 2-->
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Matricule : </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phoneNumber"
+                    formControlName="matricule"
+                    name="matricule"
+                    placeholder="numéro matricule de l'agent"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label>Fonction :</label>
+                  <input
+                    type="text"
+                    name="fonction"
+                    placeholder="fonction de l'agent"
+                    formControlName="fonction"
+                    id="fonction"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <!--end phone 1 and phone 2-->
+
+              <!-- Service -->
+              <div class="form-group mt-2">
+                <label class="form-label"> SERVICE </label>
+                <input
+                  type="text"
+                  name="service"
+                  id="service"
+                  class="form-control shadow-none"
+                  formControlName="service"
+                  placeholder="service ou departement de l'agent"
+                />
+              </div>
+              <!--End Service-->
+              <!-- Filiale -->
+              <div class="form-group mt-2">
+                <label class="form-label"> ATTACHEMENT DE L'AGENT </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  class="form-control shadow-none"
+                  formControlName="filiation"
+                  placeholder="filliale ou appartenance de l'agent"
+                />
+              </div>
+              <!--End Filiale-->
             </div>
           </div>
         </div>
@@ -337,333 +374,29 @@
           </div>
         </div>
       </div>
-      <!-- part of competence -->
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item mt-3 mb-3">
-          <h2 class="accordion-header" id="headingOne">
-            <button
-              class="accordion-button shadow-none"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne"
-            >
-              EXPERIENCE PROFESSIONNELLES
-            </button>
-          </h2>
-          <div
-            id="collapseOne"
-            class="accordion-collapse collapse show"
-            aria-labelledby="headingOne"
-            data-bs-parent="#accordionExample"
-          >
-            <div class="accordion-body">
-              <input
-                type="text"
-                name="id"
-                formControlName="id"
-                id="id"
-                class="form-control d-none"
-              />
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Poste :</label>
-                    <input
-                      type="text"
-                      name="title"
-                      formControlName="title"
-                      id="name"
-                      class="form-control"
-                      placeholder="posté occupé..."
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Company :</label>
-                    <input
-                      type="text"
-                      name="title"
-                      formControlName="company"
-                      id="name"
-                      class="form-control"
-                      placeholder="le nom de la company.."
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Date début : </label>
-                    <input
-                      type="date"
-                      formControlName="startdate"
-                      name="startdate"
-                      id="startdate"
-                      class="form-control"
-                      placeholder="faculté..."
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Date Fin :</label>
-                    <input
-                      type="date"
-                      name="enddate"
-                      formControlName="enddate"
-                      id="ecole"
-                      class="form-control"
-                      placeholder="ecole..."
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item mt-3 mb-3">
-          <h2 class="accordion-header" id="headingTwo">
-            <button
-              class="accordion-button collapsed shadow-none"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseTwo"
-              aria-expanded="false"
-              aria-controls="collapseTwo"
-            >
-              COMPETENCES
-            </button>
-          </h2>
-          <div
-            id="collapseTwo"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingTwo"
-            data-bs-parent="#accordionExample"
-          >
-            <div class="accordion-body">
-              <div class="row">
-                <div class="col-md-6">
-                  <input
-                    type="text"
-                    name="id"
-                    formControlName="id"
-                    id="id"
-                    class="form-control d-none"
-                  />
-                  <div class="form-group">
-                    <label class="form-label">Name :</label>
-                    <input
-                      type="text"
-                      name="name"
-                      formControlName="name"
-                      id="name"
-                      class="form-control"
-                      placeholder="competence name..."
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Niveau :</label>
-                    <input
-                      type="text"
-                      formControlName="level"
-                      name="level"
-                      id="level"
-                      class="form-control"
-                      placeholder="niveau de competence..."
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item mt-3 mb-3">
-          <h2 class="accordion-header" id="headingThree">
-            <button
-              class="accordion-button collapsed shadow-none"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseThree"
-              aria-expanded="false"
-              aria-controls="collapseThree"
-            >
-              FORMATIONS OU ETUDES FAITES
-            </button>
-          </h2>
-          <div
-            id="collapseThree"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingThree"
-            data-bs-parent="#accordionExample"
-          >
-            <div class="accordion-body">
-              <input
-                type="text"
-                name="id"
-                formControlName="id"
-                id="id"
-                class="form-control d-none"
-              />
-              <div class="form-group">
-                <label class="form-label">Titre :</label>
-                <input
-                  type="text"
-                  name="title"
-                  formControlName="title"
-                  id="name"
-                  class="form-control"
-                  placeholder="titre (diplome,attestation de reussite)..."
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Faculté :</label>
-                <input
-                  type="text"
-                  formControlName="Faculty"
-                  name="faculty"
-                  id="faculty"
-                  class="form-control"
-                  placeholder="faculté..."
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Ecole :</label>
-                <input
-                  type="text"
-                  name="ecole"
-                  formControlName="Ecole"
-                  id="ecole"
-                  class="form-control"
-                  placeholder="ecole..."
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Options :</label>
-                <input
-                  type="text"
-                  name="Options"
-                  formControlName="Options"
-                  id="options"
-                  class="form-control"
-                  placeholder="option..."
-                />
-              </div>
-              <div class="row">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label class="form-label">Date début :</label>
-                    <input
-                      type="date"
-                      name="options"
-                      formControlName="startDate"
-                      id="options"
-                      class="form-control"
-                    />
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label class="form-label">Date de fin :</label>
-                    <input
-                      type="date"
-                      name="endDate"
-                      formControlName="endDate"
-                      id="options"
-                      class="form-control"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item mt-3 mb-3">
-          <h2 class="accordion-header" id="headingTwo">
-            <button
-              class="accordion-button collapsed shadow-none"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseFour"
-              aria-expanded="false"
-              aria-controls="collapseTwo"
-            >
-              LANGUE PARLEE ET ECRITE
-            </button>
-          </h2>
-          <div
-            id="collapseFour"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingTwo"
-            data-bs-parent="#accordionExample"
-          >
-            <div class="accordion-body">
-              <div class="row">
-                <div class="col-sm-6">
-                  <input
-                    type="text"
-                    name="id"
-                    formControlName="id"
-                    id="id"
-                    class="form-control d-none"
-                  />
-                  <div class="form-group">
-                    <label class="form-label">Langue :</label>
-                    <input
-                      type="text"
-                      name="name"
-                      formControlName="name"
-                      id="name"
-                      class="form-control"
-                      placeholder="langue..."
-                    />
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label class="form-label">
-                      Niveau :
-                    </label>
-                    <input
-                      type="text"
-                      formControlName="level"
-                      name="level"
-                      id="level"
-                      class="form-control"
-                      placeholder="niveau..."
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end part of competence -->
       <!-- card button -->
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
               <div class="float-right">
-                <button
-                  class="btn btn-success mr-1 text-white btn-sm"
-                  routerLink="/coach/liste-des-coachs"
-                >
-                  Voir les coachs
+                <button type="reset" class="btn btn-warning mr-1 btn-sm">
+                  Annuler
                 </button>
-                <button class="btn btn-danger mr-1 btn-sm">Annuler</button>
+
                 <button
                   type="submit"
-                  [disabled]="coachForm.invalid"
-                  class="btn btn-primary btn-sm"
+                  class="btn btn-info"
+                  [disabled]="coachForm.valid"
                 >
-                  Enregister
+                  <span *ngIf="!loading"> Enregistrer </span>
+                  <div
+                    *ngIf="loading"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="sr-only">loading...</span>
+                  </div>
                 </button>
               </div>
             </div>
