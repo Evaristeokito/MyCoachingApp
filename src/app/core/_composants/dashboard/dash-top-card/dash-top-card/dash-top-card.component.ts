@@ -14,16 +14,16 @@ import {NgClass, NgForOf} from "@angular/common";
 export class DashTopCardComponent implements OnInit {
 
     ngOnInit(): void {
-        throw new Error("Method not implemented.");
+        
     }
 
     constructor() {
     }
 
   stats = [
-    { title: "Dossiers", value: 10, icon: "fa-light fa-folders", color: "bg-info" },
-    { title: "Personnel", value: 15, icon: "fa-thin fa-users", color: "bg-success" },
-    { title: "Congés", value: 20, icon: "fa-light fa-bell-slash", color: "bg-warning" },
+    { title: "Dossiers", value: 10, icon: "fas fa-light fa-folders", color: "bg-info" },
+    { title: "Personnel", value: 15, icon: "fas fa-thin fa-users", color: "bg-success" },
+    { title: "Congés", value: 20, icon: "fas fa-light fa-bell-slash", color: "bg-warning" },
     { title: "Presences", value: 5, icon: "fas fa-light fa-bell", color: "bg-danger"}
   ];
 

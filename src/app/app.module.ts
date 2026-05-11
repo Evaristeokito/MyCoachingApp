@@ -17,6 +17,7 @@ import {
 import {
   DashGraphBarComponent
 } from "./core/_composants/dashboard/dash-top-card/dash-graph-bar/dash-graph-bar.component";
+import { DataTable } from "./core/_composants/dashboard/dataTable/dataTable";
 
 
 @NgModule({
@@ -38,11 +39,10 @@ import {
     AsyncPipe,
     JsonPipe,
     UtilsModule,
-    NgbModule, 
-    DashTopCardComponent, 
-    DashProgressBarComponent, 
-    DashGraphBarComponent
-  ],
+    NgbModule,
+    DashTopCardComponent,
+    DashProgressBarComponent,
+    DashGraphBarComponent, DataTable],
   providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class AppModule {

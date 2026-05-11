@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -7,9 +7,9 @@ import {
   ApexStroke,
   ApexTitleSubtitle,
   ApexGrid,
-  ChartComponent, NgApexchartsModule
-} from "ng-apexcharts";
-
+  ChartComponent,
+  NgApexchartsModule,
+} from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries | any;
@@ -24,59 +24,83 @@ export type ChartOptions = {
 @Component({
   selector: 'app-dash-graph-bar',
   standalone: true,
-  imports: [
-    NgApexchartsModule
-  ],
+  imports: [NgApexchartsModule],
   templateUrl: './dash-graph-bar.component.html',
-  styleUrl: './dash-graph-bar.component.css'
+  styleUrl: './dash-graph-bar.component.css',
 })
-
 export class DashGraphBarComponent implements OnInit {
-
-  @ViewChild("chart") chart!: ChartComponent;
+  @ViewChild('chart') chart!: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
   constructor() {
     this.chartOptions = {
       series: [
         {
-          name: "Sales",
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-        }
+          name: 'Présence',
+          data: [
+            'Lundi',
+            'Mardi',
+            'Mercredi',
+            'Jeudi',
+            'Vendredi',
+            'Lundi',
+            'Mardi',
+            'Mercredi',
+            'Jeudi',
+            'Vendredi',
+          ],
+        },
       ],
       chart: {
-        height: 350,
-        type: "line",
+        height: 250,
+        type: 'line',
+        toolbar: {
+          show: false, // ⚠️ obligatoire
+          tools: {
+            download: true,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            reset: true,
+          },
+        },
         zoom: {
-          enabled: false
-        }
+          enabled: false,
+        },
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
-        curve: "smooth"
+        curve: 'smooth',
       },
       title: {
-        text: "Sales Trend",
-        align: "left"
+        text: 'Statistique de présence des agents',
+        align: 'left',
       },
       grid: {
         row: {
-          colors: ["#f3f3f3", "transparent"],
-          opacity: 0.5
-        }
+          colors: ['#f3f3f3', 'transparent'],
+          opacity: 0.5,
+        },
       },
       xaxis: {
         categories: [
-          "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"
-        ]
-      }
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+        ],
+      },
     };
   }
 
-  ngOnInit() {
-
-  }
-
+  ngOnInit() {}
 }

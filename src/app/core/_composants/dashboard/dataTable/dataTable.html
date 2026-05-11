@@ -1,0 +1,62 @@
+<!-- general form elements -->
+        <div class="card">
+          <div class="card-body">
+            <div
+              class="card-body table-responsive p-0 mt-3"
+              style="height: 400px"
+            >
+
+              <ng-container *ngIf="agentTable | async as data ; else failureOrLoading">
+                <table class="table table-head-fixed table-striped">
+                  <thead class="thead">
+                  <tr>
+                    <th>N°</th>
+                    <th>Nom</th>
+                    <th>Sexe</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr
+                    *ngFor="
+                      let item of agentTable | async as data;
+                      let i = index
+                    "
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.name }} {{ item.lastname }} 
+                      {{ item.firstname }}</td>
+                    <td>{{ item.sex }}</td>
+                    <td>
+                      <button class="btn btn-primary">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                      </button>
+                      <button class="btn btn-danger">
+                         <i class="fas fa-light fa-trash"></i>
+                      </button>
+                      <button class="btn btn-info">
+                        <i class="fas fa-light fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+
+              <ng-template #failureOrLoading>
+                <ng-container *ngIf="errorMessage">
+                  <div class="text-danger">
+                    {{ errorMessage }}
+                  </div>
+                </ng-container>
+
+                <ng-template #Loading>
+                  <div class="text-center text-primary">
+                    loading data...
+                  </div>
+                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
