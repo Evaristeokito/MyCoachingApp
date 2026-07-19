@@ -1,28 +1,24 @@
 import {
-  ChangeDetectionStrategy,
   Component,
-  Inject,
   type OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, 
+  ReactiveFormsModule, 
+  Validators } from '@angular/forms';
 import { UtilsService } from '../../utils.service';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogContent,
-} from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { NgIf } from '@angular/common';
-import { ICompetences } from 'src/app/shared/models/agents';
+import { NgFor, NgIf } from '@angular/common';
+import { IAgent, ICompetences } from 'src/app/shared/models/agents';
+import { AgentService } from 'src/app/management/agents/agents.service';
+import { debounceTime } from 'rxjs';
 
 
 @Component({
   selector: 'app-create-competence',
   standalone: true,
-  imports: [MatDialogContent, NgIf , ReactiveFormsModule],
+  imports: [NgIf, ReactiveFormsModule, NgFor],
   templateUrl: './create-competence.html',
   styleUrl: './create-competence.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateCompetence implements OnInit {
 
@@ -31,80 +27,114 @@ export class CreateCompetence implements OnInit {
   loading: boolean = false;
   errorMessage: String = '';
 
+  agentData: IAgent[] = [];
+
+  selectedRowIndex: number | null = null;
+  searchText: string = '';
+  searchControl = new FormControl('');
+
+  filteredAgents: IAgent[] = [];
+
   constructor(
     private service: UtilsService,
+    private serviceAgent : AgentService,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<CreateCompetence>,
     private snackbarService: SnackbarService,
-    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.competenceForm = this.fb.group({
-      id: [data ? data.id : null],
-      name: [data ? data.name : [Validators.required]],
-      level : [data ? data.level : [Validators.required]],
-      description: [data ? data.description : [Validators.required]],
+      id: [null],
+      name: [null, [Validators.required]],
+      firstname: ['', Validators.required],
+      lastname : ['' , Validators.required],
+      level: [null, [Validators.required]],
+      description: [null, [Validators.required]],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAllAgents();
+  }
 
   getCompetences() {
     this.service.getCompetences().subscribe({
-      next:(data) => {
+      next: (data) => {
         this.competenceDATA = data;
       },
-      error : (err) => {
+      error: (err) => {
         console.log(err.message);
-      }
-    })
+      },
+    });
   }
+
+   getAllAgents() {
+      this.serviceAgent.getAgents().subscribe({
+        next: (data) => {
+          this.agentData = data;
+          this.filteredAgents = data;
+  
+          this.searchControl.valueChanges
+            .pipe(debounceTime(300))
+            .subscribe((value) => {
+              const keyword = (value || '').toLowerCase();
+  
+              this.filteredAgents = this.agentData.filter(
+                (f) =>
+                  f.name.toLowerCase().includes(keyword) ||
+                  f.firstname.toLowerCase().includes(keyword) ||
+                  f.lastname.toLowerCase().includes(keyword),
+              );
+            });
+        },
+        error: (error) => {
+          console.log(error.error.message);
+        },
+      });
+    }
 
   onSubmit() {
     this.loading = true;
-    if (this.data.id) {
-      if (this.competenceForm.valid) {
-        this.service
-          .updateCompetence(this.data.id, this.competenceForm.value)
-          .subscribe({
-            next: (data) => {
-              setTimeout(() => {
-                this.snackbarService.showSuccessMessage(
-                  'Competence is updated successfully',
-                );
-                this.competenceForm.reset();
-                this.dialogRef.close();
-                this.loading = false;
-                this.dialogRef.afterClosed().subscribe((res) => {
-                  if (res) {
-                    this.getCompetences();
-                  }
-                });
-              }, 2000);
-            },
-            error: (err) => {
-              console.log(err.error.message);
-            },
-          });
-      }
-    } else {
-      if (this.competenceForm.valid) {
-        this.service.createCompetences(this.competenceForm.value).subscribe({
-          next: (data) => {
-            setTimeout(() => {
-              this.snackbarService.showSuccessMessage(
-                'Competence is created successfully',
-              );
-              this.competenceForm.reset();
-              this.dialogRef.close();
-              this.competenceForm.reset();
-            }, 2000);
-          },
-          error: (err) => {
-            console.log(err.error.message);
-          },
-        });
-      }
+    if (this.competenceForm.valid) {
+      this.service.createCompetences(this.competenceForm.value).subscribe({
+        next: (data) => {
+          setTimeout(() => {
+            this.snackbarService.showSuccessMessage(
+              'Competence is created successfully',
+            );
+            this.competenceForm.reset();
+
+            this.competenceForm.reset();
+          }, 2000);
+        },
+        error: (err) => {
+          console.log(err.error.message);
+        },
+      });
     }
+  }
+
+  selectRow(index: number) {
+    this.selectedRowIndex = index;
+  }
+
+  getAgentById(id: string) {
+    this.serviceAgent.getAgent(id).subscribe({
+      next: (data) => {
+        this.competenceForm.patchValue({
+          agentId: data.id,
+          name: data.name,
+          firstname: data.lastname,
+          lastname: data.firstname,
+          placeBirt: data.placeBirth,
+          birthdate: data.birthdate,
+          nationality: data.nationality,
+          sex: data.sex,
+          etatCivil: data.etatCivil,
+        });
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   get name() {
@@ -116,6 +146,6 @@ export class CreateCompetence implements OnInit {
   }
 
   get level() {
-    return this.competenceForm. controls['level'];
+    return this.competenceForm.controls['level'];
   }
 }

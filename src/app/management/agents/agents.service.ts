@@ -21,23 +21,23 @@ export class AgentService {
    * Get All Agents
    */
   getAgents(): Observable<Array<IAgent>> {
-    return this.http.get<Array<IAgent>>(this.baseUrl + 'agents');
+    return this.http.get<Array<IAgent>>(this.baseUrl + 'agent');
   }
 
   getAgent(id: String): Observable<IAgent> {
-    return this.http.get<IAgent>(this.baseUrl + 'agents/' + id);
+    return this.http.get<IAgent>(this.baseUrl + 'agent/' + id);
   }
 
-  createAgent(data: IAgent) {
-    return this.http.post(this.baseUrl + 'agents', data);
+  createAgent(data: any) {
+    return this.http.post(this.baseUrl + 'agent', data);
   }
 
   updateAgent(id :String , agent : IAgent) {
-    return this.http.put(this.baseUrl + "agents/" + id , agent);
+    return this.http.put(this.baseUrl + "agent/" + id , agent);
   }
 
   deleteCoach(id: any) {
-    return this.http.delete(this.baseUrl + 'agents/' + id);
+    return this.http.delete(this.baseUrl + 'agent/' + id);
   }
 
 }

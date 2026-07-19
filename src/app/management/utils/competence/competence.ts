@@ -22,7 +22,7 @@ export class Competence implements OnInit {
   errorMessage: String = '';
   handlerCompetenceSarch: FormGroup | any;
 
-  pageSize: number = 5;
+  pageSize: number = 3;
   page: number = 1;
 
   constructor(

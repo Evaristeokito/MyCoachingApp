@@ -1,1 +1,145 @@
-<p>create-dossier works!</p>,
+<div class="dossier-form-page">
+  <div class="page-header">
+    <div>
+      <span class="page-kicker">Dossiers</span>
+      <h1>Création d’un nouveau dossier</h1>
+    </div>
+
+    <nav class="breadcrumb">
+      <a routerLink="/admin/dossiers">Liste des dossiers</a>
+      <span>/</span>
+      <strong>Création du dossier</strong>
+    </nav>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-layout">
+      <section class="premium-card">
+        <div class="card-header">
+          <div>
+            <span>Étape 1</span>
+            <h2>Agent concerné</h2>
+          </div>
+        </div>
+
+        <div class="selected-agent" *ngIf="selectedAgent">
+          <div class="agent-avatar">
+            {{ selectedAgent.name.charAt(0) }}{{ selectedAgent.firstname.charAt(0) }}
+          </div>
+
+          <div>
+            <strong>{{ getAgentFullName(selectedAgent) }}</strong>
+            <span>{{ selectedAgent.sex }}</span>
+          </div>
+        </div>
+
+        <div class="empty-agent" *ngIf="!selectedAgent">
+          Sélectionnez un agent dans la liste à droite.
+        </div>
+
+        <small class="field-error" *ngIf="isInvalid('agentId')">
+          L’agent est obligatoire.
+        </small>
+      </section>
+
+      <section class="premium-card">
+        <div class="card-header">
+          <div>
+            <span>Agents</span>
+            <h2>Liste des agents</h2>
+          </div>
+        </div>
+
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+
+            (input)="filterAgents()"
+            placeholder="Rechercher un agent"
+          />
+        </div>
+
+        <div class="loading-list" *ngIf="isLoadingAgents">
+          Chargement des agents...
+        </div>
+
+        <div class="agent-list" *ngIf="!isLoadingAgents">
+          <div class="agent-row" *ngFor="let agent of filteredAgents">
+            <div>
+              <strong>{{ getAgentFullName(agent) }}</strong>
+              <span>{{ agent.sex }}</span>
+            </div>
+
+            <button
+              type="button"
+              [class.selected]="selectedAgent?.id === agent.id"
+              (click)="assignAgent(agent)">
+              {{ selectedAgent?.id === agent.id ? 'Assigné' : 'Assigner' }}
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="premium-card dossier-info-card">
+      <div class="card-header">
+        <div>
+          <span>Étape 2</span>
+          <h2>Information du dossier</h2>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Référence du dossier</label>
+          <input
+            type="text"
+            formControlName="numeroDossier"
+            placeholder="Ex : DOS-AER-2026-001"
+            [class.invalid]="isInvalid('referenceDossier')"
+          />
+          <small *ngIf="isInvalid('referenceDossier')">La référence est obligatoire.</small>
+        </div>
+
+        <div class="form-field">
+          <label>Version du dossier</label>
+          <input
+            type="text"
+            formControlName="version"
+            placeholder="Ex : 1.0"
+            [class.invalid]="isInvalid('versionDossier')"
+          />
+          <small *ngIf="isInvalid('versionDossier')">La version est obligatoire.</small>
+        </div>
+
+        <div class="form-field full">
+          <label>Résumé professionnel</label>
+          <textarea
+            rows="4"
+            formControlName="resume_professionnel"
+            placeholder="Résumé professionnel de l’agent"
+            [class.invalid]="isInvalid('resumeProfessionnel')">
+          </textarea>
+          <small *ngIf="isInvalid('resumeProfessionnel')">
+            Le résumé doit contenir au moins 10 caractères.
+          </small>
+        </div>
+      </div>
+    </section>
+
+    <div class="form-alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <section class="form-actions">
+      <button type="button" class="btn-secondary" routerLink="/management/dossiers/show">
+        Annuler
+      </button>
+
+      <button type="submit" class="btn-primary" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </section>
+  </form>
+</div>

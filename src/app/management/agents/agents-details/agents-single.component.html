@@ -1,190 +1,246 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid mt-4">
-    <div class="row mb-2">
+<section class="content-header agent-content-header">
+  <div class="container-fluid">
+    <div class="row align-items-center">
       <div class="col-sm-6">
-        <h3>DETAIL DE L'AGENT</h3>
+        <p class="agent-kicker mb-1">Detail de l'agent</p>
+        <h1 class="m-0">Fiche professionnelle</h1>
       </div>
       <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
+        <ol class="breadcrumb float-sm-right mb-0">
           <li class="breadcrumb-item">
-            <a routerLink="/coach/liste-des-coachs"> Liste des agents </a>
+            <a routerLink="/agents">Liste des agents</a>
           </li>
           <li class="breadcrumb-item active">Agent detail</li>
         </ol>
       </div>
     </div>
   </div>
-  <!-- /.container-fluid -->
 </section>
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <!--new row-->
-    <div class="row mb-2">
-      <div class="col-md-12">
-        <mat-card>
-          <mat-card-content>
-            <img [src]="Path.user" mat-card-avatar />
-            <span class="header-name">
-              Agent :
-              {{ nom }} {{ postnom }} {{ prenom }}
-            </span>
 
-            <div class="float-right">
-              <button
-                mat-raised-button
-                color="warn"
-                class="mr-1"
-                routerLink="/coach/liste-des-coachs"
-              >
-                <i class="bi bi-arrow-left"></i>
+<section class="content agent-detail-page">
+  <div class="container-fluid">
+    <div *ngIf="loading" class="card agent-state-card">
+      <div class="card-body d-flex align-items-center">
+        <div class="agent-skeleton agent-skeleton-avatar mr-3"></div>
+        <div class="w-100">
+          <span class="agent-skeleton w-50 mb-2"></span>
+          <span class="agent-skeleton w-75 mb-2"></span>
+          <span class="agent-skeleton w-25"></span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && errorMessage" class="alert alert-danger shadow-sm">
+      <h5 class="mb-1">
+        <i class="icon fas fa-exclamation-triangle mr-1"></i>
+        Chargement impossible
+      </h5>
+      <p class="mb-3">{{ errorMessage }}</p>
+      <button type="button" class="btn btn-outline-light btn-sm" (click)="retourListe()">
+        Retour a la liste
+      </button>
+    </div>
+
+    <ng-container *ngIf="!loading && !errorMessage && agent as agent">
+      <div class="card agent-hero-card elevation-2">
+        <div class="card-body">
+          <div class="agent-hero">
+            <div class="agent-identity">
+              <div class="agent-avatar">
+                <img *ngIf="avatarUrl(agent) as imageUrl; else avatarFallback" [src]="imageUrl" [alt]="displayName(agent)" />
+                <ng-template #avatarFallback>
+                  <span>{{ initials(agent) }}</span>
+                </ng-template>
+              </div>
+
+              <div class="agent-title">
+                <span class="badge badge-success agent-status">
+                  <i class="fas fa-check-circle mr-1"></i>
+                  Agent actif
+                </span>
+                <h2>{{ displayName(agent) }}</h2>
+                <div class="agent-tags">
+                  <span>
+                    <i class="fas fa-id-badge mr-1"></i>
+                    {{ field(agent.matricule) }}
+                  </span>
+                  <span>
+                    <i class="fas fa-sitemap mr-1"></i>
+                    {{ field(agent.service) }}
+                  </span>
+                  <span>
+                    <i class="fas fa-briefcase mr-1"></i>
+                    {{ field(agent.fonction) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="agent-actions">
+              <button type="button" class="btn btn-outline-danger" (click)="retourListe()">
+                <i class="fas fa-arrow-left mr-1"></i>
                 Retour sur la liste
               </button>
-              <button mat-raised-button color="primary">
+              <button type="button" class="btn btn-primary" (click)="genererCarte(agent)">
+                <i class="fas fa-address-card mr-1"></i>
                 Generer la carte
               </button>
             </div>
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
       </div>
-    </div>
-    <!--end new row-->
-    <div class="row">
-      <!-- left column -->
-      <div class="col-md-12">
-        <!-- general form elements -->
-        <div class="card card-main">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="card card-info-1">
-                  <div class="card-body">
-                    <div class="container">
-                      <div class="col-md-12 mb-2 prop_img">
-                        <img
-                          [src]="Path.user"
-                          alt="IMG"
-                          class="img img-thumbnail coach_img"
-                          name="imageUpload"
-                        />
-                      </div>
-                    </div>
-                    <div class="d-flex flex-column">
-                      <div class="p-2">
-                        <label class="label-text">NOM :</label>
-                        <label class="content-text">{{ nom }} {{ postnom }} {{ prenom }}</label>
-                      </div>
 
-                      <div class="p-2">
-                        <label class="label-text">SEXE :</label>
-                        <label class="content-text">{{ sex }}</label>
-                      </div>
-
-                      <div class="p-2">
-                        <label class="label-text">ETAT CIVIL :</label>
-                        <label class="content-text">{{ civilite }}</label>
-                      </div>
-
-                      <div class="p-2">
-                        <label class="label-text">DANAIS :</label>
-                        <label class="content-text">{{ danais | date }}</label>
-                      </div>
-
-                      <div class="p-2">
-                        <label class="label-text">LIEU DE NAISSANCE :</label>
-                        <label class="content-text">{{ lieuNaissance }}</label>
-                      </div>
-
-                      <div class="p-2">
-                        <label class="label-text">NATIONALITE :</label>
-                        <label class="content-text">{{ nationalite }}</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="card card-info-2">
-                  <div class="card-body">
-                    <label class="label-text">Mobile</label>
-                    <hr />
-                    <div class="d-flex flex-column">
-                      <div class="p-2">
-                        <label class="label-text">TELEPHONE :</label>
-                        <label class="content-text"> {{ phoneNumber }}</label>
-                      </div>
-
-                      <div class="p-2">
-                        <label class="label-text">TELEPHONE 1 :</label>
-                        <label class="content-text">{{ phoneNumber1 }}</label>
-                      </div>
-
-                      <div class="p-2" *ngIf="email">
-                        <label class="label-text">EMAIL :</label>
-                        <label
-                          class="content-text"
-                          style="text-transform: lowercase"
-                          >{{ email }}</label
-                        >
-                      </div>
-                    </div>
-                    <hr />
-                    <label class="label-text">ADRESSE</label>
-                    <hr />
-                    <div class="d-flex flex-column">
-                      <div class="p-2">
-                        <label class="content-text">
-                          {{ address }}
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="card card-info-3">
-                  <div class="card-body">
-                    <label class="label-text"> INFO PROFESSIONNELLE </label>
-                    <hr />
-                    <div class="d-flex flex-column">
-                      <div class="p-2">
-                        <label class="label-text">MATRICULE :</label>
-                        <label class="content-text">{{ matricule }}</label>
-                      </div>
-
-                      <div class="p-2">
-                        <label class="label-text">SERVICE :</label>
-                        <label class="content-text"> {{ service }}</label>
-                      </div>
-
-                      <div class="p-2" *ngIf="email">
-                        <label class="label-text">FONCTION :</label>
-                        <label
-                          class="content-text"
-                          style="text-transform: lowercase"
-                          >{{ fonction }}</label
-                        >
-                      </div>
-
-                      <div class="p-2">
-                        <label class="label-text">FILLIATION :</label>
-                        <label class="content-text">{{ filiation }}</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div class="row agent-metrics">
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="info-box elevation-1">
+            <span class="info-box-icon bg-primary"><i class="fas fa-phone-alt"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Telephone</span>
+              <span class="info-box-number">{{ field(agent.phoneNumber, agent.phoneNumber1, agent.phoneNumber) }}</span>
             </div>
           </div>
         </div>
-        <!-- /.card -->
+
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="info-box elevation-1">
+            <span class="info-box-icon bg-info"><i class="fas fa-envelope"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Email</span>
+              <span class="info-box-number">{{ field(agent.email) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="info-box elevation-1">
+            <span class="info-box-icon bg-warning"><i class="fas fa-flag"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Nationalite</span>
+              <span class="info-box-number">{{ field(agent.nationality) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="info-box elevation-1">
+            <span class="info-box-icon bg-success"><i class="fas fa-calendar-alt"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Naissance</span>
+              <span class="info-box-number">{{ dateField(agent.birthdate || agent.birthdate) }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <!--/.col (left) -->
-    </div>
-    <!-- /.row -->
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card card-outline card-danger agent-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-user mr-2"></i>
+                Identite
+              </h3>
+            </div>
+            <div class="card-body">
+              <dl class="agent-detail-list">
+                <div>
+                  <dt>Nom complet</dt>
+                  <dd>{{ displayName(agent) }}</dd>
+                </div>
+                <div>
+                  <dt>Sexe</dt>
+                  <dd>{{ field(agent.sex, agent.sex) }}</dd>
+                </div>
+                <div>
+                  <dt>Etat civil</dt>
+                  <dd>{{ field(agent.etatCivil) }}</dd>
+                </div>
+                <div>
+                  <dt>Date de naissance</dt>
+                  <dd>{{ dateField(agent.placeBirth || agent.birthdate) }}</dd>
+                </div>
+                <div>
+                  <dt>Lieu de naissance</dt>
+                  <dd>{{ field(agent.placeBirth) }}</dd>
+                </div>
+                <div>
+                  <dt>Nationalite</dt>
+                  <dd>{{ field(agent.nationality) }}</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card card-outline card-primary agent-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-mobile-alt mr-2"></i>
+                Mobile et adresse
+              </h3>
+            </div>
+            <div class="card-body">
+              <dl class="agent-detail-list">
+                <div>
+                  <dt>Telephone</dt>
+                  <dd>{{ field(agent.phoneNumber) }}</dd>
+                </div>
+                <div>
+                  <dt>Telephone 1</dt>
+                  <dd>{{ field(agent.phoneNumber, agent.phoneNumber1) }}</dd>
+                </div>
+                <div>
+                  <dt>Email</dt>
+                  <dd>{{ field(agent.email) }}</dd>
+                </div>
+                <div>
+                  <dt>Adresse</dt>
+                  <!-- <dd>{{ field(agent.adresse) }}</dd> -->
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card card-outline card-dark agent-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-building mr-2"></i>
+                Info professionnelle
+              </h3>
+            </div>
+            <div class="card-body">
+              <dl class="agent-detail-list">
+                <div>
+                  <dt>Matricule</dt>
+                  <dd>{{ field(agent.matricule) }}</dd>
+                </div>
+                <div>
+                  <dt>Service</dt>
+                  <dd>{{ field(agent.service) }}</dd>
+                </div>
+                <div>
+                  <dt>Fonction</dt>
+                  <dd>{{ field(agent.fonction) }}</dd>
+                </div>
+                <div>
+                  <dt>Filiation</dt>
+                  <dd>{{ field(agent.filiation, agent.filliation) }}</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
-  <!-- /.container-fluid -->
 </section>
+
+<app-previews-card-agent
+  *ngIf="cardAgent as selectedAgent"
+  [agent]="selectedAgent"
+  [institution]="cardInstitution"
+  (closed)="fermerCarte()"
+></app-previews-card-agent>

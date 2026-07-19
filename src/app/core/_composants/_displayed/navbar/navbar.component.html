@@ -1,58 +1,115 @@
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <!-- Brand Logo -->
-  <a href="#" class="brand-link">
-    <img
-      [src]="imgPath.logo"
-      alt="IMG"
-      class="brand-image img-circle elevation-3"
-      style="opacity: 0.8"
-    />
-    <span class="brand-text font-weight-light"> G-SPER </span>
+<aside class="main-sidebar premium-sidebar elevation-4">
+  <a routerLink="/admin/dashboard" class="brand-link premium-brand">
+    <div class="brand-logo">
+      <span>G</span>
+    </div>
+
+    <div class="brand-text">
+      <strong>G-SPER</strong>
+      <small>Administration RH</small>
+    </div>
   </a>
 
-  <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar user panel (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img
-          [src]="imgPath.user"
-          class="img-circle elevation-2"
-          alt="User Image"
-        />
+    <div class="user-panel premium-user">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
       </div>
-      <div class="info">
-        <a href="#" class="d-block"> Username </a>
+
+      <div class="user-info">
+        <strong>Username</strong>
+        <span>Administrateur</span>
       </div>
     </div>
-    <!-- Sidebar Menu -->
-    <nav class="mt-2">
+
+    <nav class="mt-3">
       <ul
-        class="nav nav-pills nav-sidebar flex-column"
+        class="nav nav-pills nav-sidebar flex-column premium-menu"
         data-widget="treeview"
         role="menu"
         data-accordion="false"
       >
-        <li class="nav-item menu-open">
-          <a routerLink="/" class="nav-link">
-            <i class="nav-icon fa-thin fa-gauge"></i>
+        <li class="nav-item" [ngClass]="{ 'menu-open': isMenuActive('/') }">
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            class="nav-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [ngClass]="{ active: isDashboardMenuActive() }"
+          >
+            <i class="nav-icon fas fa-chart-pie"></i>
             <p>Tableau de bord</p>
           </a>
         </li>
-        <li class="nav-item mb-2">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fa-thin fa-users"></i>
-            <p>
-              Agents
-              <i class="fas fa-angle-left right"></i>
-            </p>
+
+        <li
+          class="nav-item"
+          [ngClass]="{ 'menu-open': isMenuActive('/management/coach/save') }"
+        >
+          <a
+            href="#"
+            class="nav-link"
+            [ngClass]="{ active: isAgentMenuActive() }"
+          >
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>Agents</p>
+            <i class="right fas fa-chevron-right"></i>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a
-                routerLink="/management/coach/save"
+                routerLink="/management/agents/save"
                 routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="nav-link"
+              >
+                <span class="ml-4">Création</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                routerLink="/management/agents/show"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="nav-link"
+              >
+                <span class="ml-4"> Listes </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                routerLink="/management/agents/agentss"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="nav-link"
+              >
+                <span class="ml-4"> Agent Premium </span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li
+          class="nav-item"
+          [ngClass]="{
+            'menu-open': isMenuActive('/management/dossiers/create'),
+          }"
+        >
+          <a
+            href="#"
+            class="nav-link"
+            [ngClass]="{ active: isDossierMenuActive() }"
+          >
+            <i class="nav-icon far fa-folder-open"></i>
+            <p>Dossiers</p>
+            <i class="right fas fa-chevron-right"></i>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                routerLink="/management/dossiers/create"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
               >
                 <span class="ml-4"> Création </span>
@@ -60,106 +117,179 @@
             </li>
             <li class="nav-item">
               <a
-                routerLink="/coach/show"
+                routerLink="/management/dossiers/show"
                 routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
               >
-                <span class="ml-4"> List des agents </span>
+                <span class="ml-4">Listes</span>
               </a>
             </li>
           </ul>
         </li>
-        <li class="nav-item mb-2">
-          <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-person"></i>
-            <p>
-              Dossiers
-              <i class="fas fa-angle-left right"></i>
-            </p>
+
+        <li
+          class="nav-item"
+          [ngClass]="{
+            'menu-open': isMenuActive('/management/formations/create'),
+          }"
+        >
+          <a
+            href="#"
+            class="nav-link"
+            [ngClass]="{ active: isFormationMenuActive() }"
+          >
+            <i class="nav-icon fas fa-graduation-cap"></i>
+            <p>Formations</p>
+            <i class="right fas fa-chevron-right"></i>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a
-                routerLink="/coach/dossiers/create"
+                routerLink="/management/formations/create"
                 routerLinkActive="active"
                 class="nav-link"
+                [routerLinkActiveOptions]="{ exact: true }"
               >
-                <span class="ml-4">
-                  Création
-                </span>
+                <span class="ml-4"> Création </span>
               </a>
             </li>
             <li class="nav-item">
               <a
-                routerLink="/coach/dossiers"
+                routerLink="/management/formations/show"
                 routerLinkActive="active"
                 class="nav-link"
+                [routerLinkActiveOptions]="{ exact: true }"
               >
-                <span class="ml-4"> Liste de dossiers </span>
+                <span class="ml-4"> Listes </span>
               </a>
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fa-thin fa-toolbox"></i>
-            <p>
-              Management
-              <i class="fas fa-angle-left right"></i>
-            </p>
+        <li
+          class="nav-item"
+          [ngClass]="{
+            'menu-open': isMenuActive('/management/experience/create'),
+          }"
+        >
+          <a
+            href="#"
+            class="nav-link"
+            [ngClass]="{ active: isExperienceMenuActive() }"
+          >
+            <i class="nav-icon fas fa-briefcase"></i>
+            <p>Expériences</p>
+            <i class="right fas fa-chevron-right"></i>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a
-                routerLink="langue-parlee"
+                routerLink="/management/experience/create"
                 routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
               >
-                <i class="far fa-circle nav-icon"></i>
-                <p>Langues</p>
+                <span class="ml-4">Création</span>
               </a>
             </li>
             <li class="nav-item">
               <a
-                routerLink="experience-pro"
+                routerLink="/management/experience/show"
                 routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
               >
-                <i class="far fa-circle nav-icon"></i>
-                <p>Experience</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                routerLink="competences"
-                routerLinkActive="active"
-                class="nav-link"
-              >
-                <i class="far fa-circle nav-icon"></i>
-                <p>Competences</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                routerLink="formations"
-                routerLinkActive="active"
-                class="nav-link"
-              >
-                <i class="far fa-circle nav-icon"></i>
-                <p>Formations</p>
+                <span class="ml-4">Listes </span>
               </a>
             </li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a routerLink="login" routerLinkActive="active" class="nav-link">
-            <i class="fa-thin fa-arrow-right-from-bracket nav-icon"></i>
-            <p>Déconnection</p>
+
+        <li
+          class="nav-item"
+          [ngClass]="{
+            'menu-open': isMenuActive('/management/competences/create'),
+          }"
+        >
+          <a
+            href="#"
+            class="nav-link"
+            [ngClass]="{ active: isCompetenceMenuActive() }"
+          >
+            <i class="nav-icon fas fa-medal"></i>
+            <p>Compétences</p>
+            <i class="right fas fa-chevron-right"></i>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a
+                  routerLink="/management/competences/create"
+                  routerLinkActive="active"
+                  class="nav-link"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  <span class="ml-4"> Création </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  routerLink="/management/competences/show"
+                  routerLinkActive="active"
+                  class="nav-link"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  <span class="ml-4"> Listes </span>
+                </a>
+              </li>
+            </ul>
+          </a>
+        </li>
+
+        <li
+          class="nav-item"
+          [ngClass]="{
+            'menu-open': isMenuActive('/management/langues/create'),
+          }"
+        >
+          <a
+            href="#"
+            routerLinkActive="active"
+            class="nav-link"
+            [ngClass]="{ active: isLangueMenuActive() }"
+          >
+            <i class="nav-icon fas fa-language"></i>
+            <p>Langues</p>
+            <i class="right fas fa-chevron-right"></i>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                routerLink="/management/langues/create"
+                routerLinkActive="active"
+                class="nav-link"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <span class="ml-4"> Création </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                routerLink="/management/langues/show"
+                routerLinkActive="active"
+                class="nav-link"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <span class="ml-4"> Listes </span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item logout-item">
+          <a routerLink="/login" class="nav-link logout-link">
+            <i class="nav-icon fas fa-power-off"></i>
+            <p>Déconnexion</p>
           </a>
         </li>
       </ul>
     </nav>
-    <!-- /.sidebar-menu -->
   </div>
-  <!-- /.sidebar -->
 </aside>

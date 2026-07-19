@@ -24,6 +24,7 @@
     "@popperjs/core": "^2.11.8",
     "admin-lte": "3.2",
     "angular-datatables": "^16.0.0",
+    "angularx-qrcode": "^21.0.5",
     "apexcharts": "^4.2.0",
     "bootstrap": "^5.3.2",
     "chart.js": "^4.5.1",

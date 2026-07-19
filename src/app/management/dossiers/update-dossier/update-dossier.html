@@ -1,0 +1,152 @@
+<div class="edit-page">
+  <div class="page-header">
+    <div>
+      <span>Administration</span>
+      <h1>Mise à jour du dossier agent</h1>
+    </div>
+
+    <nav>
+      <a routerLink="/admin/dashboard">Accueil</a>
+      <span>/</span>
+      <a routerLink="/admin/dossiers">Liste des dossiers</a>
+      <span>/</span>
+      <strong>Mise à jour</strong>
+    </nav>
+  </div>
+
+  <div class="loading-card" *ngIf="isLoading">Chargement du dossier...</div>
+
+  <div class="alert success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <ng-container *ngIf="!isLoading && dossier">
+    <section class="agent-hero">
+      <div class="avatar">{{ dossier.agent.name.charAt(0) }}</div>
+
+      <div class="agent-info">
+        <span>Dossier sélectionné</span>
+        <h2>
+          {{ dossier.agent.name }} {{ dossier.agent.lastname }} {{
+          dossier.agent.firstname }}
+        </h2>
+        <p>
+          {{ dossier.agent.matricule }} · {{ dossier.agent.sex }} · {{
+          dossier.agent.etatCivil }}
+        </p>
+      </div>
+
+      <div class="dossier-badge">{{ dossier.numeroDossier }}</div>
+    </section>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-layout">
+        <section class="premium-card">
+          <div class="card-title">
+            <span>Informations agent</span>
+            <h2>Résumé administratif</h2>
+          </div>
+
+          <div class="info-grid">
+            <div>
+              <span>Agent</span>
+              <strong>{{ dossier.agent.name }}</strong>
+            </div>
+
+            <div>
+              <span>Matricule</span>
+              <strong>{{ dossier.agent.matricule }}</strong>
+            </div>
+
+            <div>
+              <span>Sexe</span>
+              <strong>{{ dossier.agent.sex }}</strong>
+            </div>
+
+            <div>
+              <span>État civil</span>
+              <strong>{{ dossier.agent.etatCivil }}</strong>
+            </div>
+
+            <div>
+              <span>Téléphone</span>
+              <strong>{{ dossier.agent.phoneNumber }}</strong>
+            </div>
+
+            <div>
+              <span>Email</span>
+              <strong>{{ dossier.agent.email }}</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="premium-card">
+          <div class="card-title">
+            <span>Mise à jour</span>
+            <h2>Informations du dossier</h2>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <label>N° dossier</label>
+              <input
+                type="text"
+                formControlName="numeroDossier"
+                [class.invalid]="isInvalid('numeroDossier')"
+              />
+              <small *ngIf="isInvalid('numeroDossier')">
+                Le numéro du dossier est obligatoire.
+              </small>
+            </div>
+
+            <div class="form-field">
+              <label>Version du dossier</label>
+              <input
+                type="text"
+                formControlName="versionDossier"
+                [class.invalid]="isInvalid('versionDossier')"
+              />
+              <small *ngIf="isInvalid('versionDossier')">
+                La version est obligatoire.
+              </small>
+            </div>
+
+            <div class="form-field full">
+              <label>Référence du dossier</label>
+              <input
+                type="text"
+                formControlName="referenceDossier"
+                [class.invalid]="isInvalid('referenceDossier')"
+              />
+              <small *ngIf="isInvalid('referenceDossier')">
+                La référence est obligatoire.
+              </small>
+            </div>
+
+            <div class="form-field full">
+              <label>Résumé professionnel</label>
+              <textarea
+                rows="5"
+                formControlName="resumeProfessionnel"
+                [class.invalid]="isInvalid('resumeProfessionnel')"
+              >
+              </textarea>
+              <small *ngIf="isInvalid('resumeProfessionnel')">
+                Le résumé doit contenir au moins 10 caractères.
+              </small>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="actions-card">
+        <button type="button" class="btn-secondary" (click)="cancel()">
+          Annuler
+        </button>
+
+        <button type="submit" class="btn-primary" [disabled]="isSaving">
+          {{ isSaving ? 'Mise à jour...' : 'Enregistrer les modifications' }}
+        </button>
+      </section>
+    </form>
+  </ng-container>
+</div>

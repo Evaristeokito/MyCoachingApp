@@ -1,0 +1,116 @@
+<article class="official-card" *ngIf="agent">
+  <div class="security-layer" aria-hidden="true"></div>
+  <div class="watermark" aria-hidden="true">RDC</div>
+
+  <header class="official-header">
+    <div class="flag-rdc" aria-label="Drapeau RDC">
+      <span class="flag-star">★</span>
+    </div>
+
+    <div class="institution-copy">
+      <p>{{ cardInstitution.country }}</p>
+      <span>{{ cardInstitution.ministry }}</span>
+      <strong>{{ cardInstitution.title }}</strong>
+    </div>
+
+    <div class="emblem-mark" aria-label="Embleme">
+      <i class="fas fa-shield-alt"></i>
+    </div>
+  </header>
+
+  <main class="official-body">
+    <aside class="photo-column">
+      <strong class="region-code">{{ cardInstitution.regionCode }}</strong>
+
+      <div class="portrait">
+        <img
+          *ngIf="avatarUrl(agent) as imageUrl; else portraitFallback"
+          [src]="imageUrl"
+          [alt]="displayName(agent)"
+        />
+        <ng-template #portraitFallback>
+          <span>{{ initials(agent) }}</span>
+        </ng-template>
+      </div>
+
+      <div class="serial-block">
+        <span>{{ cardInstitution.serialLabel }}</span>
+        <strong>{{ field(agent.matricule, agent.id) }}</strong>
+      </div>
+    </aside>
+
+    <section class="identity-column">
+      <div class="field-row field-main">
+        <span>Nom / <em>Name</em></span>
+        <strong>{{ lastName(agent) }}</strong>
+      </div>
+
+      <div class="field-row field-main">
+        <span>Prenom / <em>First name</em></span>
+        <strong>{{ firstName(agent) }}</strong>
+      </div>
+
+      <div class="identity-grid">
+        <div class="field-row">
+          <span>Lieu de naissance / <em>Place of birth</em></span>
+          <strong>{{ field(agent.placeBirth) }}</strong>
+        </div>
+
+        <div class="field-row">
+          <span>Sexe / <em>Sex</em></span>
+          <strong>{{ field(agent.sex, agent.sex) }}</strong>
+        </div>
+
+        <div class="field-row">
+          <span>Nationalite / <em>Nationality</em></span>
+          <strong>{{ field(agent.nationality) }}</strong>
+        </div>
+
+        <div class="field-row">
+          <span>Fonction / <em>Title</em></span>
+          <strong>{{ field(agent.fonction) }}</strong>
+        </div>
+      </div>
+
+      <div class="field-row field-main">
+        <span>Date de naissance / <em>Date of birth</em></span>
+        <strong>{{ dateField(agent.birthdate || agent.birthdate) }}</strong>
+      </div>
+    </section>
+
+    <aside class="verification-column">
+      <div class="qr-card">
+        <qrcode
+          [qrdata]="qrValue()"
+          [width]="112"
+          [margin]="1"
+          [errorCorrectionLevel]="'M'"
+        ></qrcode>
+        <span>Verifier</span>
+      </div>
+
+      <div class="mini-field">
+        <span>Service</span>
+        <strong>{{ field(agent.service) }}</strong>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="official-footer">
+    <div>
+      <span>Telephone / Phone</span>
+      <strong
+        >{{ field(agent.phoneNumber, agent.phoneNumber1, agent.phoneNumber1)
+        }}</strong
+      >
+    </div>
+    <div>
+      <span>Delivree le / Date of issue</span>
+      <strong>{{ dateField(cardInstitution.issueDate) }}</strong>
+    </div>
+    <div>
+      <span>Expiration / Expiring date</span>
+      <strong>{{ dateField(cardInstitution.expiryDate) }}</strong>
+    </div>
+  </footer>
+</article>

@@ -8,9 +8,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">
-            Competences
-          </li>
+          <li class="breadcrumb-item active">Competences</li>
         </ol>
       </div>
     </div>
@@ -47,7 +45,7 @@
                     <th>N°</th>
                     <th>Agent</th>
                     <th>Sexe</th>
-                    <th>Compétence en </th>
+                    <th>Compétence en</th>
                     <th>Niveau</th>
                     <th>Action</th>
                   </tr>
@@ -60,7 +58,10 @@
                     "
                   >
                     <td>{{ i + 1 }}</td>
-                    <td>{{item.agent.name}} {{item.agent.firstname}} {{item.agent.lastname}}</td>
+                    <td>
+                      {{item.agent.name}} {{item.agent.firstname}}
+                      {{item.agent.lastname}}
+                    </td>
                     <td>{{item.agent.sex}}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.level }}</td>
@@ -101,7 +102,6 @@
                 </tbody>
               </table>
             </div>
-
             <div
               *ngIf="competenceDATA.length > 0"
               class="pagination mt-3 d-flex justify-content-end align-items-end"
@@ -112,7 +112,8 @@
                 [maxSize]="pageSize"
                 [rotate]="true"
                 [ellipses]="false"
-                [boundaryLinks]="true"></ngb-pagination>
+                [boundaryLinks]="true"
+              ></ngb-pagination>
             </div>
           </div>
         </div>

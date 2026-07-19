@@ -1,106 +1,161 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexStroke,
-  ApexTitleSubtitle,
-  ApexGrid,
-  ChartComponent,
-  NgApexchartsModule,
-} from 'ng-apexcharts';
+import { NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexYAxis, ApexStroke, ApexMarkers, ApexDataLabels, ApexFill, ApexGrid, ApexTooltip, ChartComponent } from 'ng-apexcharts';
+import { PresenceStat, UtilsService } from 'src/app/management/utils/utils.service';
 
-export type ChartOptions = {
-  series: ApexAxisChartSeries | any;
-  chart: ApexChart | any;
-  xaxis: ApexXAxis | any;
-  stroke: ApexStroke | any;
-  dataLabels: ApexDataLabels | any;
-  grid: ApexGrid | any;
-  title: ApexTitleSubtitle | any;
+
+export type PresenceChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  yaxis: ApexYAxis;
+  stroke: ApexStroke;
+  markers: ApexMarkers;
+  dataLabels: ApexDataLabels;
+  fill: ApexFill;
+  grid: ApexGrid;
+  tooltip: ApexTooltip;
+  colors: string[];
 };
 
 @Component({
   selector: 'app-dash-graph-bar',
   standalone: true,
-  imports: [NgApexchartsModule],
+  imports: [NgIf, ChartComponent],
   templateUrl: './dash-graph-bar.component.html',
   styleUrl: './dash-graph-bar.component.css',
 })
 export class DashGraphBarComponent implements OnInit {
-  @ViewChild('chart') chart!: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  isLoading = true;
 
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          name: 'Présence',
-          data: [
-            'Lundi',
-            'Mardi',
-            'Mercredi',
-            'Jeudi',
-            'Vendredi',
-            'Lundi',
-            'Mardi',
-            'Mercredi',
-            'Jeudi',
-            'Vendredi',
-          ],
-        },
-      ],
-      chart: {
-        height: 250,
-        type: 'line',
-        toolbar: {
-          show: false, // ⚠️ obligatoire
-          tools: {
-            download: true,
-            selection: true,
-            zoom: true,
-            zoomin: true,
-            zoomout: true,
-            pan: true,
-            reset: true,
-          },
-        },
-        zoom: {
-          enabled: false,
-        },
+  chartOptions: PresenceChartOptions = {
+    series: [
+      {
+        name: 'Présences',
+        data: [],
       },
-      dataLabels: {
+    ],
+    chart: {
+      type: 'line',
+      height: 280,
+      toolbar: {
+        show: false,
+      },
+      zoom: {
         enabled: false,
       },
-      stroke: {
-        curve: 'smooth',
+      animations: {
+        enabled: true,
+        speed: 800,
       },
-      title: {
-        text: 'Statistique de présence des agents',
-        align: 'left',
+    },
+    colors: ['#2563eb'],
+    stroke: {
+      curve: 'smooth',
+      width: 4,
+    },
+    markers: {
+      size: 5,
+      colors: ['#2563eb'],
+      strokeColors: '#ffffff',
+      strokeWidth: 2,
+      hover: {
+        size: 7,
       },
-      grid: {
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    fill: {
+      type: 'solid',
+      opacity: 0.12,
+    },
+    grid: {
+      borderColor: '#e5e7eb',
+      strokeDashArray: 0,
+      xaxis: {
+        lines: {
+          show: false,
         },
       },
-      xaxis: {
-        categories: [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-        ],
+      yaxis: {
+        lines: {
+          show: true,
+        },
       },
-    };
+    },
+    xaxis: {
+      categories: [],
+      labels: {
+        style: {
+          colors: '#374151',
+          fontSize: '14px',
+        },
+      },
+      axisBorder: {
+        color: '#d1d5db',
+      },
+      axisTicks: {
+        color: '#d1d5db',
+      },
+    },
+    yaxis: {
+      min: 0,
+      max: 6,
+      tickAmount: 6,
+      labels: {
+        style: {
+          colors: '#374151',
+          fontSize: '13px',
+        },
+      },
+    },
+    tooltip: {
+      theme: 'dark',
+      y: {
+        formatter: (value: number) => `${value} présence(s)`,
+      },
+    },
+  };
+
+  constructor(private dashboardService: UtilsService) {}
+
+  ngOnInit(): void {
+    this.loadPresencePersonnelStats();
   }
 
-  ngOnInit() {}
+  loadPresencePersonnelStats(): void {
+    this.dashboardService.getPresenceStats().subscribe({
+      next: (data: PresenceStat[]) => {
+        const mois = data.map((item) => item.mois);
+        const presences = data.map((item) => item.presences);
+        const maxValue = Math.max(...presences, 6);
+
+        this.chartOptions = {
+          ...this.chartOptions,
+          series: [
+            {
+              name: 'Présences',
+              data: presences,
+            },
+          ],
+          xaxis: {
+            ...this.chartOptions.xaxis,
+            categories: mois,
+          },
+          yaxis: {
+            ...this.chartOptions.yaxis,
+            max: maxValue,
+          },
+        };
+
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Erreur chargement présence des personnels', error);
+        this.isLoading = false;
+      },
+    });
+  }
 }

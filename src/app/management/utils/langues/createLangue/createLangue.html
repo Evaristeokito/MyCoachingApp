@@ -1,53 +1,261 @@
-<div style="background: blue !important; height: 4rem !important;">
-  <h2 mat-dialog-title>
-  <span *ngIf="!data.id" class="text-white">
-    CREATE NEW LANGUES
-  </span>
-    <span *ngIf="data.id" class="text-white" style="line-height: 12px;">
-    You are updating with Name : {{ data.name }}
-  </span>
-  </h2>
-</div>
-<mat-dialog-content>
-  <div class="container">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>CREATE LANGUES</h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Langue</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<section class="content">
+  <div class="container-fluid">
     <form [formGroup]="langueForm" (ngSubmit)="onSubmit()">
-      <input type="text" name="id" formControlName="i" id="id" class="form-control d-none">
-      <div class="form-group">
-        <label class="form-label">
-          Identité de l'agent :
-        </label>
-        <select name="iagent" id="iagent" formControlname="idAgent" class="form-select shadow-none">
-          <option value="#">Selectionner l'agent</option>
-          <ng-container *ngFor="let ag of agentData">
-            <option [value]="ag.id">
-              {{ag.name}}
-              {{ag.lastname}} 
-              {{ag.firstname}}
-            </option>
-          </ng-container>
-        </select>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h4>LISTE DES AGENTS</h4>
+          </div>
+        </div>
+        <!-- Corps de la Card -->
+        <div class="card-body">
+          <div class="card shadow-none" style="outline: none; border: none">
+            <div class="card-body">
+              <div
+                class="d-flex flex-row align-items-center justify-content-center align-content-center"
+              >
+                <!--form-search-->
+                <form action="">
+                  <div
+                    class="d-flex flex-row justify-content-center align-content-center align-items-center gap-1 form-search-center"
+                  >
+                    <button class="btn btn-search">
+                      <i class="fa-thin fa-magnifying-glass"></i>
+                    </button>
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      class="form-control input-search"
+                      placeholder="Rechercher l'agent par son nom , postnom ou prénom"
+                      [formControl]="searchControl"
+                    />
+                  </div>
+                </form>
+                <!-- end form search -->
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="card-body table-responsive p-0 mt-3"
+            style="height: 200px"
+          >
+            <table class="table table-head-fixed table-striped">
+              <thead>
+                <tr>
+                  <th>Nom</th>
+                  <th>PostNom</th>
+                  <th>Prenom</th>
+                  <th>Sexe</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let gt of filteredAgents ; let i = index" [class.selected-row]="selectedRowIndex === i">
+                  <td (click)="selectRow(i)">{{ gt.name }}</td>
+                  <td (click)="selectRow(i)">{{ gt.firstname }}</td>
+                  <td (click)="selectRow(i)">{{ gt.lastname }}</td>
+                  <td (click)="selectRow(i)">{{gt.sex }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-warning me-2"
+                     (click)="selectRow(i)"
+                     (click)="getAgentById(gt.id)">
+                      Assigner
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Langue :</label>
-        <input type="text" name="name" formControlName="name" id="name" class="form-control" placeholder="langue...">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Niveau :</label>
-        <input type="text" formControlName="level" name="level" id="level" class="form-control" placeholder="niveau...">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Observation :</label>
-        <input type="text" formControlName="Observation" name="observation" id="observation" class="form-control" placeholder="observation...">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h4>AGENT INFORMATION</h4>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+             <input
+                  type="text"
+                  name="id"
+                  formControlName="agentId"
+                  class="form-control d-none"
+                  placeholder="le nom..."
+                />
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-label"> Nom : </label>
+                <input
+                  type="text"
+                  name="name"
+                  formControlName="name"
+                  class="form-control"
+                  placeholder="le nom..."
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Post-nom :</label>
+              <input
+                type="text"
+                name="lastname"
+                formControlName="lastname"
+                class="form-control"
+                placeholder="nom de famille..."
+              />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Prenom :</label>
+              <input
+                type="text"
+                name="firstname"
+                formControlName="firstname"
+                class="form-control"
+                placeholder="le prenom..."
+              />
+            </div>
+          </div>
+          <!-- Sexe et civilité -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Sexe :</label>
+                <select
+                  name="sex"
+                  id="sex"
+                  formControlName="sex"
+                  class="form-select select shadow-none"
+                >
+                  <option value="">Selectionner le sexe</option>
+                  <option value="Masculin">Masculin</option>
+                  <option value="Feminin">Feminin</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Etat Civil : </label>
+              <div class="form-group">
+                <select
+                  name="etat"
+                  id="etat"
+                  formControlName="etatCivil"
+                  class="form-select shadow-none"
+                >
+                  <option value="">Selectionner l'état civil</option>
+                  <option value="cilibatire">Celibataire</option>
+                  <option value="marié">Marié</option>
+                  <option value="divorcé">Divorcé</option>
+                  <option value="veuve">Veuve</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- End civilite & Sex -->
+
+          <input
+            type="text"
+            name="id"
+            formControlName="i"
+            id="id"
+            class="form-control d-none"
+          />
+
+          <div formArrayName="languages">
+            <div
+              *ngFor="let item of languages.controls; let i=index"
+              [formGroupName]="i"
+              class="row mt-3"
+            >
+              <div class="col-md-5">
+                <label>Langue</label>
+
+                <select class="form-select shadow-none" formControlName="name">
+                  <option [ngValue]="null">Sélectionner</option>
+                  <option value="français">Français</option>
+                  <option value="anglais">Anglais</option>
+                  <option value="Lingala">Lingala</option>
+                  <option value="Swahili">Swahili</option>
+                  <option value="Kikongo">Kikongo</option>
+                  <option value="Tshiluba">Tshiluba</option>
+                </select>
+              </div>
+
+              <div class="col-md-5">
+                <label>Niveau</label>
+
+                <select class="form-select shadow-none" formControlName="level">
+                  <option>Débutant</option>
+                  <option>Moyen</option>
+                  <option>Bon</option>
+                  <option>Excellent</option>
+                </select>
+              </div>
+
+              <div class="col-md-2 d-flex align-items-end">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="removeLanguage(i)"
+                >
+                  Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="addLanguage()"
+            >
+              Ajouter une langue à l'agent
+            </button>
+          </div>
+        </div>
       </div>
       <div class="float-right">
-        <button type="button" class="btn btn-danger mr-1" mat-dialog-close>Close</button>
-        <button type="submit" class="btn btn-primary" [disabled]="langueForm.invalid">
-          <span *ngIf="!loading">Submit</span>
-          <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status">
+        <button type="button" class="btn btn-danger mr-1" mat-dialog-close>
+          Fermer
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"      
+        >
+          <span *ngIf="!loading">
+            Enregistrer
+          </span>
+          <div
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
             <span class="sr-only">loading...</span>
           </div>
         </button>
       </div>
     </form>
   </div>
-</mat-dialog-content>
+</section>

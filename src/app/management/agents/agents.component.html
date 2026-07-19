@@ -1,410 +1,226 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid mt-4">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h3>CREATION D'UN AGENT</h3>
+<div class="agent-form-page">
+  <div class="page-header">
+    <div>
+      <span>Gestion RH</span>
+      <h1>Création d’un agent</h1>
+    </div>
+
+    <nav>
+      <a routerLink="/admin/agents">Liste des agents</a>
+      <span>/</span>
+      <strong>Nouvel agent</strong>
+    </nav>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-layout">
+      <section class="premium-card identity-card">
+        <div class="card-title">
+          <span>Étape 1</span>
+          <h2>Identité de l’agent</h2>
+        </div>
+
+        <div class="form-grid three">
+          <div class="form-field">
+            <label>Nom</label>
+            <input formControlName="nom" placeholder="Nom de l’agent" />
+            <small *ngIf="isInvalid('nom')">Le nom est obligatoire.</small>
+          </div>
+
+          <div class="form-field">
+            <label>Post-nom</label>
+            <input formControlName="postNom" placeholder="Post-nom" />
+            <small *ngIf="isInvalid('postNom')">Le post-nom est obligatoire.</small>
+          </div>
+
+          <div class="form-field">
+            <label>Prénom</label>
+            <input formControlName="prenom" placeholder="Prénom" />
+            <small *ngIf="isInvalid('prenom')">Le prénom est obligatoire.</small>
+          </div>
+
+          <div class="form-field">
+            <label>Lieu de naissance</label>
+            <input formControlName="lieuNaissance" placeholder="Lieu de naissance" />
+          </div>
+
+          <div class="form-field">
+            <label>Date de naissance</label>
+            <input type="date" formControlName="dateNaissance" />
+            <small *ngIf="isInvalid('dateNaissance')">La date est obligatoire.</small>
+          </div>
+
+          <div class="form-field">
+            <label>Sexe</label>
+            <select formControlName="sexe">
+              <option value="">Sélectionner le sexe</option>
+              <option value="Masculin">Masculin</option>
+              <option value="Feminin">Féminin</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label>État civil</label>
+            <select formControlName="etatCivil">
+              <option value="">Sélectionner l’état civil</option>
+              <option value="Célibataire">Célibataire</option>
+              <option value="Marié">Marié</option>
+              <option value="Divorcé">Divorcé</option>
+              <option value="Veuf">Veuf</option>
+            </select>
+          </div>
+
+          <div class="form-field full">
+            <label>Nationalité</label>
+            <select formControlName="nationaliteId">
+              <option value="">Sélectionner la nationalité</option>
+              <!-- <option *ngFor="let item of nationalites" [value]="item.id">
+                {{ item.libelle }}
+              </option> -->
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <aside class="premium-card photo-card">
+        <div class="photo-preview">
+          <img *ngIf="photoPreview" [src]="photoPreview" alt="Photo agent" />
+          <i *ngIf="!photoPreview" class="fas fa-user"></i>
+        </div>
+
+        <div class="photo-actions">
+          <label class="btn-danger">
+            <i class="fas fa-upload"></i>
+            Importer
+            <input type="file" accept="image/*" hidden (change)="onPhotoSelected($event)" />
+          </label>
+
+          <button type="button" class="btn-blue" (click)="openCamera()">
+            <i class="fas fa-camera"></i>
+            Camera
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="form-layout">
+      <section class="premium-card">
+        <div class="card-title">
+          <span>Étape 2</span>
+          <h2>Contact</h2>
+        </div>
+
+        <div class="form-grid two">
+          <div class="form-field">
+            <label>Téléphone 1</label>
+            <input formControlName="telephone1" placeholder="+243..." />
+            <small *ngIf="isInvalid('telephone1')">Le téléphone est obligatoire.</small>
+          </div>
+
+          <div class="form-field">
+            <label>Téléphone 2</label>
+            <input formControlName="telephone2" placeholder="+243..." />
+          </div>
+
+          <div class="form-field full">
+            <label>Email</label>
+            <input formControlName="email" placeholder="exemple@email.com" />
+            <small *ngIf="isInvalid('email')">Adresse email invalide.</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="premium-card">
+        <div class="card-title">
+          <span>Étape 3</span>
+          <h2>Information professionnelle</h2>
+        </div>
+
+        <div class="form-grid two">
+          <div class="form-field">
+            <label>Matricule</label>
+            <input formControlName="matricule" placeholder="Matricule" />
+          </div>
+
+          <div class="form-field">
+            <label>Fonction</label>
+            <input formControlName="fonction" placeholder="Fonction" />
+          </div>
+
+          <div class="form-field full">
+            <label>Service</label>
+            <input formControlName="service" placeholder="Service ou département" />
+          </div>
+
+          <div class="form-field full">
+            <label>Attachement</label>
+            <input formControlName="attachement" placeholder="Filiale ou appartenance" />
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="premium-card">
+      <div class="card-title">
+        <span>Étape 4</span>
+        <h2>Adresse</h2>
       </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item">
-            <a routerLink="/"> Liste des agents </a>
-          </li>
-          <li class="breadcrumb-item active">Editer Agent</li>
-        </ol>
+
+      <div class="form-grid four">
+        <div class="form-field">
+          <label>District</label>
+          <select formControlName="districtId">
+            <option value="">Sélectionner</option>
+            <!-- <option *ngFor="let item of districts" [value]="item.id">
+              {{ item.libelle }}
+            </option> -->
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label>Commune</label>
+          <select formControlName="communeId">
+            <option value="">Sélectionner</option>
+            <!-- <option *ngFor="let item of communes" [value]="item.id">
+              {{ item.libelle }}
+            </option> -->
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label>Quartier</label>
+          <input formControlName="quartier" placeholder="Quartier" />
+        </div>
+
+        <div class="form-field">
+          <label>Avenue</label>
+          <input formControlName="avenue" placeholder="Avenue" />
+        </div>
+      </div>
+    </section>
+
+    <div class="camera-modal" *ngIf="cameraActive">
+      <div class="camera-box">
+        <video #video autoplay playsinline></video>
+        <canvas #canvas hidden></canvas>
+
+        <div class="camera-actions">
+          <button type="button" class="btn-secondary" (click)="closeCamera()">Annuler</button>
+          <button type="button" class="btn-primary" (click)="capturePhoto()">Capturer</button>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- /.container-fluid -->
-</section>
-<!-- end Content Header (Page header) -->
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <form autocomplete="off" [formGroup]="coachForm" (ngSubmit)="createAgent()">
-      <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-          <!-- card identité -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">
-                <h4>IDENTITE DE L'AGENT</h4>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="form-label"> Nom : </label>
-                    <input
-                      type="text"
-                      name="name"
-                      formControlName="name"
-                      class="form-control"
-                      placeholder="le nom..."
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label">Post-nom :</label>
-                  <input
-                    type="text"
-                    name="lastname"
-                    formControlName="lastname"
-                    class="form-control"
-                    placeholder="nom de famille..."
-                  />
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label">Prenom :</label>
-                  <input
-                    type="text"
-                    name="firstname"
-                    formControlName="firstname"
-                    class="form-control"
-                    placeholder="le prenom..."
-                  />
-                </div>
-              </div>
-              <!-- Lieu & Date de naissance -->
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Lieu de naissance :</label>
-                    <input
-                      type="text"
-                      name="placeOfBirt"
-                      id="placeOfBirt"
-                      formControlName="placeOfBirt"
-                      class="form-control"
-                      placeholder="lieu de naissance..."
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <label>Date de naissance : </label>
-                  <input
-                    type="date"
-                    name="dateOfBirt"
-                    id="dateOfBirt"
-                    formControlName="birthdate"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <!-- End Lieu & Date de naissance -->
 
-              <!-- Sexe et civilité -->
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Sexe :</label>
-                    <select
-                      name="sex"
-                      id="sex"
-                      formControlName="sex"
-                      class="form-select select shadow-none"
-                    >
-                      <option value="">Selectionner le sexe</option>
-                      <option value="Masculin">Masculin</option>
-                      <option value="Feminin">Feminin</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Etat Civil : </label>
-                  <div class="form-group">
-                    <select
-                      name="etat"
-                      id="etat"
-                      formControlName="etatCivil"
-                      class="form-select shadow-none"
-                    >
-                      <option value="">Selectionner l'état civil</option>
-                      <option value="cilibatire">Celibataire</option>
-                      <option value="marié">Marié</option>
-                      <option value="divorcé">Divorcé</option>
-                      <option value="veuve">Veuve</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <!-- End civilite & Sex -->
+    <div class="form-error" *ngIf="errorMessage">{{ errorMessage }}</div>
 
-              <!-- Nationality -->
-              <div class="row">
-                <div class="form-group">
-                  <label class="form-label"> Nationalité : </label>
-                  <select
-                    name="nationalite"
-                    id="nationalite"
-                    formControlName="nationality"
-                    class="form-select shadow-none"
-                  >
-                    <option value="">Selectionner la nationalité</option>
-                    <option value="Congolais(RDC)">Congo Kinshasa</option>
-                    <option value="Congolais(Brazzaville)">
-                      Congo Brazzaville
-                    </option>
-                    <option value="Angola">Angola</option>
-                    <option value="Zambie">Zambie</option>
-                  </select>
-                </div>
-              </div>
-              <!-- ./ end Nationality -->
-            </div>
-          </div>
-          <!-- ./ card identité -->
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" routerLink="/admin/agents">
+        Annuler
+      </button>
 
-          <!-- /.card contact -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">
-                <h3>CONTACT</h3>
-              </div>
-            </div>
-            <div class="card-body">
-              <!--phone  1 et phone 2-->
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Téléphone (1) : </label>
-                  <input
-                    type="tel"
-                    class="form-control"
-                    id="phoneNumber"
-                    formControlName="phoneNumber"
-                    name="phone"
-                    placeholder="phone (1)"
-                  />
-                </div>
-                <div class="col-md-6">
-                  <label>Téléphone (2) :</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="phone (2)"
-                    formControlName="phoneNumber1"
-                    id="phoneNumber1"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <!--end phone 1 and phone 2-->
-
-              <!-- Email -->
-              <div class="form-group">
-                <label class="form-label">Email :</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  class="form-control shadow-none"
-                  formControlName="email"
-                  placeholder="exemple@exemple.com"
-                />
-              </div>
-              <!--End Email-->
-            </div>
-          </div>
-          <!-- ./ card contact -->
-        </div>
-        <!--/.col (left) -->
-
-        <!-- right column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="card">
-            <div class="card-body">
-              <div class="container">
-                <div class="d-flex flex-column">
-                  <div class="text-center">
-                    <img
-                      [src]="imageURL ? imageURL : Path.user"
-                      *ngIf="imageURL ? imageURL : Path.user"
-                      alt="IMG"
-                      class="img img-thumbnail coach_img"
-                      name="imageUpload"
-                    />
-                  </div>
-                  <div class="d-flex flex-row justify-content-center mt-3">
-                    <div>
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                      >
-                        Choose Browse
-                        <i class="fa-thin fa-folder-magnifying-glass"></i>
-                      </button>
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        class="btn btn-primary btn-sm btn_p_photo"
-                      >
-                        Take a Photo
-                        <i class="fa-thin fa-camera"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.card -->
-
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">
-                <h3>INFORMATION PROFESSIONNELLE</h3>
-              </div>
-            </div>
-            <div class="card-body">
-              <!--phone  1 et phone 2-->
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Matricule : </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="phoneNumber"
-                    formControlName="matricule"
-                    name="matricule"
-                    placeholder="numéro matricule de l'agent"
-                  />
-                </div>
-                <div class="col-md-6">
-                  <label>Fonction :</label>
-                  <input
-                    type="text"
-                    name="fonction"
-                    placeholder="fonction de l'agent"
-                    formControlName="fonction"
-                    id="fonction"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <!--end phone 1 and phone 2-->
-
-              <!-- Service -->
-              <div class="form-group mt-2">
-                <label class="form-label"> SERVICE </label>
-                <input
-                  type="text"
-                  name="service"
-                  id="service"
-                  class="form-control shadow-none"
-                  formControlName="service"
-                  placeholder="service ou departement de l'agent"
-                />
-              </div>
-              <!--End Service-->
-              <!-- Filiale -->
-              <div class="form-group mt-2">
-                <label class="form-label"> ATTACHEMENT DE L'AGENT </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  class="form-control shadow-none"
-                  formControlName="filiation"
-                  placeholder="filliale ou appartenance de l'agent"
-                />
-              </div>
-              <!--End Filiale-->
-            </div>
-          </div>
-        </div>
-        <!--/.col (right) -->
-      </div>
-      <!-- /.row -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">
-                <h3>ADRESSE</h3>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label for="" class="form-label"> District : </label>
-                    <select name="" id="" class="form-select shadow-none">
-                      <option value="selected">Select un district</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label for="" class="form-label">Commune : </label>
-                    <select name="" id="" class="form-select shadow-none">
-                      <option value="selected">Select une commune</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label for="" class="form-label">Quartier : </label>
-                    <input
-                      type="text"
-                      name=""
-                      id=""
-                      class="form-control shadow-none"
-                      placeholder="quartier..."
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label for="" class="form-label">Avenue : </label>
-                    <input
-                      type="text"
-                      name=""
-                      id=""
-                      class="form-control shadow-none"
-                      placeholder="avenue..."
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- card button -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="float-right">
-                <button type="reset" class="btn btn-warning mr-1 btn-sm">
-                  Annuler
-                </button>
-
-                <button
-                  type="submit"
-                  class="btn btn-info"
-                  [disabled]="coachForm.valid"
-                >
-                  <span *ngIf="!loading"> Enregistrer </span>
-                  <div
-                    *ngIf="loading"
-                    class="spinner-border spinner-border-sm"
-                    role="status"
-                  >
-                    <span class="sr-only">loading...</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end card button-->
-    </form>
-  </div>
-  <!-- /.container-fluid -->
-</section>
+      <button type="submit" class="btn-primary" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+</div>

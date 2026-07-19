@@ -1,4 +1,4 @@
-export interface IDossiers {
+export interface IAgent {
   id: string;
   numeroDossier : String;
   resume_professionnel: string;

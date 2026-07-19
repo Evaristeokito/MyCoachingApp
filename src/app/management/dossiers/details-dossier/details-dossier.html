@@ -1,359 +1,321 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid mt-4">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h3>DETAIL DES DOSSIERS</h3>
-      </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item">
-            <a routerLink="/coach/liste-des-coachs"> Dossiers </a>
-          </li>
-          <li class="breadcrumb-item active">Details dossier</li>
-        </ol>
-      </div>
+<div class="agent-page">
+  <div class="page-header">
+    <div>
+      <span class="page-kicker">Gestion des dossiers</span>
+      <h1>Détail du dossier agent</h1>
+    </div>
+
+    <div class="breadcrumb">
+      <a routerLink="/admin/dossiers">Dossiers</a>
+      <span>/</span>
+      <strong>Détails dossier</strong>
     </div>
   </div>
-  <!-- /.container-fluid -->
-</section>
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <!--new row-->
-    <!-- <div class="row mb-2">
-      <div class="col-md-12">
-        <mat-card>
-          <mat-card-content>
-            <span class="header-name">
-              NUMERO DE DOSSIER : {{ numeroDossier }}
-            </span>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div> -->
-    <!--end new row-->
-    <!-- card agent informations -->
-    <div class="row">
-      <!-- left column -->
-      <div class="col-md-12">
-        <!-- general form elements -->
 
-        <!-- card head -->
-        <div class="card card-top">
-          <div class="card-body">
-            <h2>
-                IDENTITE DE L'AGENT
-            </h2>
-        </div>
-        </div>
-        <!-- end card head -->
-        <div class="card card-main">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="p-2">
-                  <label class="label-text">NOM :</label>
-                  <label class="content-text"
-                    >{{ nom }} {{ postnom }} {{ prenom }}</label
-                  >
-                </div>
-
-                <div class="p-2">
-                  <label class="label-text">SEXE :</label>
-                  <label class="content-text">{{ sex }}</label>
-                </div>
-
-                <div class="p-2">
-                  <label class="label-text">ETAT CIVIL :</label>
-                  <label class="content-text">{{ civilite }}</label>
-                </div>
-
-                <div class="p-2">
-                  <label class="label-text">DANAIS :</label>
-                  <label class="content-text">{{ dateNaissance | date }}</label>
-                </div>
-
-                <div class="p-2">
-                  <label class="label-text">LIEU DE NAISSANCE :</label>
-                  <label class="content-text">{{ lieuNaissance }}</label>
-                </div>
-
-                <div class="p-2">
-                  <label class="label-text">NATIONALITE :</label>
-                  <label class="content-text">{{ nationality }}</label>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="d-flex flex-column">
-                  <div class="p-2">
-                    <label class="label-text">TELEPHONE :</label>
-                    <label class="content-text"> {{ phoneNumber }}</label>
-                  </div>
-
-                  <div class="p-2">
-                    <label class="label-text">TELEPHONE 1 :</label>
-                    <label class="content-text">{{ phoneNumber1 }}</label>
-                  </div>
-
-                  <div class="p-2" *ngIf="email">
-                    <label class="label-text">EMAIL :</label>
-                    <label
-                      class="content-text"
-                      style="text-transform: lowercase"
-                      >{{ email }}</label
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="d-flex flex-column">
-                  <div class="p-2">
-                    <label class="label-text">MATRICULE :</label>
-                    <label class="content-text">{{ matricule }}</label>
-                  </div>
-
-                  <div class="p-2">
-                    <label class="label-text">SERVICE :</label>
-                    <label class="content-text"> {{ service }}</label>
-                  </div>
-
-                  <div class="p-2" *ngIf="email">
-                    <label class="label-text">FONCTION :</label>
-                    <label
-                      class="content-text"
-                      style="text-transform: lowercase"
-                      >{{ fonction }}</label
-                    >
-                  </div>
-
-                  <div class="p-2">
-                    <label class="label-text">FILLIATION :</label>
-                    <label class="content-text">{{ filiation }}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.card -->
-      </div>
-      <!--/.col (left) -->
-    </div>
-    <!-- /.row agent information -->
-
-    <!-- card competences -->
-    <div class="row">
-      <!-- left column -->
-      <div class="col-md-12">
-        <!-- general form elements -->
-
-        <!-- card head -->
-        <div class="card card-top">
-          <div class="card-body">
-            <h2>COMPETENCES</h2>
-          </div>
-        </div>
-        <!-- end card head -->
-        <div class="card card-main">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table table-striped table-borderless">
-                    <thead>
-                      <tr>
-                        <th>N°</th>
-                        <th>Competence</th>
-                        <th>Niveau</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        *ngFor="let cop of dossierAgent.agent.competences;let i = index;"
-                      >
-                        <td>{{i+1}}</td>
-                        <td>{{cop.name}}</td>
-                        <td>{{cop.level}}</td>
-                        <td>{{cop.description}}</td>
-                      </tr>
-                      <tr *ngIf="dossierAgent.agent.competences==0">
-                        <td colspan="5" class="text-center">
-                          cet agent n'a aucune compétence ou qualification
-                          requise.
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.card -->
-      </div>
-      <!--/.col (left) -->
-    </div>
-    <!-- /.row agent information -->
-
-    <!-- card experiences -->
-    <div class="row">
-      <div class="col-md-12">
-        <!-- card head -->
-        <div class="card card-top">
-          <div class="card-body">
-            <h2>EXPERIENCES PROFESSIONNELLES</h2>
-          </div>
-        </div>
-        <!-- end card head -->
-        <div class="card card-main">
-          <div class="card-body">
-            <div class="row">
-              <div class="table-responsive">
-                <table class="table table-striped table-borderless">
-                  <thead>
-                    <tr>
-                      <th>N°</th>
-                      <th>Company</th>
-                      <th>Titre</th>
-                      <th>Date début</th>
-                      <th>Date de fin</th>
-                      <th>Role</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="let exp of dossierAgent.agent.experiences;let i = index;"
-                    >
-                      <td>{{i+1}}</td>
-                      <td>{{exp.company}}</td>
-                      <td>{{exp.title}}</td>
-                      <td>{{exp.startdate}}</td>
-                      <td>{{exp.enddate}}</td>
-                      <td>{{exp.description}}</td>
-                    </tr>
-                    <tr *ngIf="dossierAgent.agent.experiences==0">
-                      <td colspan="7" class="text-center">
-                        cet agent n'a aucune experience professionnelle.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.card -->
-      </div>
-      <!--/.col (left) -->
-    </div>
-    <!-- /.row agent information -->
-
-    <!-- card formations -->
-    <div class="row">
-      <div class="col-md-12">
-        <!-- card head -->
-        <div class="card card-top">
-          <div class="card-body">
-            <h2>FORMATIONS OU ETUDES FAITES</h2>
-        </div>
-        </div>
-        <!-- end card head -->
-        <div class="card card-main">
-          <div class="card-body">
-            <div class="row">
-              <div class="table-responsive">
-                <table class="table table-striped table-borderless">
-                  <thead>
-                    <tr>
-                      <th>N°</th>
-                      <th>ECOLE</th>
-                      <th>FACULTE</th>
-                      <th>OPTION</th>
-                      <th>TITRE</th>
-                      <th>Date début</th>
-                      <th>Date de fin</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="let e of dossierAgent.agent.formations;let i = index;"
-                    >
-                      <td>{{i+1}}</td>
-                      <td>{{e.ecole}}</td>
-                      <td>{{e.faculty}}</td>
-                      <td>{{e.options}}</td>
-                      <td>{{e.title}}</td>
-                      <td>{{e.startDate}}</td>
-                      <td>{{e.endDate}}</td>
-                    </tr>
-                    <tr *ngIf="dossierAgent.agent.formations==0">
-                      <td colspan="7" class="text-center">
-                        cet agent n'a aucune education ou aucune étude faite.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.card -->
-      </div>
-      <!--/.col (left) -->
-    </div>
-    <!-- end card formations -->
-
-    <!-- card langues -->
-    <div class="row">
-      <div class="col-md-12">
-        <!-- card head -->
-        <div class="card card-top">
-          <div class="card-body">
-            <h2>LANGUES PARLEES ET ECRITES</h2>
-          </div>
-        </div>
-        <!-- end card head -->
-        <div class="card card-main">
-          <div class="card-body">
-            <div class="row">
-              <div class="table-responsive">
-                <table class="table table-striped table-borderless">
-                  <thead>
-                    <tr>
-                      <th>N°</th>
-                      <th>Langue parlée et Ecrite</th>
-                      <th>Niveau</th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="let e of dossierAgent.agent.languages;let i = index;"
-                    >
-                      <td>{{i+1}}</td>
-                      <td>{{e.name}}</td>
-                      <td>{{e.level}}</td>
-                      <td>{{e.description}}</td>
-                    </tr>
-                    <tr *ngIf="dossierAgent.agent.languages==0">
-                      <td colspan="5" class="text-center">
-                        l'agent ne parle aucune langue ou acune langue n'est associée à l'agent
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.card -->
-      </div>
-      <!--/.col (left) -->
-    </div>
-    <!-- end card langues -->
+  <div class="loading-card" *ngIf="isLoading">
+    Chargement des informations...
   </div>
-  <!-- /.container-fluid -->
-</section>
+
+  <ng-container *ngIf="!isLoading && dossiers">
+    <section class="agent-hero">
+      <div class="agent-avatar">{{ getInitials(dossiers.agent.name ) }}</div>
+
+      <div class="agent-title">
+        <span class="status-badge">Dossier actif</span>
+        <h2>{{ dossiers.agent.name }} {{ dossiers.agent.lastname }} {{ dossiers.agent.firstname }}</h2>
+        <p>
+          {{ display(dossiers.agent.fonction) }} · {{
+          display(dossiers.agent.service) }}
+        </p>
+      </div>
+
+      <div class="agent-actions">
+        <button type="button" class="btn-light">
+          <i class="far fa-file-pdf"></i>
+          Exporter
+        </button>
+
+        <button type="button" class="btn-primary">
+          <i class="fas fa-pen"></i>
+          Modifier
+        </button>
+      </div>
+    </section>
+
+    <section class="premium-card">
+      <div class="section-header">
+        <div>
+          <span>Identification</span>
+          <h3>Identité de l’agent</h3>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span>Nom</span>
+          <strong>{{ display(dossiers.agent.name) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Téléphone</span>
+          <strong>{{ display(dossiers.agent.phoneNumber1) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Matricule</span>
+          <strong>{{ display(dossiers.agent.matricule) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Sexe</span>
+          <strong>{{ display(dossiers.agent.sex) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Téléphone 2</span>
+          <strong>{{ display(dossiers.agent.phoneNumber) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Service</span>
+          <strong>{{ display(dossiers.agent.service) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>État civil</span>
+          <strong>{{ display(dossiers.agent.etatCivil) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Email</span>
+          <strong>{{ display(dossiers.agent.email) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Fonction</span>
+          <strong>{{ display(dossiers.agent.fonction) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Date de naissance</span>
+          <strong
+            >{{ dossiers.agent.birthdate | date:'dd/MM/yyyy' }}</strong
+          >
+        </div>
+
+        <div class="info-item">
+          <span>Nationalité</span>
+          <strong>{{ display(dossiers.agent.nationality) }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Filiation</span>
+          <strong>{{ display(dossiers.agent.filiation) }}</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="premium-card">
+      <div class="section-header">
+        <div>
+          <span>Profil professionnel</span>
+          <h3>Compétences</h3>
+        </div>
+
+        <button type="button" class="btn-outline">
+          <i class="fas fa-plus"></i>
+          Ajouter
+        </button>
+      </div>
+
+      <div
+        class="table-wrapper"
+        *ngIf="dossiers.agent.competences.length > 0; else emptyCompetences"
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Compétence</th>
+              <th>Niveau</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of dossiers.agent.competences; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.name }}</td>
+              <td>
+                <span class="level-badge">{{ item.level }}</span>
+              </td>
+              <td>{{ display(item.description) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #emptyCompetences>
+        <div class="empty-state">
+          <i class="fas fa-award"></i>
+          <strong>Aucune compétence enregistrée</strong>
+          <p>Cet agent n’a aucune compétence ou qualification renseignée.</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <section class="premium-card">
+      <div class="section-header">
+        <div>
+          <span>Profil Formations</span>
+          <h3>Etudes faites</h3>
+        </div>
+
+        <button type="button" class="btn-outline">
+          <i class="fas fa-plus"></i>
+          Ajouter
+        </button>
+      </div>
+
+      <div
+        class="table-wrapper"
+        *ngIf="dossiers.agent.formations.length; else emptyFormations"
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Titre</th>
+              <th>Faculté ou Section</th>
+              <th>Option</th>
+              <th>Ecole ou Institution ou Université</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of dossiers.agent.formations; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.title }}</td>
+               <td>
+                {{ item.options }}
+              </td>
+              <td>
+                <span class="level-badge">{{ item.faculty }}</span>
+              </td>
+              <td>{{ display(item.ecole) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #emptyFormations>
+        <div class="empty-state">
+          <i class="fas fa-graduation-cap"></i>
+          <strong>Aucune formation enregistrée</strong>
+          <p>Cet agent n’a aucune formation renseignée.</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <section class="premium-card">
+      <div class="section-header">
+        <div>
+          <span>Profil Experiences</span>
+          <h3>Expériences professionnelles</h3>
+        </div>
+
+        <button type="button" class="btn-outline">
+          <i class="fas fa-plus"></i>
+          Ajouter
+        </button>
+      </div>
+
+      <div
+        class="table-wrapper"
+        *ngIf="dossiers.agent.experiences.length; else emptyExperiences"
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Company ou Entreprise</th>
+              <th>Poste Occupé</th>
+              <th>Date de début</th>
+              <th>Date de fin</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of dossiers.agent.experiences; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.company}}</td>
+               <td>
+                {{ item.title }}
+              </td>
+              <td>
+                <span class="level-badge">{{ item.startdate }}</span>
+              </td>
+              <td>{{ item.enddate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #emptyExperiences>
+        <div class="empty-state">
+          <i class="fas fa-briefcase"></i>
+          <strong>Aucune expérience enregistrée</strong>
+          <p>Cet agent n’a aucune expérience professionnelle renseignée.</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <section class="premium-card">
+      <div class="section-header">
+        <div>
+          <span>Profil Langues</span>
+          <h3>Langues parlées et ecrites</h3>
+        </div>
+
+        <button type="button" class="btn-outline">
+          <i class="fas fa-plus"></i>
+          Ajouter
+        </button>
+      </div>
+
+      <div
+        class="table-wrapper"
+        *ngIf="dossiers.agent.languages.length; else emptyLangues"
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Langue</th>
+              <th>Niveau de maîtrise</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of dossiers.agent.languages; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.name }}</td>
+               <td>
+                {{ item.level }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #emptyLangues>
+        <div class="empty-state">
+          <i class="fas fa-language"></i>
+          <strong>Aucune langue enregistrée</strong>
+          <p>Cet agent n’a aucune langue renseignée.</p>
+        </div>
+      </ng-template>
+    </section>
+
+  </ng-container>
+</div>

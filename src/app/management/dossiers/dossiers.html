@@ -1,130 +1,150 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid mt-4">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h3>
-          GESTION DES DOSSIERS DES AGENTS
-        </h3>
+<div class="dossier-page">
+  <div class="page-header">
+    <div>
+      <span class="page-kicker">Administration</span>
+      <h1>Gestion des dossiers des agents</h1>
+    </div>
+
+    <nav class="breadcrumb">
+      <a routerLink="/admin/dashboard">Accueil</a>
+      <span>/</span>
+      <strong>Liste des dossiers</strong>
+    </nav>
+  </div>
+
+  <section class="toolbar-card">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="searchDossiers()"
+        placeholder="Rechercher par numéro, matricule ou agent"
+      />
+    </div>
+
+    <button type="button" class="btn-primary" routerLink="/admin/dossiers/create">
+      <i class="fas fa-plus"></i>
+      Nouveau dossier
+    </button>
+  </section>
+
+  <section class="table-card">
+    <div class="table-card-header">
+      <div>
+        <span>Répertoire</span>
+        <h2>Liste des dossiers</h2>
       </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-          <li class="breadcrumb-item active">Liste des dossiers</li>
-        </ol>
+
+      <strong>{{ filteredDossiers.length }} dossier(s)</strong>
+    </div>
+
+    <div class="loading-state" *ngIf="isLoading">
+      Chargement des dossiers...
+    </div>
+
+    <div class="table-wrapper" *ngIf="!isLoading && paginatedDossiers.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>N° dossier</th>
+            <th>Agent</th>
+            <th>Matricule</th>
+            <th>Sexe</th>
+            <th>État civil</th>
+            <th class="text-right">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let dossier of paginatedDossiers; let i = index">
+            <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+            <td>
+              <strong class="dossier-number">
+                {{ display(dossier.numeroDossier) }}
+              </strong>
+            </td>
+             <td>
+              {{ display(dossier.agent.name) }}
+              {{ display(dossier.agent.lastname) }}
+              {{ display(dossier.agent.firstname) }}
+
+            </td>
+            <td>{{ display(dossier.agent.matricule) }}</td>
+           
+            <td>
+              <span
+                class="gender-badge"
+                [ngClass]="dossier.agent.sex === 'Feminin' ? 'female' : 'male'">
+                {{ display(dossier.agent.sex) }}
+              </span>
+            </td>
+            <td>{{ display(dossier.agent.etatCivil) }}</td>
+            <td class="text-right action-cell">
+              <button
+                type="button"
+                class="action-btn"
+                (click)="toggleMenu(dossier.id)">
+                <i class="fas fa-ellipsis-h"></i>
+              </button>
+
+              <div class="action-menu" *ngIf="openedMenuId === dossier.id">
+                <a [routerLink]="['/management/dossiers/show', dossier.id]">
+                  <i class="far fa-eye"></i>
+                  Détail du dossier
+                </a>
+
+                <a [routerLink]="['/management/dossiers/update', dossier.id]">
+                  <i class="far fa-edit"></i>
+                  Mise à jour
+                </a>
+
+                <button type="button">
+                  <i class="far fa-trash-alt"></i>
+                  Suppression
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && paginatedDossiers.length === 0">
+      <i class="far fa-folder-open"></i>
+      <strong>Aucun dossier trouvé</strong>
+      <p>Aucun résultat ne correspond à votre recherche.</p>
+    </div>
+
+    <div class="pagination-bar" *ngIf="!isLoading && filteredDossiers.length > 0">
+      <span>
+        Page {{ currentPage }} sur {{ totalPages }}
+      </span>
+
+      <div class="pagination-actions">
+        <button
+          type="button"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <button
+          type="button"
+          *ngFor="let page of getPages()"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)">
+          {{ page }}
+        </button>
+
+        <button
+          type="button"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </div>
-  </div>
-  <!-- /.container-fluid -->
-</section>
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <!-- left column -->
-      <div class="col-md-12">
-        <div class="card shadow-none" style="outline: none;border: none;">
-          <div class="card-body">
-            <div class="d-flex flex-row align-items-center justify-content-center align-content-center">
-              <!--form-search-->
-              <form action="">
-                <div class="d-flex flex-row justify-content-center align-content-center align-items-center gap-1 form-search-center">
-                  <button class="btn btn-search">
-                    <i class="fa-thin fa-magnifying-glass"></i>
-                  </button>
-                  <input type="text" name="" id="" class="form-control input-search" placeholder="Search...">
-                </div>
-              </form>
-              <!-- end form search -->
-            </div>
-          </div>
-        </div>
-        <!-- general form elements -->
-        <div class="card">
-          <div class="card-body">
-            <div
-              class="card-body table-responsive p-0 mt-3"
-              style="height: 400px"
-            >
-                <table class="table table-head-fixed table-striped">
-                  <thead class="thead">
-                  <tr>
-                    <th>N°</th>
-                    <th>N° Dossier</th>
-                    <th>MATRICULE</th>
-                    <th>Agent</th>
-                    <th>Sexe</th>
-                    <th>Etat Civil</th>
-                    <th>FORMATION</th> 
-                    <th>DETAIL</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr
-                    *ngFor="
-                      let item of dossierTable;
-                      let i = index
-                    "
-                  >
-                    <td>{{ i + 1 }}</td>
-                    <td>{{item.numeroDossier}}</td>
-                    <td>{{item.agent.matricule}}</td>
-                    <td>{{ item.agent.name }} {{ item.agent.lastname }} {{ item.agent.firstname }} </td>
-                    <td>{{item.agent.sex}}</td>
-                    <td>{{item.agent.etatCivil}}</td>
-                    <td *ngFor="let forma of item.agent.formations">
-                      {{ forma.title }}
-                    </td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-secondary" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="fa-solid fa-ellipsis"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li>
-                            <a class="dropdown-item" (click)="detailDossier(item.id)">
-                              <i class="fa-thin fa-eye"></i> Details
-                            </a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" (click)="editDossier(item.id)">
-                              <i class="fa-thin fa-pen-to-square"></i> Update
-                            </a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">
-                              <i class="fa-thin fa-trash"></i> Delete
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              <ng-template #failureOrLoading>
-                <ng-container *ngIf="errorMessage">
-                  <div class="text-danger">
-                    {{ errorMessage }}
-                  </div>
-                </ng-container>
-
-                <ng-template #Loading>
-                  <div class="text-center text-primary">
-                    loading data...
-                  </div>
-                </ng-template>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-        <!-- /.card -->
-      </div>
-      <!--/.col (left) -->
-    </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container-fluid -->
-</section>
-
+  </section>
+</div>

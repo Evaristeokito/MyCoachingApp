@@ -1,115 +1,159 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid mt-4">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h3>
-          MANAGEMENT FORMATIONS
-        </h3>
-      </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Formations</li>
-        </ol>
-      </div>
+<div class="dossier-page">
+  <div class="page-header">
+    <div>
+      <span class="page-kicker">Administration</span>
+      <h1>Formations</h1>
     </div>
+
+    <nav class="breadcrumb">
+      <a routerLink="/admin/dashboard">Accueil</a>
+      <span>/</span>
+      <strong>Liste des formations</strong>
+    </nav>
   </div>
-  <!-- /.container-fluid -->
-</section>
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <!-- left column -->
-      <div class="col-md-12">
-        <!-- general form elements -->
-        <div class="card">
-          <div class="card-header">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="float-right">
-                  <button class="btn btn-primary" (click)="dialogColors()">
-                    Crée une nouvelle formation
-                  </button>
-                </div>
+
+  <section class="toolbar-card">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="searchFormations()"
+        placeholder="Rechercher par numéro, matricule ou agent"
+      />
+    </div>
+
+    <button
+      type="button"
+      class="btn-primary"
+      routerLink="/admin/dossiers/create"
+    >
+      <i class="fas fa-plus"></i>
+      Nouveau
+    </button>
+  </section>
+
+  <section class="table-card">
+    <div class="table-card-header">
+      <div>
+        <span>Répertoire</span>
+        <h2>Liste des langues</h2>
+      </div>
+
+      <strong>{{ filteredFormation.length }} langue(s)</strong>
+    </div>
+
+    <div class="loading-state" *ngIf="isLoading">Chargement des langues...</div>
+
+    <div
+      class="table-wrapper"
+      *ngIf="!isLoading && paginatedFormation.length > 0"
+    >
+      <table>
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Agent</th>
+            <th>Sexe</th>
+            <th>Titre Academique</th>
+            <th>Ecole / Institut / Université</th>
+            <th class="text-right">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let lang of paginatedFormation; let i = index">
+            <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+            <td>
+              <strong>
+                {{ display(lang.agent.name) }} {{ display(lang.agent.lastname)
+                }} {{ display(lang.agent.firstname) }}
+              </strong>
+            </td>
+            <td>
+              <span
+                class="gender-badge"
+                [ngClass]="lang.agent.sex === 'Feminin' ? 'female' : 'male'"
+              >
+                {{ display(lang.agent.sex) }}
+              </span>
+            </td>
+            <td>
+              <strong class="dossier-number"> {{ display(lang.title) }} </strong>
+            </td>
+            <td>{{ display(lang.ecole) }}</td>
+            <td class="text-right action-cell">
+              <button
+                type="button"
+                class="action-btn"
+                (click)="toggleMenu(lang.id)"
+              >
+                <i class="fas fa-ellipsis-h"></i>
+              </button>
+
+              <div class="action-menu" *ngIf="openedMenuId === lang.id">
+                <a [routerLink]="['/management/dossiers/show', lang.id]">
+                  <i class="far fa-eye"></i>
+                  Détail de la langue
+                </a>
+
+                <a [routerLink]="['/management/dossiers/update', lang.id]">
+                  <i class="far fa-edit"></i>
+                  Mise à jour
+                </a>
+
+                <button type="button">
+                  <i class="far fa-trash-alt"></i>
+                  Suppression
+                </button>
               </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div
-              class="card-body table-responsive p-0 mt-3"
-              style="height: 400px"
-            >
-              <table class="table table-head-fixed">
-                <thead class="thead">
-                <tr>
-                  <th>N°</th>
-                  <th>Titre</th>
-                  <th>Option</th>
-                  <th>Ecole</th>
-                  <th>Faculté</th>
-                  <th>StartDate</th>
-                  <th>EndDate</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr
-                  *ngFor="
-                      let item of formationDATA | slice: (page-1) * pageSize : page * pageSize;
-                      let i = index
-                    "
-                >
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.options}}</td>
-                  <td>{{ item.ecole }}</td>
-                  <td>{{ item.faculty }}</td>
-                  <td>{{item.startDate}}</td>
-                  <td>{{item.endDate}}</td>
-                  <td>
-                    <div class="dropdown">
-                      <button class="btn btn-secondary btn-sm" type="button" id="dropdownMenuButton1"
-                              data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots"></i>
-                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" (click)="dialogColors(item)">
-                          <i class="bi bi-pen"></i>
-                          Update
-                        </a></li>
-                        <li><a class="dropdown-item">
-                          <i class="bi bi-trash3"></i>
-                          Delete
-                        </a></li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div *ngIf="formationDATA.length > 0" class="pagination mt-3 d-flex justify-content-end align-items-end">
-              <ngb-pagination
-                [collectionSize]="formationDATA.length"
-                [(page)]="page"
-                [maxSize]="pageSize"
-                [rotate]="true"
-                [ellipses]="false"
-                [boundaryLinks]="true"
-              />
-            </div>
-          </div>
-        </div>
-        <!-- /.card -->
-      </div>
-      <!--/.col (left) -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container-fluid -->
-</section>
 
+    <div
+      class="empty-state"
+      *ngIf="!isLoading && paginatedFormation.length === 0"
+    >
+      <i class="far fa-folder-open"></i>
+      <strong>Aucun dossier trouvé</strong>
+      <p>Aucun résultat ne correspond à votre recherche.</p>
+    </div>
 
+    <div
+      class="pagination-bar"
+      *ngIf="!isLoading && filteredFormation.length > 0"
+    >
+      <span> Page {{ currentPage }} sur {{ totalPages }} </span>
+
+      <div class="pagination-actions">
+        <button
+          type="button"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <button
+          type="button"
+          *ngFor="let page of getPages()"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+
+        <button
+          type="button"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

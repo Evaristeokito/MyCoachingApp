@@ -1,0 +1,29 @@
+<div class="card-preview-backdrop" *ngIf="agent">
+  <section class="card-preview-shell" role="dialog" aria-modal="true" aria-label="Carte de service">
+    <header class="card-preview-header">
+      <div>
+        <span>Carte generee</span>
+        <h2>{{ displayName(agent) }}</h2>
+      </div>
+
+      <button type="button" class="btn btn-tool" aria-label="Fermer" (click)="close()">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <main class="card-preview-body">
+      <app-carte-service-agent
+        [agent]="agent"
+        [institution]="institution"
+      ></app-carte-service-agent>
+    </main>
+
+    <footer class="card-preview-actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="close()">Fermer</button>
+      <button type="button" class="btn btn-primary" (click)="print()">
+        <i class="fas fa-print mr-1"></i>
+        Imprimer / PDF
+      </button>
+    </footer>
+  </section>
+</div>

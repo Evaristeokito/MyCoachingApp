@@ -1,5 +1,20 @@
 import { Agent } from "./dossiers";
 
+
+
+export type LookupValue =
+  | string
+  | number
+  | null
+  | undefined
+  | {
+      libelle?: string | null;
+      label?: string | null;
+      nom?: string | null;
+      name?: string | null;
+      designation?: string | null;
+    };
+
 export interface IAgent {
   birthdate: Date;
   email: string;
@@ -8,16 +23,33 @@ export interface IAgent {
   lastname: string;
   matricule: string;
   name: string;
-  nationality: any;
+  nationality: string;
   phoneNumber: string;
   phoneNumber1: string;
-  placeBirth: string;
+  placeBirth: string ;
   sex: string;
-  etatCivil: String;
-  fonction: String;
-  filiation: String;
-  service: String;
+  etatCivil: string;
+  service?: LookupValue;
+  fonction?: LookupValue;
+  filiation?: string;
+  filliation?: string;
+  addresse: string;
   status: boolean;
+  photoUrl?: string;
+  avatarUrl?: string;
+  photo?: string;
+}
+
+
+export interface AgentCardInstitution {
+  country?: string;
+  ministry?: string;
+  title?: string;
+  regionCode?: string;
+  serialLabel?: string;
+  issueDate?: string | Date | null;
+  expiryDate?: string | Date | null;
+  verificationBaseUrl?: string;
 }
 
 export interface ILangues {
@@ -26,6 +58,11 @@ export interface ILangues {
   level: string;
   Observation: string;
   agent : Agent
+}
+
+export interface RootFormation {
+  id: string;
+  formations: IFormation[];
 }
 
 export interface IFormation {
@@ -50,7 +87,7 @@ export interface IExperience {
 }
 
 export interface ICompetences {
-  id: string;
+  id: String;
   name: string;
   level: string;
   description: string;

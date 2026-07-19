@@ -1,0 +1,352 @@
+:host {
+  display: block;
+}
+
+.official-card {
+  position: relative;
+  width: min(920px, 100%);
+  aspect-ratio: 1.586 / 1;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 18px;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.94)),
+    #ffffff;
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.18);
+  color: #0f172a;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.security-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0.52;
+  background:
+    repeating-radial-gradient(circle at 78% 38%, rgba(37, 99, 235, 0.2) 0 1px, transparent 2px 10px),
+    repeating-radial-gradient(circle at 72% 50%, rgba(220, 38, 38, 0.12) 0 1px, transparent 2px 12px),
+    repeating-linear-gradient(8deg, transparent 0 13px, rgba(14, 165, 233, 0.1) 14px, transparent 16px);
+  pointer-events: none;
+}
+
+.watermark {
+  position: absolute;
+  right: 18%;
+  top: 24%;
+  width: 250px;
+  height: 250px;
+  display: grid;
+  place-items: center;
+  border: 8px double rgba(15, 23, 42, 0.08);
+  border-radius: 50%;
+  color: rgba(15, 23, 42, 0.08);
+  font-size: 4.5rem;
+  font-weight: 950;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.official-header,
+.official-body,
+.official-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.official-header {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr) 88px;
+  align-items: center;
+  gap: 18px;
+  padding: 26px 34px 10px;
+}
+
+.flag-rdc {
+  position: relative;
+  width: 88px;
+  height: 56px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #1686d9;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.14);
+}
+
+.flag-rdc::before {
+  content: "";
+  position: absolute;
+  inset: -18px -10px;
+  background: linear-gradient(135deg, transparent 34%, #f7d116 35% 40%, #ce1021 41% 57%, #f7d116 58% 63%, transparent 64%);
+}
+
+.flag-star {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  color: #f7d116;
+  font-size: 16px;
+}
+
+.institution-copy {
+  min-width: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.institution-copy p {
+  margin: 0;
+  color: #0891b2;
+  font-size: clamp(0.95rem, 2vw, 1.5rem);
+  font-weight: 900;
+  line-height: 1.08;
+}
+
+.institution-copy span {
+  display: block;
+  margin-top: 4px;
+  color: #111827;
+  font-size: clamp(0.72rem, 1.2vw, 1rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.institution-copy strong {
+  display: block;
+  margin-top: 5px;
+  color: #050816;
+  font-size: clamp(1rem, 1.7vw, 1.45rem);
+  font-weight: 950;
+  line-height: 1.06;
+}
+
+.emblem-mark {
+  display: grid;
+  justify-self: end;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border: 2px solid rgba(8, 145, 178, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: #b45309;
+  font-size: 2rem;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+}
+
+.official-body {
+  display: grid;
+  grid-template-columns: 245px minmax(0, 1fr) 154px;
+  gap: 24px;
+  padding: 10px 34px 0;
+}
+
+.photo-column {
+  min-width: 0;
+}
+
+.region-code {
+  display: block;
+  margin: 0 0 8px 78px;
+  color: #b45309;
+  font-size: 1.55rem;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.portrait {
+  display: grid;
+  width: 202px;
+  height: 250px;
+  place-items: center;
+  overflow: hidden;
+  border: 4px solid rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  background: #dfe5ee;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.18);
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait span {
+  color: #334155;
+  font-size: 3.1rem;
+  font-weight: 950;
+}
+
+.serial-block {
+  display: flex;
+  justify-content: space-between;
+  width: 202px;
+  margin-top: 10px;
+  color: #111827;
+}
+
+.serial-block span,
+.official-footer span,
+.field-row span,
+.mini-field span,
+.qr-card span {
+  color: #475569;
+  font-weight: 800;
+}
+
+.serial-block span,
+.official-footer span,
+.mini-field span,
+.qr-card span {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.serial-block strong {
+  font-size: 0.92rem;
+  font-weight: 950;
+}
+
+.identity-column {
+  min-width: 0;
+  padding-top: 44px;
+}
+
+.field-row {
+  min-width: 0;
+  margin-bottom: 13px;
+}
+
+.field-row span {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 0.78rem;
+  line-height: 1.1;
+}
+
+.field-row em {
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.field-row strong {
+  display: block;
+  color: #050816;
+  font-size: 1.08rem;
+  font-weight: 950;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.field-main strong {
+  font-size: 1.28rem;
+}
+
+.identity-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.7fr;
+  column-gap: 28px;
+}
+
+.verification-column {
+  display: grid;
+  align-content: end;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.qr-card,
+.mini-field {
+  border: 1px solid rgba(100, 116, 139, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.qr-card {
+  display: grid;
+  justify-items: center;
+  padding: 10px 10px 8px;
+}
+
+.qr-card span {
+  margin-top: 4px;
+}
+
+.mini-field {
+  padding: 10px 12px;
+}
+
+.mini-field strong {
+  display: block;
+  margin-top: 3px;
+  color: #0f172a;
+  font-size: 0.9rem;
+  font-weight: 900;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.official-footer {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 20px;
+  padding: 8px 34px 24px 279px;
+}
+
+.official-footer strong {
+  display: block;
+  margin-top: 3px;
+  color: #050816;
+  font-size: 0.98rem;
+  font-weight: 950;
+}
+
+@media (max-width: 760px) {
+  .official-card {
+    width: 100%;
+    aspect-ratio: auto;
+  }
+
+  .official-header,
+  .official-body,
+  .official-footer {
+    grid-template-columns: 1fr;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .official-header {
+    text-align: left;
+  }
+
+  .institution-copy {
+    text-align: left;
+  }
+
+  .emblem-mark {
+    justify-self: start;
+  }
+
+  .identity-column {
+    padding-top: 0;
+  }
+
+  .identity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .official-footer {
+    padding-bottom: 20px;
+  }
+}
+
+@media print {
+  .official-card {
+    width: 85.6mm;
+    height: 54mm;
+    border-radius: 2mm;
+    box-shadow: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-12">
-    <div class="card">
+    <div class="card dashboard-card">
       <div class="card-body">
         <div class="row">
-          <div class="col-lg-3 col-6" *ngFor="let item of stats">
+          <div class="col-lg-3 col-6" *ngFor="let item of cards">
             <div class="small-box" [ngClass]="item.color">
-              <div class="inner">
+              <div class="inner card-content">
                 <h3>{{ item.value }}</h3>
-                <p>{{ item.title }}</p>
+                <p>{{ item.label }}</p>
               </div>
-              <div class="icon">
+              <div class="icon card-icon">
                 <i [class]="item.icon"></i>
               </div>
             </div>

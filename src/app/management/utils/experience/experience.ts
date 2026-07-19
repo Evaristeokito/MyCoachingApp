@@ -1,73 +1,107 @@
-import {Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { IExperience } from 'src/app/shared/models/agents';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { IFormation } from 'src/app/shared/models/agents';
 import { UtilsService } from '../utils.service';
-import { ToastService } from 'src/app/shared/services/toast.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { CreateExperience } from './createExperience/createExperience';
-import { NgFor, NgIf, SlicePipe } from '@angular/common';
-import { NgbPagination } from "@ng-bootstrap/ng-bootstrap";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    SlicePipe,
-    NgbPagination
-],
+  imports: [NgIf, NgFor, ReactiveFormsModule, FormsModule, NgClass, RouterLink],
   templateUrl: './experience.html',
   styleUrl: './experience.css',
 })
 export class Experience implements OnInit {
+  formations: IFormation[] = [];
 
-     experienceDATA: IExperience[] = [];
+  filteredFormation: IFormation[] = [];
+  paginatedFormation: IFormation[] = [];
 
-     experienceDATA2 : IExperience | any ;
+  searchTerm = '';
+  isLoading = true;
 
-     errorMessage: String = '';
-     handlerFormationSarch: FormGroup | any;
+  currentPage = 1;
+  pageSize = 3;
+  totalPages = 1;
 
-     pageSize: number = 5;
-     page: number = 1;
+  openedMenuId: string | null = null;
 
-     constructor(
-       private service: UtilsService,
-       private toast: ToastService,
-       private fb: FormBuilder,
-       private dialog: MatDialog,
-     ) {}
+  constructor(private serivce: UtilsService) {}
 
-     ngOnInit(): void {
-       this.getFormations();
-     }
+  ngOnInit(): void {
+    this.loadFormations();
+  }
 
+  loadFormations(): void {
+    this.serivce.getFormations().subscribe({
+      next: (data) => {
+        this.formations = data;
+        this.filteredFormation = data;
+        this.updatePagination();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Erreur chargement experience professionnelle', error);
+        this.isLoading = false;
+      },
+    });
+  }
 
-     dialogColors(colorsData?: any) {
-       const dialogConfig = new MatDialogConfig();
-       dialogConfig.width = '550px';
-       dialogConfig.height = '600px';
-       dialogConfig.position = { top: '5%' };
-       dialogConfig.role = 'dialog';
-       dialogConfig.data = { ...colorsData };
+  searchExperience(): void {
+    const term = this.searchTerm.toLowerCase().trim();
 
-       const dialogRef = this.dialog.open(CreateExperience, dialogConfig);
+    this.filteredFormation = this.formations.filter(
+      (lang) =>
+        lang.agent.name?.toLowerCase().includes(term) ||
+        lang.agent.lastname.toLowerCase().includes(term) ||
+        lang.ecole.toLowerCase().includes(term) ||
+        lang.options.toLowerCase().includes(term) ||
+        lang.faculty.toLowerCase().includes(term) ||
+        lang.agent.matricule?.toLowerCase().includes(term),
+    );
 
-       dialogRef.afterClosed().subscribe((result) => {
-         this.getFormations();
-       });
-     }
+    this.currentPage = 1;
+    this.updatePagination();
+  }
 
-     getFormations() {
-       this.service.getExperiences().subscribe({
-         next: (data) => {
-           this.experienceDATA = data;
-         },
-         error: (error: any) => {
-           console.log(error.error.message);
-         },
-       });
-     }
+  updatePagination(): void {
+    this.totalPages =
+      Math.ceil(this.filteredFormation.length / this.pageSize) || 1;
 
- }
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+
+    this.paginatedFormation = this.filteredFormation.slice(
+      startIndex,
+      endIndex,
+    );
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+
+    this.currentPage = page;
+    this.updatePagination();
+  }
+
+  nextPage(): void {
+    this.goToPage(this.currentPage + 1);
+  }
+
+  previousPage(): void {
+    this.goToPage(this.currentPage - 1);
+  }
+
+  getPages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, index) => index + 1);
+  }
+
+  toggleMenu(id: string): void {
+    this.openedMenuId = this.openedMenuId === id ? null : id;
+  }
+
+  display(value?: String): String {
+    return value && value.trim() !== '' ? value : 'À définir';
+  }
+}

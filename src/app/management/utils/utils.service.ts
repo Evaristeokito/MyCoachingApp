@@ -5,6 +5,12 @@ import { ICompetences, IExperience, IFormation, ILangues } from 'src/app/shared/
 import { ICommune } from 'src/app/shared/models/commune';
 import { environment } from 'src/environments/environment.development';
 
+
+export interface PresenceStat {
+  mois: string;
+  presences: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -101,7 +107,15 @@ export class UtilsService {
     return this.http.put<ICommune>(this.BaseUrl + 'communes/' + id, data);
   }
 
- 
+  // ========================== dashboard ==============================
+
+  getDashboardData(): Observable<any> {
+    return this.http.get(this.BaseUrl + 'dashboard/stats');
+  }
+
+  getPresenceStats(): Observable<PresenceStat[]> {
+    return this.http.get<PresenceStat[]>(`${this.BaseUrl}dashboard/presences`);
+  }
 
   // ========================== competences ==============================
 
@@ -127,5 +141,4 @@ export class UtilsService {
   deleteCompetence(id: any) {
     return this.http.delete(this.BaseUrl + 'competences/' + id);
   }
-
 }

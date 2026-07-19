@@ -1,0 +1,23 @@
+.presence-chart-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 26px 32px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+.presence-chart-header h3 {
+  margin: 0 0 18px;
+  font-size: 21px;
+  font-weight: 700;
+  color: #343a40;
+}
+
+.presence-chart-loader {
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-weight: 500;
+}

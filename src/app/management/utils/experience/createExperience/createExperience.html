@@ -1,95 +1,268 @@
-<div style="background: blue !important; height: 4rem !important">
-  <h2 mat-dialog-title>
-    <span *ngIf="!data.id" class="text-white"> CREATE NEW FORMATION </span>
-    <span *ngIf="data.id" class="text-white" style="line-height: 12px">
-      You are updating with Name : {{ data.name }}
-    </span>
-  </h2>
-</div>
-<mat-dialog-content>
-  <div class="container">
-    <form [formGroup]="experienceForm" (ngSubmit)="onSubmit()">
-      <input
-        type="text"
-        name="id"
-        formControlName="id"
-        id="id"
-        class="form-control d-none"
-      />
-      <div class="form-group">
-        <label class="form-label">Poste :</label>
-        <input
-          type="text"
-          name="title"
-          formControlName="title"
-          id="name"
-          class="form-control"
-          placeholder="posté occupé..."
-        />
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid mt-4">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h3>CREATE EXPERIENCE PROFESSSIONNELLE</h3>
       </div>
-       <div class="form-group">
-        <label class="form-label">Company :</label>
-        <input
-          type="text"
-          name="title"
-          formControlName="company"
-          id="name"
-          class="form-control"
-          placeholder="le nom de la company.."
-        />
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Experience</li>
+        </ol>
       </div>
-      <div class="form-group">
-        <label class="form-label">Date début : </label>
-        <input
-          type="date"
-          formControlName="startdate"
-          name="startdate"
-          id="startdate"
-          class="form-control"
-          placeholder="faculté..."
-        />
-      </div>
-      <div class="form-group">
-        <label class="form-label">Date Fin :</label>
-        <input
-          type="date"
-          name="enddate"
-          formControlName="enddate"
-          id="ecole"
-          class="form-control"
-          placeholder="ecole..."
-        />
-      </div>
-      <div class="form-group">
-        <label class="form-label">Description :</label>
-        <input
-          type="text"
-          name="title"
-          formControlName="description"
-          id="name"
-          class="form-control"
-          placeholder="description..."
-        />
-      </div>
-      <div class="float-right">
-        <button type="button" class="btn btn-danger mr-1" mat-dialog-close>
-          Close
-        </button>
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="experienceForm.invalid"
-        >
-          <span *ngIf="!loading">Submit</span>
-          <div
-            *ngIf="loading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-          >
-            <span class="sr-only">loading...</span>
-          </div>
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
-</mat-dialog-content>
+  <!-- /.container-fluid -->
+</section>
+<section class="content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="experienceForm" (ngSubmit)="onSubmit()">
+          <div class="card">
+            <div class="card-header">
+              <h3>Liste des Agents</h3>
+
+              <!--form-search-->
+              <div class="search-form" role="search">
+                <div
+                  class="d-flex flex-row justify-content-center align-content-center align-items-center gap-1 form-search-center"
+                >
+                  <button class="btn btn-search" type="button">
+                    <i class="fa-thin fa-magnifying-glass"></i>
+                  </button>
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    class="form-control input-search"
+                    placeholder="Rechercher l'agent par son nom , postnom ou prénom"
+                    [formControl]="searchControl"
+                  />
+                </div>
+              </div>
+              <!-- end form search -->
+            </div>
+            <div
+              class="card-body table-responsive p-0 mt-3"
+              style="height: 200px"
+            >
+              <table class="table table-head-fixed table-striped">
+                <thead>
+                  <tr>
+                    <th>Nom</th>
+                    <th>PostNom</th>
+                    <th>Prenom</th>
+                    <th>Sexe</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    *ngFor="let gt of filteredAgents ; let i = index"
+                    [class.selected-row]="selectedRowIndex===i"
+                  >
+                    <td (click)="selectRow(i)">{{ gt.name }}</td>
+                    <td (click)="selectRow(i)">{{ gt.firstname }}</td>
+                    <td (click)="selectRow(i)">{{ gt.lastname }}</td>
+                    <td (click)="selectRow(i)">{{gt.sex }}</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-warning me-2"
+                        (click)="selectRow(i)"
+                        (click)="getAgentById(gt.id)"
+                      >
+                        Assigner
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <h4>AGENT INFORMATION</h4>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <input
+                  type="hidden"
+                  name="name"
+                  formControlName="agentId"
+                  class="form-control"
+                />
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-label"> Nom : </label>
+                    <input
+                      type="text"
+                      name="name"
+                      formControlName="name"
+                      class="form-control"
+                      placeholder="le nom..."
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Post-nom :</label>
+                  <input
+                    type="text"
+                    name="lastname"
+                    formControlName="lastname"
+                    class="form-control"
+                    placeholder="nom de famille..."
+                    readonly
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Prenom :</label>
+                  <input
+                    type="text"
+                    name="firstname"
+                    formControlName="firstname"
+                    class="form-control"
+                    placeholder="le prenom..."
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h4>EXPERIENCE PROFESSIONNELLE</h4>
+            </div>
+            <div class="card-body">
+              <input
+                type="text"
+                name="id"
+                formControlName="i"
+                id="id"
+                class="form-control d-none"
+              />
+              <div formArrayName="experiences">
+                <div
+                  *ngFor="let item of experiences.controls;
+                   let i = index"
+                  [formGroupName]="i"
+                  class="mt-3"
+                >
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label">Poste :</label>
+                        <input
+                          type="text"
+                          name="title"
+                          formControlName="title"
+                          id="name"
+                          class="form-control"
+                          placeholder="posté occupé..."
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label">Company :</label>
+                        <input
+                          type="text"
+                          name="company"
+                          formControlName="company"
+                          id="company"
+                          class="form-control"
+                          placeholder="le nom de la company.."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label">Date début : </label>
+                        <input
+                          type="date"
+                          formControlName="startdate"
+                          name="startdate"
+                          id="startdate"
+                          class="form-control"
+                          placeholder="faculté..."
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label">Date Fin :</label>
+                        <input
+                          type="date"
+                          name="enddate"
+                          formControlName="enddate"
+                          id="ecole"
+                          class="form-control"
+                          placeholder="ecole..."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Description :</label>
+                    <input
+                      type="text"
+                      name="title"
+                      formControlName="description"
+                      id="name"
+                      class="form-control"
+                      placeholder="description..."
+                    />
+                  </div>
+                  <div class="col-md-2 d-flex align-items-end">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="removeExperience(i)"
+                    >
+                      Supprimer
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="m-3">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="addExperience()"
+              >
+                Associé l'expérience (Work Experience) à l'agent
+              </button>
+            </div>
+
+            <div class="float-right">
+              <button type="button" class="btn btn-danger mr-1">Close</button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+              >
+                <span *ngIf="!loading">Submit</span>
+                <div
+                  *ngIf="loading"
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                >
+                  <span class="sr-only">loading...</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

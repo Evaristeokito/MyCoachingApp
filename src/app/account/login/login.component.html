@@ -1,47 +1,58 @@
-<div class="container">
-  <div class="forms-container">
-    <div class="signin-signup">
-      <form action="#" class="sign-in-form">
-        <h2 class="title">Se connecter</h2>
-        <div class="input-field">
-          <i class="fas fa-user"></i>
-          <input type="text" placeholder="Username" />
-        </div>
-        <div class="input-field">
-          <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Password" />
-        </div>
-        <input type="submit" value="Connexion" class="btn solid" />
-        <p class="social-text">
-          Ou Connectez-vous avec les plateformes sociales
-        </p>
-        <div class="social-media">
-          <a href="#" class="social-icon">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-google"></i>
-          </a>
-          <a href="#" class="social-icon">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-        </div>
-      </form>
-    </div>
-  </div>
+<div class="auth-page">
+  <div class="auth-overlay"></div>
 
-  <div class="panels-container">
-    <div class="panel left-panel">
-      <div class="content">
-        <h3>MyCoacha</h3>
-        <p>
-          Bienvenue sur l'application Mycoacha, la plateforme dédiée à la gestion de votre parcours sportif, vous permettant de rester en contact constant avec votre coach et de suivre vos progrès. Que vous soyez un athlète amateur ou professionnel, cette application vous aide à organiser vos entraînements, vos performances et à recevoir des conseils personnalisés de la part de votre coach
-        </p>
+  <div class="auth-card">
+    <div class="brand-section">
+      <div class="flag-rdc">
+        <span class="blue"></span>
+        <span class="yellow"></span>
+        <span class="red"></span>
+        <i class="star">★</i>
       </div>
-      <img src="assets/img/login-auth.svg" class="image" alt="IMG" />
+
+      <h1>République Démocratique du Congo</h1>
+      <p>Cellule de gestion de l'aeronef du gouvernement (CEGAG)</p>
     </div>
+
+    <form class="login-form">
+      <div class="form-group">
+        <label for="email">Adresse email</label>
+        <div class="input-box">
+          <i class="fas fa-envelope"></i>
+          <input
+            id="email"
+            type="email"
+            placeholder="exemple@gouv.cd"
+            autocomplete="email"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <div class="input-box">
+          <i class="fas fa-lock"></i>
+          <input
+            id="password"
+            type="password"
+            placeholder="Votre mot de passe"
+            autocomplete="current-password"
+          />
+        </div>
+      </div>
+
+      <div class="form-options">
+        <label>
+          <input type="checkbox" />
+          Se souvenir de moi
+        </label>
+
+        <a href="#">Mot de passe oublié ?</a>
+      </div>
+
+      <button type="submit" class="login-btn">
+        Connexion
+      </button>
+    </form>
   </div>
 </div>

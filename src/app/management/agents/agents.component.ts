@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ToastService } from 'src/app/shared/services/toast.service';
-import { UtilsService } from '../utils/utils.service';
 import { AgentService } from './agents.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,142 +14,172 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   styleUrls: ['./agents.component.css'],
 })
 export class AgentsComponent implements OnInit {
-  Path = {
-    user: 'assets/img/user.jpeg',
-  };
+  @ViewChild('video') video?: ElementRef<HTMLVideoElement>;
+  @ViewChild('canvas') canvas?: ElementRef<HTMLCanvasElement>;
 
-  isLinear = false;
-  public coachForm: FormGroup | any;
+  form!: FormGroup;
 
-  public imagePath: any;
-  imageURL: any;
-  useFile: any;
-  Errormessage?: String = '';
-  submitted = false;
-  loading: boolean = false;
+  // nationalites: SelectOption[] = [];
+  // districts: SelectOption[] = [];
+  // communes: SelectOption[] = [];
+
+  photoPreview: string | ArrayBuffer | null = null;
+  photoFile?: File;
+  cameraActive = false;
+  stream?: MediaStream;
+
+  isSubmitting = false;
+  errorMessage = '';
 
   constructor(
-    private service: UtilsService,
-    private coachService: AgentService,
-    private snackBarService: SnackbarService,
     private fb: FormBuilder,
+    private agentService: AgentService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.Path;
-
-    this.coachForm = this.fb.group({
-      name: ['', [Validators.required, Validators.min(5), Validators.max(30)]],
-      lastname: ['', Validators.required],
-      firstname: ['', Validators.required],
-      birthdate: ['', Validators.required],
-      placeBirt: ['', Validators.required],
-      nationality: ['', Validators.required],
-      sex: ['', Validators.required],
-      etatCivil: [''],
-      phoneNumber: ['', []],
-      phoneNumber1: ['', []],
-      filiation: [''],
-      email: [''],
+    this.form = this.fb.group({
+      nom: ['', Validators.required],
+      postNom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      lieuNaissance: [''],
+      dateNaissance: ['', Validators.required],
+      sexe: ['', Validators.required],
+      etatCivil: ['', Validators.required],
+      nationaliteId: ['', Validators.required],
+      telephone1: ['', Validators.required],
+      telephone2: [''],
+      email: ['', [Validators.email]],
       matricule: [''],
       fonction: [''],
       service: [''],
-      address: [''],
-      placeOfBirt: [''],
+      attachement: [''],
+      districtId: ['', Validators.required],
+      communeId: ['', Validators.required],
+      quartier: [''],
+      avenue: [''],
+    });
+
+    this.loadInitialData();
+
+    // this.form.get('districtId')?.valueChanges.subscribe((districtId) => {
+    //   if (districtId) {
+    //     this.agentService.getCommunesByDistrict(districtId).subscribe({
+    //       next: (data) => (this.communes = data),
+    //     });
+    //   } else {
+    //     this.communes = [];
+    //   }
+    // });
+  }
+
+  loadInitialData(): void {
+    // this.agentService.getNationalites().subscribe({
+    //   next: (data) => (this.nationalites = data),
+    // });
+
+    // this.agentService.getDistricts().subscribe({
+    //   next: (data) => (this.districts = data),
+    // });
+  }
+
+  onPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) return;
+
+    this.photoFile = input.files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => (this.photoPreview = reader.result);
+    reader.readAsDataURL(this.photoFile);
+  }
+
+  async openCamera(): Promise<void> {
+    this.cameraActive = true;
+
+    this.stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false,
+    });
+
+    setTimeout(() => {
+      if (this.video?.nativeElement && this.stream) {
+        this.video.nativeElement.srcObject = this.stream;
+      }
     });
   }
 
-  onSelectFile(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.useFile = file;
-      var mimeType = event.target.files[0].type;
+  capturePhoto(): void {
+    if (!this.video || !this.canvas) return;
 
-      if (mimeType.match(/image\/*/) == null) {
-        this.Errormessage = 'Only image are not supported';
-        return;
-      }
+    const video = this.video.nativeElement;
+    const canvas = this.canvas.nativeElement;
 
-      var reader = new FileReader();
-      this.imagePath = File;
-      reader.readAsDataURL(file);
-      reader.onload = (_event) => {
-        this.imageURL = reader.result;
-      };
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const context = canvas.getContext('2d');
+    context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      this.photoFile = new File([blob], 'photo-agent.png', {
+        type: 'image/png',
+      });
+
+      this.photoPreview = canvas.toDataURL('image/png');
+      this.closeCamera();
+    }, 'image/png');
+  }
+
+  closeCamera(): void {
+    this.cameraActive = false;
+
+    if (this.stream) {
+      this.stream.getTracks().forEach((track) => track.stop());
+      this.stream = undefined;
     }
   }
-  fileName: String = '';
-  onFileInput(e: any) {
-    this.fileName = e.target.files[0].name;
-  }
 
-  createAgent() {
-    this.coachService.createAgent(this.coachForm.value).subscribe({
-      next: (data) => {
-        setTimeout(() => {
-          this.snackBarService.showSuccessMessage(
-            "L'Agent à été crée avec succèss",
-          );
-          this.coachForm.reset();
-        }, 2000);
+  submit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const formData = new FormData();
+
+    Object.keys(this.form.value).forEach((key) => {
+      formData.append(key, this.form.value[key] ?? '');
+    });
+
+    if (this.photoFile) {
+      formData.append('photo', this.photoFile);
+    }
+
+    this.isSubmitting = true;
+    this.errorMessage = '';
+
+    this.agentService.createAgent(formData).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.router.navigate(['/admin/agents']);
       },
-      error: (error) => {
-        this.snackBarService.showErrorMessage;
+      error: () => {
+        this.errorMessage = 'Erreur lors de l’enregistrement de l’agent.';
+        this.isSubmitting = false;
       },
     });
   }
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.coachForm.controls;
+  isInvalid(field: string): boolean {
+    const control = this.form.get(field);
+    return !!control && control.invalid && control.touched;
   }
 
-  get nom_coach() {
-    return this.coachForm.controls['name'];
-  }
-  get telephone() {
-    return this.coachForm.controls['phoneNumber'];
-  }
-
-  get telephone1() {
-    return this.coachForm.controls['phoneNumber1'];
-  }
-
-  get email() {
-    return this.coachForm.controls['email'];
-  }
-
-  get danais() {
-    return this.coachForm.controls['danais'];
-  }
-  get lieu_naissance() {
-    return this.coachForm.controls['lieu_naissance'];
-  }
-
-  get nationalite() {
-    return this.coachForm.controls['nationality'];
-  }
-
-  get sexe() {
-    return this.coachForm.controls['sex'];
-  }
-
-  get civilite() {
-    return this.coachForm.controls['civilite'];
-  }
-
-  get commune() {
-    return this.coachForm.controls['commune'];
-  }
-
-  get quartier() {
-    return this.coachForm.controls['quartier'];
-  }
-
-  get avenue() {
-    return this.coachForm.controls['avenue'];
-  }
-
-  get numero() {
-    return this.coachForm.controls['numero'];
+  ngOnDestroy(): void {
+    this.closeCamera();
   }
 }

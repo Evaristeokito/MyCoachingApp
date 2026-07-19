@@ -1,133 +1,145 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <div class="container-fluid mt-4">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h3>
-          GESTION DES AGENTS
-        </h3>
+<div class="agent-list-page">
+  <div class="page-header">
+    <div>
+      <span class="page-kicker">Administration</span>
+      <h1>Gestion des agents</h1>
+    </div>
+
+    <nav class="breadcrumb">
+      <a routerLink="/admin/dashboard">Accueil</a>
+      <span>/</span>
+      <strong>Liste des agents</strong>
+    </nav>
+  </div>
+
+  <section class="toolbar-card">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="searchAgents()"
+        placeholder="Rechercher par nom, post-nom ou prénom"
+      />
+    </div>
+
+    <button type="button" class="btn-primary" routerLink="/admin/agents/create">
+      <i class="fas fa-plus"></i>
+      Nouvel agent
+    </button>
+  </section>
+
+  <section class="table-card">
+    <div class="table-card-header">
+      <div>
+        <span>Répertoire</span>
+        <h2>Liste des agents</h2>
       </div>
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-          <li class="breadcrumb-item active">Liste des agents</li>
-        </ol>
+
+      <strong>{{ filteredAgents.length }} agent(s)</strong>
+    </div>
+
+    <div class="loading-state" *ngIf="isLoading">
+      Chargement des agents...
+    </div>
+
+    <div class="table-wrapper" *ngIf="!isLoading && filteredAgents.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Nom</th>
+            <th>Post-nom</th>
+            <th>Prénom</th>
+            <th>Sexe</th>
+            <th>Mobile</th>
+            <th>E-mail</th>
+            <th class="text-right">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let agent of paginatedAgents; let i = index">
+            <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+            <td>
+              <strong class="agent-name">{{ display(agent.name) }}</strong>
+            </td>
+            <td>{{ display(agent.firstname) }}</td>
+            <td>{{ display(agent.lastname) }}</td>
+            <td>
+              <span
+                class="gender-badge"
+                [ngClass]="agent.sex === 'Feminin' ? 'female' : 'male'">
+                {{ display(agent.sex) }}
+              </span>
+            </td>
+            <td>{{ display(agent.phoneNumber) }}</td>
+            <td>{{ display(agent.email) }}</td>
+            <td class="text-right action-cell">
+              <button
+                type="button"
+                class="action-btn"
+                (click)="toggleMenu(agent.id)">
+                <i class="fas fa-ellipsis-h"></i>
+              </button>
+
+              <div class="action-menu" *ngIf="openedMenuId === agent.id">
+                <a [routerLink]="['/management/agents/show', agent.id]">
+                  <i class="far fa-eye"></i>
+                  Détail de l'agent
+                </a>
+
+                <a [routerLink]="['/management/agents/update', agent.id]">
+                  <i class="far fa-edit"></i>
+                  Mise à jour
+                </a>
+
+                <button type="button">
+                  <i class="far fa-trash-alt"></i>
+                  Suppression
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && filteredAgents.length === 0">
+      <i class="fas fa-user-friends"></i>
+      <strong>Aucun agent trouvé</strong>
+      <p>Aucun résultat ne correspond à votre recherche.</p>
+    </div>
+
+    <div class="pagination-bar" *ngIf="!isLoading && filteredAgents.length > 0">
+      <span>
+        Page {{ currentPage }} sur {{ totalPages }}
+      </span>
+
+      <div class="pagination-actions">
+        <button
+          type="button"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <button
+          type="button"
+          *ngFor="let page of getPages()"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)">
+          {{ page }}
+        </button>
+
+        <button
+          type="button"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </div>
-  </div>
-  <!-- /.container-fluid -->
-</section>
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <!-- left column -->
-      <div class="col-md-12">
-        <div class="card shadow-none" style="outline: none;border: none;">
-          <div class="card-body">
-            <div class="d-flex flex-row align-items-center justify-content-center align-content-center">
-              <!--form-search-->
-              <form action="">
-                <div class="d-flex flex-row justify-content-center align-content-center align-items-center gap-1 form-search-center">
-                  <button class="btn btn-search">
-                    <i class="fa-thin fa-magnifying-glass"></i>
-                  </button>
-                  <input type="text" name="" id="" class="form-control input-search" placeholder="Search...">
-                </div>
-              </form>
-              <!-- end form search -->
-            </div>
-          </div>
-        </div>
-        <!-- general form elements -->
-        <div class="card">
-          <div class="card-body">
-            <div
-              class="card-body table-responsive p-0 mt-3"
-              style="height: 400px"
-            >
 
-              <ng-container *ngIf="agentTable | async as data ; else failureOrLoading">
-                <table class="table table-head-fixed table-striped">
-                  <thead class="thead">
-                  <tr>
-                    <th>N°</th>
-                    <th>Nom</th>
-                    <th>Post-Nom</th>
-                    <th>Prénom</th>
-                    <th>Sexe</th>
-                    <th>Mobile</th>
-                    <th>Mobile 1</th>
-                    <th>E-mail</th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr
-                    *ngFor="
-                      let item of agentTable | async as data;
-                      let i = index
-                    "
-                  >
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.lastname }}</td>
-                    <td>{{ item.firstname }}</td>
-                    <td>{{ item.sex }}</td>
-                    <td>{{ item.phoneNumber }}</td>
-                    <td>{{ item.phoneNumber1 }}</td>
-                    <td>{{ item.email }}</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-secondary" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="fa-solid fa-ellipsis"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li>
-                            <a class="dropdown-item" (click)="singleCoach(item.id)">
-                              <i class="fa-thin fa-eye"></i> Details
-                            </a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" (click)="editCoach(item.id)">
-                              <i class="fa-thin fa-pen-to-square"></i> Update
-                            </a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">
-                              <i class="fa-thin fa-trash"></i> Delete
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </ng-container>
-
-              <ng-template #failureOrLoading>
-                <ng-container *ngIf="errorMessage">
-                  <div class="text-danger">
-                    {{ errorMessage }}
-                  </div>
-                </ng-container>
-
-                <ng-template #Loading>
-                  <div class="text-center text-primary">
-                    loading data...
-                  </div>
-                </ng-template>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-        <!-- /.card -->
-      </div>
-      <!--/.col (left) -->
-    </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container-fluid -->
-</section>
+  </section>
+</div>

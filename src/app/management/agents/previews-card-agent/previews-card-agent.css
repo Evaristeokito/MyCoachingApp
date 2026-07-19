@@ -1,0 +1,97 @@
+:host {
+  display: block;
+}
+
+.card-preview-backdrop {
+  position: fixed;
+  z-index: 2050;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.card-preview-shell {
+  width: min(1040px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.3);
+}
+
+.card-preview-header,
+.card-preview-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 22px;
+}
+
+.card-preview-header {
+  border-bottom: 1px solid rgba(100, 116, 139, 0.18);
+}
+
+.card-preview-header span {
+  color: #2563eb;
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.card-preview-header h2 {
+  margin: 4px 0 0;
+  color: #111827;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.card-preview-body {
+  display: grid;
+  place-items: center;
+  padding: 30px;
+  background:
+    linear-gradient(135deg, #eef2f7, #f8fafc);
+}
+
+.card-preview-actions {
+  justify-content: flex-end;
+  border-top: 1px solid rgba(100, 116, 139, 0.18);
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .card-preview-backdrop,
+  .card-preview-backdrop * {
+    visibility: visible;
+  }
+
+  .card-preview-backdrop {
+    position: static;
+    display: block;
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .card-preview-shell {
+    width: auto;
+    max-height: none;
+    overflow: visible;
+    box-shadow: none;
+  }
+
+  .card-preview-header,
+  .card-preview-actions {
+    display: none;
+  }
+
+  .card-preview-body {
+    padding: 0;
+    background: #ffffff;
+  }
+}

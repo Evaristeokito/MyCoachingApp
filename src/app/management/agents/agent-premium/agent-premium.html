@@ -1,0 +1,431 @@
+<div class="wizard-page">
+  <div class="page-header">
+    <div>
+      <span>Administration</span>
+      <h1>Enregistrement du dossier agent</h1>
+    </div>
+
+    <nav>
+      <a routerLink="/admin/dashboard">Accueil</a>
+      <span>/</span>
+      <strong>Nouveau dossier agent</strong>
+    </nav>
+  </div>
+
+  <div class="wizard-card">
+    <div class="steps">
+      <button
+        type="button"
+        *ngFor="let step of steps; let i = index"
+        [class.active]="currentStep === i"
+        [class.done]="i < currentStep"
+        (click)="goToStep(i)"
+      >
+        <span>{{ i + 1 }}</span>
+        {{ step }}
+      </button>
+    </div>
+
+    <form [formGroup]="form">
+      <section *ngIf="currentStep === 0" class="step-panel">
+        <h2>Identité de l’agent</h2>
+
+        <div class="form-grid three">
+          <div class="form-field">
+            <label>Nom</label>
+            <input formControlName="nom" />
+          </div>
+
+          <div class="form-field">
+            <label>Post-nom</label>
+            <input formControlName="postNom" />
+          </div>
+
+          <div class="form-field">
+            <label>Prénom</label>
+            <input formControlName="prenom" />
+          </div>
+
+          <div class="form-field">
+            <label>Sexe</label>
+            <select formControlName="sexe">
+              <option value="">Sélectionner</option>
+              <option value="Masculin">Masculin</option>
+              <option value="Feminin">Féminin</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label>Date de naissance</label>
+            <input type="date" formControlName="dateNaissance" />
+          </div>
+
+          <div class="form-field">
+            <label>Lieu de naissance</label>
+            <input formControlName="lieuNaissance" />
+          </div>
+
+          <div class="form-field">
+            <label>Téléphone</label>
+            <input formControlName="telephone1" />
+          </div>
+
+          <div class="form-field">
+            <label>Email</label>
+            <input formControlName="email" />
+          </div>
+
+          <div class="form-field">
+            <label>Matricule</label>
+            <input formControlName="matricule" />
+          </div>
+
+          <div class="form-field">
+            <label>Fonction</label>
+            <input formControlName="fonction" placeholder="Fonction" />
+          </div>
+
+          <div class="form-field">
+            <label>Service</label>
+            <input formControlName="service" placeholder="Service" />
+          </div>
+
+          <div class="form-field">
+            <label>Attachement</label>
+            <input
+              formControlName="attachement"
+              placeholder="Filiale ou appartenance"
+            />
+          </div>
+
+          <div class="form-field">
+            <label>District</label>
+            <input formControlName="district" placeholder="District" />
+          </div>
+
+          <div class="form-field">
+            <label>Commune</label>
+            <input formControlName="commune" placeholder="Commune" />
+          </div>
+
+          <div class="form-field">
+            <label>Quartier</label>
+            <input formControlName="quartier" placeholder="Quartier" />
+          </div>
+
+          <div class="form-field">
+            <label>Avenue</label>
+            <input formControlName="avenue" placeholder="Avenue" />
+          </div>
+
+          <aside class="photo-panel">
+            <div class="photo-preview">
+              <img
+                *ngIf="photoPreview"
+                [src]="photoPreview"
+                alt="Photo de l’agent"
+              />
+              <i *ngIf="!photoPreview" class="fas fa-user"></i>
+            </div>
+
+            <div class="photo-actions">
+              <label class="btn-upload">
+                <i class="fas fa-upload"></i>
+                Importer
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  (change)="onPhotoSelected($event)"
+                />
+              </label>
+
+              <button type="button" class="btn-camera" (click)="openCamera()">
+                <i class="fas fa-camera"></i>
+                Camera
+              </button>
+            </div>
+          </aside>
+        </div>
+
+        <div class="camera-modal" *ngIf="cameraActive">
+          <div class="camera-box">
+            <video #video autoplay playsinline></video>
+            <canvas #canvas hidden></canvas>
+
+            <div class="camera-actions">
+              <button
+                type="button"
+                class="btn-secondary"
+                (click)="closeCamera()"
+              >
+                Annuler
+              </button>
+
+              <button
+                type="button"
+                class="btn-primary"
+                (click)="capturePhoto()"
+              >
+                Capturer
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section *ngIf="currentStep === 1" class="step-panel">
+        <h2>Information du dossier</h2>
+
+        <div class="form-grid two">
+          <div class="form-field">
+            <label>N° dossier</label>
+            <input formControlName="numeroDossier" />
+          </div>
+
+          <div class="form-field">
+            <label>Référence</label>
+            <input formControlName="referenceDossier" />
+          </div>
+
+          <div class="form-field">
+            <label>Version</label>
+            <input formControlName="versionDossier" />
+          </div>
+
+          <div class="form-field full">
+            <label>Résumé professionnel</label>
+            <textarea rows="5" formControlName="resumeProfessionnel"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section *ngIf="currentStep === 2" class="step-panel">
+        <h2>Langues</h2>
+
+        <div class="dynamic-row" *ngFor="let item of langues; let i = index">
+          <input
+            [(ngModel)]="item.langue"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Langue"
+          />
+          <input
+            [(ngModel)]="item.niveauParle"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Parlé"
+          />
+          <input
+            [(ngModel)]="item.niveauEcrit"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Écrit"
+          />
+          <input
+            [(ngModel)]="item.niveauLecture"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Lecture"
+          />
+          <button type="button" (click)="removeLangue(i)">Supprimer</button>
+        </div>
+
+        <button type="button" class="btn-outline" (click)="addLangue()">
+          Ajouter une langue
+        </button>
+      </section>
+
+      <section *ngIf="currentStep === 3" class="step-panel">
+        <h2>Études faites</h2>
+
+        <div class="dynamic-card" *ngFor="let item of etudes; let i = index">
+          <input
+            [(ngModel)]="item.niveau"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Niveau"
+          />
+          <input
+            [(ngModel)]="item.etablissement"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Établissement"
+          />
+          <input
+            [(ngModel)]="item.domaine"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Domaine"
+          />
+          <input
+            [(ngModel)]="item.diplome"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Diplôme"
+          />
+          <input
+            type="number"
+            [(ngModel)]="item.anneeDebut"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Début"
+          />
+          <input
+            type="number"
+            [(ngModel)]="item.anneeFin"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Fin"
+          />
+          <button type="button" (click)="removeEtude(i)">Supprimer</button>
+        </div>
+
+        <button type="button" class="btn-outline" (click)="addEtude()">
+          Ajouter une étude
+        </button>
+      </section>
+
+      <section *ngIf="currentStep === 4" class="step-panel">
+        <h2>Compétences</h2>
+
+        <div
+          class="dynamic-card"
+          *ngFor="let item of competences; let i = index"
+        >
+          <input
+            [(ngModel)]="item.competence"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Compétence"
+          />
+          <input
+            [(ngModel)]="item.niveau"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Niveau"
+          />
+          <textarea
+            [(ngModel)]="item.description"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Description"
+          ></textarea>
+          <button type="button" (click)="removeCompetence(i)">Supprimer</button>
+        </div>
+
+        <button type="button" class="btn-outline" (click)="addCompetence()">
+          Ajouter une compétence
+        </button>
+      </section>
+
+      <section *ngIf="currentStep === 5" class="step-panel">
+        <h2>Formations</h2>
+
+        <div
+          class="dynamic-card"
+          *ngFor="let item of formations; let i = index"
+        >
+          <input
+            [(ngModel)]="item.intitule"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Intitulé"
+          />
+          <input
+            [(ngModel)]="item.organisme"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Organisme"
+          />
+          <input
+            type="date"
+            [(ngModel)]="item.dateDebut"
+            [ngModelOptions]="{standalone: true}"
+          />
+          <input
+            type="date"
+            [(ngModel)]="item.dateFin"
+            [ngModelOptions]="{standalone: true}"
+          />
+          <input
+            [(ngModel)]="item.certificat"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Certificat"
+          />
+          <button type="button" (click)="removeFormation(i)">Supprimer</button>
+        </div>
+
+        <button type="button" class="btn-outline" (click)="addFormation()">
+          Ajouter une formation
+        </button>
+      </section>
+
+      <section *ngIf="currentStep === 6" class="step-panel">
+        <h2>Expériences professionnelles</h2>
+
+        <div
+          class="dynamic-card"
+          *ngFor="let item of experiences; let i = index"
+        >
+          <input
+            [(ngModel)]="item.poste"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Poste"
+          />
+          <input
+            [(ngModel)]="item.entreprise"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Entreprise"
+          />
+          <input
+            [(ngModel)]="item.lieu"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Lieu"
+          />
+          <input
+            type="date"
+            [(ngModel)]="item.dateDebut"
+            [ngModelOptions]="{standalone: true}"
+          />
+          <input
+            type="date"
+            [(ngModel)]="item.dateFin"
+            [ngModelOptions]="{standalone: true}"
+          />
+          <textarea
+            [(ngModel)]="item.description"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Description"
+          ></textarea>
+          <button type="button" (click)="removeExperience(i)">Supprimer</button>
+        </div>
+
+        <button type="button" class="btn-outline" (click)="addExperience()">
+          Ajouter une expérience
+        </button>
+      </section>
+
+      <section *ngIf="currentStep === 7" class="step-panel">
+        <h2>Validation finale</h2>
+        <p class="final-text">
+          Vérifiez les informations avant de valider définitivement le dossier.
+        </p>
+      </section>
+
+      <div class="wizard-actions">
+        <button
+          type="button"
+          class="btn-secondary"
+          [disabled]="currentStep === 0"
+          (click)="previousStep()"
+        >
+          Précédent
+        </button>
+
+        <button
+          type="button"
+          class="btn-primary"
+          *ngIf="currentStep < steps.length - 1"
+          (click)="nextStep()"
+        >
+          Suivant
+        </button>
+
+        <button
+          type="button"
+          class="btn-primary"
+          *ngIf="currentStep === steps.length - 1"
+          (click)="submitAll()"
+        >
+          Valider le dossier
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
